@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/03 22:30:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:51:09 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,27 @@ static void    convert_argv_to_int(t_philo *ph, int argc, char **argv)
 
 static void make_fork_list(t_philo *ph)
 {
-    size_t  i;
+    size_t  id_fork;
 
-    i = 0;
-    while(i < ph->argv[1])
+    id_fork = 0;
+    while(id_fork < ph->argv[1])
     {
-        // printf("make\n");
-        add_list(&ph->fork_list, &ph->alloc_list, i);
-        i++;
+        add_list(&ph->fork_list, &ph->alloc_list, id_fork);
+        id_fork++;
     }
 }
 
+static void make_pthread_list(t_philo *ph)
+{
+    size_t  id_th;
+
+    id_th = 0;
+    while(id_th < ph->argv[1])
+    {
+        add_pthread_list(&ph->thread_list, &ph->alloc_list, id_th);
+        id_th++;
+    }
+}
 static void	make_function_ptr_array(t_philo *ph)
 {
     ph->put_type[TAKEN_FORK] =  put_taken_fork;
@@ -59,6 +69,7 @@ void    begin_philo(t_philo *ph, int argc, char **argv)
     convert_argv_to_int(ph, argc, argv);
     ph->sleep_seconds = ph->argv[4];
     make_fork_list(ph);
+    make_pthread_list(ph);
     make_function_ptr_array(ph);
     if (ph->argv[1] == 1){
         //時間経過後にdied

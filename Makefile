@@ -8,6 +8,7 @@ SRCS		:= 	ph_main.c \
 				ph_begin.c \
 				ph_begin_check.c \
 				ph_list.c \
+				ph_list_thread.c \
 				ph_list_malloc.c \
 				ph_thread.c \
 				ph_start_routine.c \

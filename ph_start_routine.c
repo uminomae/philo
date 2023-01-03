@@ -11,12 +11,14 @@ void    *dining_philosophers(void *ptr)
 
     ph = (t_philo *)ptr;
     printf ("Philosopher %zu is done thinking and now ready to eat.\n", ph->id);
+       	printf("run\n");
     while (1) {
         f = food_on_table(ph);
         if (f == 0)//foodがなくなったら
             break;//プログラムの終了
         if (ph->id == 1)
             sleep (ph->sleep_seconds);//->usleep
+
         toggle_mutex_forks(&ph->fork_list, ph->id, 1);
         put_timestamp(ph, ph->id, EATING);
         ret = usleep (DELAY * (FOOD - f + 1));

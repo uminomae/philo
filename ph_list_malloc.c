@@ -28,7 +28,6 @@ static void	add_ptr_list(t_ptr_list *ptr_list, void *ptr)
 {
 	t_ptr_node	*node;
 
-	// printf("init_ptr\n");
 	node = init_ptr_node();
 	node->ptr = ptr;
 	if (ptr_list->head == NULL)

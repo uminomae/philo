@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/03 22:41:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:53:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ typedef struct s_ptr_list
 	struct s_ptr_node	*tail;
 }	t_ptr_list;
 
+typedef struct s_pthread_node
+{
+	pthread_t		thread;
+	size_t			id;
+	struct s_pthread_node	*next;
+}	t_pthread_node;
+
+typedef struct s_pthread_list
+{
+	struct s_pthread_node	*head;
+	struct s_pthread_node	*tail;
+}	t_pthread_list;
+
+
 typedef struct s_node
 {
 	size_t			data;
@@ -66,7 +80,6 @@ typedef struct s_list
 // [5][number_of_times_each_philosopher_must_eat]: すべての哲学者がnumber_of_times_each_philosopher_must_eat 回食べた場合、シミュレーションは停止します。
 typedef struct s_philo
 {
-    // pthread_mutex_t fork[5];
     pthread_t		philo[5];
     pthread_mutex_t food_lock;
     size_t			sleep_seconds;
@@ -74,6 +87,7 @@ typedef struct s_philo
 	void			(*put_type[5])(size_t);
     size_t			id;
 	struct s_list	fork_list;
+	struct s_pthread_list	thread_list;
 	struct s_ptr_list	alloc_list;
 }	t_philo;
 
@@ -115,6 +129,7 @@ void    put_thinking(size_t id);
 void    put_died(size_t id);
 //
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
+void	add_pthread_list(t_pthread_list *list, t_ptr_list *ptr_list, size_t thread);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
 #endif
