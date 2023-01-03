@@ -10,7 +10,7 @@ void    *dining_philosophers(void *ptr)
     int ret;
 
     ph = (t_philo *)ptr;
-    printf ("Philosopher %zu is done thinking and now ready to eat.\n", ph->id);
+    printf ("%zu done thinking\n", ph->id);
        	printf("run\n");
     while (1) {
         f = food_on_table(ph);
@@ -26,7 +26,7 @@ void    *dining_philosophers(void *ptr)
             exit(1);
         toggle_mutex_forks(&ph->fork_list, ph->id, 0);
     }
-    printf ("Philosopher %zu is done eating.\n", ph->id);
+    printf ("%zu done eating\n", ph->id);
     return (NULL);
 }
 
@@ -48,29 +48,44 @@ static void unlock_mutex(t_node *node)
         exit(1);
 }
 
-static void toggle_mutex_forks(t_list *list, size_t c, size_t j) {
-    size_t	i;
-    t_node	*node_fork;
 
-	node_fork = list->head;
+static t_node *get_node(t_list *list, size_t c)
+{
+    size_t	i;
+    t_node	*node;
+
+	node = list->head;
     i = 0;
     while(i < c)
     {
-        node_fork = node_fork->next;
+        node = node->next;
         i++;
     }
-    if (j == 1)
+    return (node);
+}
+
+
+static void toggle_mutex_forks(t_list *list, size_t c, size_t flag)
+{
+    size_t	i;
+    t_node	*node_fork;
+
+    i = 0;
+    node_fork = get_node(list, i);
+    if (flag == TRUE)
     {
         lock_mutex(node_fork);
         lock_mutex(node_fork->next);
-        printf ("fork's mutex lock:got LR-hand fork %zu\n", c);
-    }else if (j == 0)
+        printf ("fork's mutex lock: got fork %zu\n", c);
+    }else if (flag == FALSE)
     {
         unlock_mutex(node_fork);
         unlock_mutex(node_fork->next);
         printf ("fork's mutex unlock %zu\n", c);
     }
 }
+
+
 
 static int food_on_table(t_philo *ph)
 {

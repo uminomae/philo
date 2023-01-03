@@ -41,11 +41,9 @@ void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
 	void	*ret;
 
 	(void)ptr_list;
-	// ret = malloc(sizeof(void *) * size);
 	ret = malloc(size);
 	if (ret == NULL)
 		exit(1);
-	// printf("malloc\n");
 	add_ptr_list(ptr_list, ret);
 	return (ret);
 }

@@ -32,7 +32,6 @@ static t_pthread_node *get_pthread_node(t_pthread_list *list_th, size_t c)
     i = 0;
     while(i < c)
     {
-        // printf("get_node_thread\n");
         node_th = node_th->next;
         i++;
     }
@@ -44,7 +43,6 @@ void    create_pthread(t_philo *ph)
     size_t i;
     size_t num_philo;
     int ret;
-    // pthread_t thread;
     t_pthread_node *node_th;
 
     num_philo = ph->argv[1];
@@ -54,8 +52,6 @@ void    create_pthread(t_philo *ph)
         ph->id = i;
         node_th = get_pthread_node(&ph->thread_list, i);
         ret = pthread_create(&node_th->thread, NULL, dining_philosophers, ph);
-        // printf("cr_thread\n");
-        // ret = pthread_create(&ph->philo[i], NULL, dining_philosophers, ph);
         if (ret != 0)
             exit(1);
         i++;
@@ -75,7 +71,6 @@ void    join_pthread(t_philo *ph)
     {
         node_th = get_pthread_node(&ph->thread_list, i);
         ret = pthread_join(node_th->thread, NULL);
-        // ret = pthread_join(ph->philo[i], NULL);
         if (ret != 0)
             exit(1);
         i++;

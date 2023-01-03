@@ -86,7 +86,7 @@ sani: re
 
 run: 
 	make
-	./philo 5 2 3 4 5
+	./philo 10 2 3 4 50
 #	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
 #	./philo 7 a 10 10

@@ -27,7 +27,6 @@ void	add_pthread_list(t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
 {
 	t_pthread_node	*node;
 
-	// printf("init_thread\n");
 	node = init_pthread_node(ptr_list);
 	node->id = id;
 	if (list->head == NULL)
