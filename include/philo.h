@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/03 22:18:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/03 22:41:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,6 @@ void    create_pthread(t_philo *ph);
 void    join_pthread(t_philo *ph);
 //
 void *philosopher (void *ph);
-void grab_fork (t_philo*, size_t, size_t, char *);
-// void down_forks (t_philo*, int,  int);
-void    down_forks(t_philo *ph, size_t c);
-
-// int food_on_table ();
 //
 void    *dining_philosophers(void *ptr);
 //

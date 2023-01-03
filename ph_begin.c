@@ -6,18 +6,19 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/03 20:51:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/03 22:30:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void init_struct(t_philo *ph)
+static void init_struct_s_philo(t_philo *ph)
 {
-    memset(ph, 0, sizeof(struct s_philo));
+    // memset(ph, 0, sizeof(struct s_philo));
+    memset(ph, 0, sizeof(t_philo));
 }
 
-static void    convert_argv_toi(t_philo *ph, int argc, char **argv)
+static void    convert_argv_to_int(t_philo *ph, int argc, char **argv)
 {
     int i;
 
@@ -54,8 +55,8 @@ static void	make_function_ptr_array(t_philo *ph)
 void    begin_philo(t_philo *ph, int argc, char **argv)
 {
     check_valid_values(argc, argv);
-    init_struct(ph);
-    convert_argv_toi(ph, argc, argv);
+    init_struct_s_philo(ph);
+    convert_argv_to_int(ph, argc, argv);
     ph->sleep_seconds = ph->argv[4];
     make_fork_list(ph);
     make_function_ptr_array(ph);
