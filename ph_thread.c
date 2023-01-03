@@ -8,12 +8,12 @@ void    init_pthread_mutex(t_philo *ph)
 
 	node = ph->fork_list.head;
     number_of_philosophers = ph->argv[1];
-    pthread_mutex_init (&ph->food_lock, NULL);
+    pthread_mutex_init(&ph->food_lock, NULL);
     i = 0;
     while (i < number_of_philosophers)
     {
 		// printf("pthre_mu\n");
-        pthread_mutex_init (&node->mutex, NULL);
+        pthread_mutex_init(&node->mutex, NULL);
 		node = node->next;
         i++;
     }
@@ -43,7 +43,7 @@ void    join_pthread(t_philo *ph)
     i = 0;
     while (i < number_of_philosophers)
     {
-        pthread_join (ph->philo[i], NULL);
+        pthread_join(ph->philo[i], NULL);
         i++;
     }
 }
