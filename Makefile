@@ -7,6 +7,7 @@ DFLAGS		:= -MMD -MP
 SRCS		:= 	ph_main.c \
 				ph_begin.c \
 				ph_begin_check.c \
+				ph_begin_build.c \
 				ph_list.c \
 				ph_list_thread.c \
 				ph_list_malloc.c \
@@ -87,7 +88,7 @@ sani: re
 run: 
 	make
 	./philo 10 2 3 4 50
-#	./philo 1 100000000 10 10 1
+	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
 #	./philo 7 a 10 10
 #	./philo 123a 10 10 10 

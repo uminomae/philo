@@ -1,78 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ph_thread.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/04 00:56:51 by uminomae         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void    init_pthread_mutex(t_philo *ph)
+void	init_pthread_mutex(t_philo *ph)
 {
-    size_t i;
-    size_t num_philo;
-	t_node *node;
-    int ret;
+	size_t	i;
+	size_t	num_philo;
+	t_node	*node;
+	int		ret;
 
 	node = ph->fork_list.head;
-    num_philo = ph->argv[1];
-    ret = pthread_mutex_init(&ph->food_lock, NULL);
-    if (ret != 0)
-        exit(1);
-    i = 0;
-    while (i < num_philo)
-    {
-        ret = pthread_mutex_init(&node->mutex, NULL);
-        if (ret != 0)
-            exit(1);
+	num_philo = ph->argv[1];
+	ret = pthread_mutex_init(&ph->food_lock, NULL);
+	if (ret != 0)
+		exit(1);
+	i = 0;
+	while (i < num_philo)
+	{
+		ret = pthread_mutex_init(&node->mutex, NULL);
+		if (ret != 0)
+			exit(1);
 		node = node->next;
-        i++;
-    }
+		i++;
+	}
 }
 
-static t_pthread_node *get_pthread_node(t_pthread_list *list_th, size_t c)
+static t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t c)
 {
-    size_t	i;
-    t_pthread_node	*node_th;
+	size_t			i;
+	t_pthread_node	*node_th;
 
 	node_th = list_th->head;
-    i = 0;
-    while(i < c)
-    {
-        node_th = node_th->next;
-        i++;
-    }
-    return (node_th);
+	i = 0;
+	while (i < c)
+	{
+		node_th = node_th->next;
+		i++;
+	}
+	return (node_th);
 }
 
-void    create_pthread(t_philo *ph)
+void	create_pthread(t_philo *ph)
 {
-    size_t i;
-    size_t num_philo;
-    int ret;
-    t_pthread_node *node_th;
+	size_t			i;
+	size_t			num_philo;
+	int				ret;
+	t_pthread_node	*node_th;
 
-    num_philo = ph->argv[1];
-    i = 0; 
-    while (i < num_philo)
-    {
-        ph->id = i;
-        node_th = get_pthread_node(&ph->thread_list, i);
-        ret = pthread_create(&node_th->thread, NULL, dining_philosophers, ph);
-        if (ret != 0)
-            exit(1);
-        i++;
-    }
+	num_philo = ph->argv[1];
+	i = 0;
+	while (i < num_philo)
+	{
+		ph->id = i;
+		node_th = get_pthread_node(&ph->thread_list, i);
+		ret = pthread_create(&node_th->thread, NULL, dining_philosophers, ph);
+		if (ret != 0)
+			exit(1);
+		i++;
+	}
 }
 
-void    join_pthread(t_philo *ph)
+void	join_pthread(t_philo *ph)
 {
-    size_t i;
-    size_t num_philo;
-    int ret;
-    t_pthread_node *node_th;
+	size_t			i;
+	size_t			num_philo;
+	int				ret;
+	t_pthread_node	*node_th;
 
-    num_philo = ph->argv[1];
-    i = 0;
-    while (i < num_philo)
-    {
-        node_th = get_pthread_node(&ph->thread_list, i);
-        ret = pthread_join(node_th->thread, NULL);
-        if (ret != 0)
-            exit(1);
-        i++;
-    }
+	num_philo = ph->argv[1];
+	i = 0;
+	while (i < num_philo)
+	{
+		node_th = get_pthread_node(&ph->thread_list, i);
+		ret = pthread_join(node_th->thread, NULL);
+		if (ret != 0)
+			exit(1);
+		i++;
+	}
 }

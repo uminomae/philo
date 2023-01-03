@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ph_list_thread.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/04 00:51:25 by uminomae         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static t_pthread_node	*init_pthread_node(t_ptr_list *ptr_list)
 {
 	t_pthread_node	*node;
 
-	node = (t_pthread_node *)malloc_and_add_ptr_list(ptr_list, sizeof(t_pthread_node));
+	node = (t_pthread_node *)malloc_and_add_ptr_list(ptr_list, \
+				sizeof(t_pthread_node));
 	node->thread = NULL;
 	node->next = NULL;
 	return (node);
