@@ -5,6 +5,7 @@ RM			:= rm -f
 CFLAGS		:= -Wall -Wextra -Werror -O
 DFLAGS		:= -MMD -MP
 SRCS		:= 	ph_main.c \
+				ph_util.c \
 				ph_begin.c \
 				ph_begin_check.c \
 				ph_begin_build.c \
@@ -82,17 +83,27 @@ re: fclean all
 # bonus: 
 # 	make WITH_BONUS=1
 
-sani: CFLAGS +=  -g  -fsanitize=address -fsanitize=undefined
+sani: CFLAGS +=  -g  -fsanitize=address -fsanitize=undefined 
 sani: re
 
+sani2: CFLAGS +=  -g  -fsanitize=thread
+sani2: re
+# gcc -fsanitize=thread *.c
 run: 
 	make
 	./philo 10 2 3 4 50
-	./philo 1 100000000 10 10 1
+#	./philo 200 410 200 200
+#	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
 #	./philo 7 a 10 10
 #	./philo 123a 10 10 10 
 
+# n回食べたかの確認
+#  N=9; ./philo 20 300 100 100 $N | grep eating | sort -nk 2 | awk '{print "| "$2" "$3" "$4}' | uniq -c | tee >(cat) | awk -v N=$N '$1 < $N' | grep '^$' || echo "\nOK"
+
+# ./philo 200 410 200 200 | awk '{print $1}' | tee act | sort -n > exp; diff -u exp act
+
+# タイムスタンプに前後がないか確認するコマンド
 .PHONY: all clean fclean re bonus sani
 
 RED			=	"\033[31m"

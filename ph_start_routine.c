@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 01:06:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:10:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 static int	food_on_table(t_philo *ph);
 static void	toggle_mutex_forks(t_list *list, size_t c, size_t j);
 
+
+//食べる＞食べる時間経過させる＞眠る＞眠る時間経過させる＞起きる（考え開始時刻？考え中はいつでも食べられる？）
+//if 最後の食事の"開始"時刻から経過　＞die
+//※死は10ミリ秒以内に表示
+//if must_eat回食べたら ＞ exit(0)
 void	*dining_philosophers(void *ptr)
 {
 	size_t	f;
@@ -32,6 +37,8 @@ void	*dining_philosophers(void *ptr)
 		if (ph->id == 1)
 			sleep (ph->sleep_seconds);
 		toggle_mutex_forks(&ph->fork_list, ph->id, 1);
+		//   gettimeofday(&ph->thread_list->tv, NULL);
+		//   printf("%ld %06d\n", tv.tv_sec, tv.tv_usec);
 		put_timestamp(ph, ph->id, EATING);
 		ret = usleep (DELAY * (FOOD - f + 1));
 		if (ret != 0)

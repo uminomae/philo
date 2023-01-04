@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/04 00:42:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:41:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_pthread_node
 {
 	pthread_t				thread;
 	size_t					id;
+	// struct timeval			tv;
 	struct s_pthread_node	*next;
 }	t_pthread_node;
 
@@ -83,6 +84,7 @@ typedef struct s_philo
 	pthread_mutex_t			food_lock;
 	size_t					sleep_seconds;
 	size_t					argv[5];
+	size_t					start_time;
 	void					(*put_type[5])(size_t);
 	size_t					id;
 	struct s_list			fork_list;
@@ -114,6 +116,7 @@ void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_pthread_mutex(t_philo *ph);
 void	create_pthread(t_philo *ph);
 void	join_pthread(t_philo *ph);
+long	get_time_milli_sec(void);
 //
 // void *philosopher (void *ph);
 //

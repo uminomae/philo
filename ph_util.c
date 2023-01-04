@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin.c                                         :+:      :+:    :+:   */
+/*   ph_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 16:43:58 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/04 17:06:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_struct_s_philo(t_philo *ph)
+void	put_timestamp(t_philo *ph, size_t id, size_t i)
 {
-	memset(ph, 0, sizeof(t_philo));
+	ph->put_type[i](id);
 }
 
-void	begin_philo(t_philo *ph, int argc, char **argv)
-{
-	check_valid_values(argc, argv);
-	init_struct_s_philo(ph);
-	build_struct_and_list(ph, argc, argv);
-	if (ph->argv[1] == 1)
-	{
-		put_timestamp(ph, 1, DIED);
-		exit(0);
-	}
-}
