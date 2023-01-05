@@ -6,15 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 16:10:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 04:08:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	food_on_table(t_philo *ph);
-static void	toggle_mutex_forks(t_list *list, size_t c, size_t j);
-
+static void	toggle_mutex_forks(t_pthread_node *node_th, t_list *list, size_t id, size_t flag);
 
 //食べる＞食べる時間経過させる＞眠る＞眠る時間経過させる＞起きる（考え開始時刻？考え中はいつでも食べられる？）
 //if 最後の食事の"開始"時刻から経過　＞die
@@ -22,34 +20,52 @@ static void	toggle_mutex_forks(t_list *list, size_t c, size_t j);
 //if must_eat回食べたら ＞ exit(0)
 void	*dining_philosophers(void *ptr)
 {
-	size_t	f;
-	t_philo	*ph;
-	int		ret;
+	// t_philo	*node;
+	t_pthread_node *node_th;
+	size_t cnt;
+	size_t id = 0;
 
-	ph = (t_philo *)ptr;
-	printf ("%zu done thinking\n", ph->id);
-	printf("run\n");
+	cnt = 0;
+	node_th = (t_pthread_node *)ptr;
+	// printf("run\n");
 	while (1)
 	{
-		f = food_on_table(ph);
-		if (f == 0)
-			break ;
-		if (ph->id == 1)
-			sleep (ph->sleep_seconds);
-		toggle_mutex_forks(&ph->fork_list, ph->id, 1);
-		//   gettimeofday(&ph->thread_list->tv, NULL);
-		//   printf("%ld %06d\n", tv.tv_sec, tv.tv_usec);
-		put_timestamp(ph, ph->id, EATING);
-		ret = usleep (DELAY * (FOOD - f + 1));
-		if (ret != 0)
-			exit(1);
-		toggle_mutex_forks(&ph->fork_list, ph->id, 0);
+		id = node_th->id;
+		if (id == 1)
+			x_usleep_ms(node_th->ph->sleep_seconds);
+		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, 1);
+		
+
+		node_th->time_eating = get_time_milli_sec() - node_th->ph->start_time;
+		x_usleep_ms(node_th->ph->argv[3]);
+		printf("%ld ", node_th->time_eating);
+		put_timestamp(node_th->ph, id, EATING);
+		cnt++;
+		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, 0);
+
+		if (node_th->ph->must_eat == TRUE && node_th->ph->argv[5] == cnt){
+			// puts("break");
+			break;
+		}
+			
+		node_th->time_sleeping = get_time_milli_sec() - node_th->ph->start_time;
+		printf("%ld ", node_th->time_sleeping);
+		put_timestamp(node_th->ph, id, SLEEPING);
+
+		x_usleep_ms(node_th->ph->argv[4]);
+		
+		node_th->time_thinking = get_time_milli_sec() - node_th->ph->start_time;
+		printf("%ld ", node_th->time_thinking);
+		put_timestamp(node_th->ph, id, THINKING);
+
+
+		
 	}
-	printf ("%zu done eating\n", ph->id);
+
 	return (NULL);
 }
 
-static void	lock_mutex(t_node *node)
+static void	lock_mutex(t_fork_node *node)
 {
 	int	ret;
 
@@ -58,7 +74,7 @@ static void	lock_mutex(t_node *node)
 		exit(1);
 }
 
-static void	unlock_mutex(t_node *node)
+static void	unlock_mutex(t_fork_node *node)
 {
 	int	ret;
 
@@ -67,10 +83,10 @@ static void	unlock_mutex(t_node *node)
 		exit(1);
 }
 
-static t_node	*get_node(t_list *list, size_t c)
+static t_fork_node	*get_fork_node(t_list *list, size_t c)
 {
 	size_t	i;
-	t_node	*node;
+	t_fork_node	*node;
 
 	node = list->head;
 	i = 0;
@@ -82,36 +98,24 @@ static t_node	*get_node(t_list *list, size_t c)
 	return (node);
 }
 
-static void	toggle_mutex_forks(t_list *list, size_t c, size_t flag)
+static void	toggle_mutex_forks(t_pthread_node *node_th, t_list *list, size_t id, size_t flag)
 {
-	size_t	i;
-	t_node	*node_fork;
+	t_fork_node	*node_fork;
 
-	i = 0;
-	node_fork = get_node(list, i);
+	node_fork = get_fork_node(list, id);
 	if (flag == TRUE)
 	{
 		lock_mutex(node_fork);
+
+		node_th->time_fork = get_time_milli_sec() - node_th->ph->start_time;
+		printf("%ld ", node_th->time_fork);
+		put_timestamp(node_th->ph, id, TAKEN_FORK);
+
 		lock_mutex(node_fork->next);
-		printf ("fork's mutex lock: got fork %zu\n", c);
 	}
 	else if (flag == FALSE)
 	{
 		unlock_mutex(node_fork);
 		unlock_mutex(node_fork->next);
-		printf ("fork's mutex unlock %zu\n", c);
 	}
-}
-
-static int	food_on_table(t_philo *ph)
-{
-	static int	food = FOOD;
-	int			myfood;
-
-	pthread_mutex_lock (&ph->food_lock);
-	if (food > 0)
-		food--;
-	myfood = food;
-	pthread_mutex_unlock (&ph->food_lock);
-	return (myfood);
 }

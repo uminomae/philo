@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin.c                                         :+:      :+:    :+:   */
+/*   ph_init_mutex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 01:46:06 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/06 02:01:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_struct_philo(t_philo *ph)
+static void	x_pthread_mutex_init(pthread_mutex_t *mutex)
 {
-	memset(ph, 0, sizeof(t_philo));
+	int ret;
+
+	ret = pthread_mutex_init(mutex, NULL);
+	if (ret != 0)
+		exit(1);
 }
 
-void	begin_philo(t_philo *ph, int argc, char **argv)
+void	init_pthread_mutex(t_philo *ph)
 {
-	check_valid_values(argc, argv);
-	init_struct_philo(ph);
-	build_struct_and_list(ph, argc, argv);
-	if (ph->argv[1] == 1)
+	size_t	i;
+	size_t	num_philo;
+	t_fork_node	*node_fork;
+
+	node_fork = ph->fork_list.head;
+	num_philo = ph->argv[1];
+	x_pthread_mutex_init(&ph->food_lock);
+	i = 0;
+	while (i < num_philo)
 	{
-		put_timestamp(ph, 1, DIED);
-		exit(0);
+		x_pthread_mutex_init(&node_fork->mutex);
+		node_fork = node_fork->next;
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/04 18:41:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 03:54:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <signal.h>
 
 //削除予定
-# define DELAY 5000
-# define FOOD 20
+// # define DELAY 1000
+# define FOOD 10
 //
 
 typedef struct s_ptr_node
@@ -49,8 +49,12 @@ typedef struct s_pthread_node
 {
 	pthread_t				thread;
 	size_t					id;
-	// struct timeval			tv;
+	long					time_fork;
+	long					time_eating;
+	long					time_sleeping;
+	long					time_thinking;
 	struct s_pthread_node	*next;
+	struct s_philo			*ph;
 }	t_pthread_node;
 
 typedef struct s_pthread_list
@@ -59,17 +63,17 @@ typedef struct s_pthread_list
 	struct s_pthread_node	*tail;
 }	t_pthread_list;
 
-typedef struct s_node
+typedef struct s_fork_node
 {
 	size_t			data;
 	pthread_mutex_t	mutex;
-	struct s_node	*next;
-}	t_node;
+	struct s_fork_node	*next;
+}	t_fork_node;
 
 typedef struct s_list
 {
-	struct s_node	*head;
-	struct s_node	*tail;
+	struct s_fork_node	*head;
+	struct s_fork_node	*tail;
 }	t_list;
 
 // program(s) should take the following arguments: 
@@ -82,9 +86,10 @@ typedef struct s_list
 typedef struct s_philo
 {
 	pthread_mutex_t			food_lock;
-	size_t					sleep_seconds;
-	size_t					argv[5];
-	size_t					start_time;
+	long					sleep_seconds;
+	bool					must_eat;
+	size_t					argv[6];
+	long					start_time;
 	void					(*put_type[5])(size_t);
 	size_t					id;
 	struct s_list			fork_list;
@@ -117,9 +122,9 @@ void	init_pthread_mutex(t_philo *ph);
 void	create_pthread(t_philo *ph);
 void	join_pthread(t_philo *ph);
 long	get_time_milli_sec(void);
-//
-// void *philosopher (void *ph);
-//
+void	get_start_time(t_philo *ph);
+void	x_usleep_ms(size_t ms);
+
 void	*dining_philosophers(void *ptr);
 void	put_timestamp(t_philo *ph, size_t id, size_t i);
 int		ft_isdigit(int c);
@@ -130,8 +135,8 @@ void	put_sleeping(size_t id);
 void	put_thinking(size_t id);
 void	put_died(size_t id);
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
-void	add_pthread_list(\
-		t_pthread_list *list, t_ptr_list *ptr_list, size_t thread);
+void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
+t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id);
 
 #endif

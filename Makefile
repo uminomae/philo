@@ -5,7 +5,8 @@ RM			:= rm -f
 CFLAGS		:= -Wall -Wextra -Werror -O
 DFLAGS		:= -MMD -MP
 SRCS		:= 	ph_main.c \
-				ph_util.c \
+				ph_time.c \
+				ph_init_mutex.c \
 				ph_begin.c \
 				ph_begin_check.c \
 				ph_begin_build.c \
@@ -91,7 +92,7 @@ sani2: re
 # gcc -fsanitize=thread *.c
 run: 
 	make
-	./philo 10 2 3 4 50
+	./philo 5 300 100 100 3
 #	./philo 200 410 200 200
 #	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 

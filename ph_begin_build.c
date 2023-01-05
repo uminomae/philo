@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 00:48:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 03:38:33 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ static void	make_fork_list(t_philo *ph)
 
 static void	make_pthread_list(t_philo *ph)
 {
-	size_t	id_th;	
+	size_t	id;	
 
-	id_th = 0;
-	while (id_th < ph->argv[1])
+	id = 0;
+	while (id < ph->argv[1])
 	{
-		add_pthread_list(&ph->thread_list, &ph->alloc_list, id_th);
-		id_th++;
+		// puts("a");
+		add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id);
+		id++;
 	}
 }
 
@@ -59,6 +60,8 @@ static void	make_function_ptr_array(t_philo *ph)
 
 void	build_struct_and_list(t_philo *ph, int argc, char **argv)
 {
+	if (argc == 6)
+		ph->must_eat = TRUE;
 	convert_argv_to_int(ph, argc, argv);
 	ph->sleep_seconds = ph->argv[4];
 	make_fork_list(ph);

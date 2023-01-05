@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 00:51:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 03:22:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ static void	add_last_pthread_node(t_pthread_list *list, t_pthread_node *node)
 	node->next = list->head;
 }
 
-void	add_pthread_list(t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
+void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
 {
 	t_pthread_node	*node;
 
 	node = init_pthread_node(ptr_list);
 	node->id = id;
+	node->ph = ph;
 	if (list->head == NULL)
 		make_first_pthread_node(list, node);
 	else
 		add_last_pthread_node(list, node);
+	// puts("b");
 }

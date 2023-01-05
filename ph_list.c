@@ -6,29 +6,29 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 00:42:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:56:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_node	*init_node(t_ptr_list *ptr_list)
+static t_fork_node	*init_fork_node(t_ptr_list *ptr_list)
 {
-	t_node	*node;
+	t_fork_node	*node;
 
-	node = (t_node *)malloc_and_add_ptr_list(ptr_list, sizeof(t_node));
+	node = (t_fork_node *)malloc_and_add_ptr_list(ptr_list, sizeof(t_fork_node));
 	node->data = 0;
 	node->next = NULL;
 	return (node);
 }
 
-static void	make_first_node(t_list *list, t_node *node)
+static void	make_first_fork_node(t_list *list, t_fork_node *node)
 {
 	list->head = node;
 	list->tail = node;
 }
 
-static void	add_last_node(t_list *list, t_node *node)
+static void	add_last_fork_node(t_list *list, t_fork_node *node)
 {
 	list->tail->next = node;
 	list->tail = node;
@@ -37,12 +37,12 @@ static void	add_last_node(t_list *list, t_node *node)
 
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data)
 {
-	t_node	*node;
+	t_fork_node	*node;
 
-	node = init_node(ptr_list);
+	node = init_fork_node(ptr_list);
 	node->data = data;
 	if (list->head == NULL)
-		make_first_node(list, node);
+		make_first_fork_node(list, node);
 	else
-		add_last_node(list, node);
+		add_last_fork_node(list, node);
 }
