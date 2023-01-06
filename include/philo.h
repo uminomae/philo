@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 13:55:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:05:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ typedef struct s_pthread_node
 {
 	pthread_t				thread;
 	size_t					id;
-	long					time_fork;
-	long					time_eating;
-	long					time_sleeping;
-	long					time_thinking;
+	// long					time_fork;
+	// long					time_eating;
+	// long					time_sleeping;
+	// long					time_thinking;
 	long					time[4];
 	char					**status[5];
 	struct s_pthread_node	*next;
@@ -126,10 +126,11 @@ void	create_pthread(t_philo *ph);
 void	join_pthread(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
+// t_fork_node	*get_fork_node(t_list *list, size_t c);
 
 void	x_usleep_ms(size_t ms);
 
-void	*dining_philosophers(void *ptr);
+void	*dining_philosophers_in_thread(void *ptr);
 
 void	put_stamp(long time, size_t id, char *str);
 
