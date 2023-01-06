@@ -18,7 +18,6 @@ SRCS		:= 	ph_main.c \
 				ph_run_start_routine.c \
 				ph_libft.c \
 				ph_atoi.c \
-				ph_put.c \
 				ph_finish.c \
 				ph_free.c \
 

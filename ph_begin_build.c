@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 15:37:30 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:59:40 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	make_pthread_list(t_philo *ph)
 	}
 }
 
-static void	init_status_array(t_philo *ph)
+static void	strdup_status_array(t_philo *ph)
 {
 	//TODO free
 	ph->status[0] = x_strdup(&ph->alloc_list, TAKEN_FORK_STR);
@@ -68,7 +68,7 @@ void	build_struct_and_list(t_philo *ph, int argc, char **argv)
 	if (argc == 6)
 		ph->must_eat = TRUE;
 	argv_to_int(ph, argc, argv);
-	init_status_array(ph);
+	strdup_status_array(ph);
 	ph->sleep_seconds = ph->argv[4];
 	make_fork_list(ph);
 	make_pthread_list(ph);

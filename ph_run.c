@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_create_join_thread.c                            :+:      :+:    :+:   */
+/*   ph_run.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 15:27:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:54:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,29 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-//TODO 関数が失敗した場合
+static void create_and_run_pthread(t_philo *ph, t_pthread_node *node_th)
+{
+	int	ret;
+
+	ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
+	if (ret != 0)
+		process_error(ph);
+}
+
 void	run_parallel_process(t_philo *ph)
 {
 	size_t			i;
 	t_pthread_node	*node_th;
 	size_t			num_people;
-	int				ret;
 
 	num_people = ph->argv[1];
-	ret = 0;
 	i = 0;
+	get_start_time(ph);
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
 		node_th->id = i;
-		ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
-		if (ret != 0)
-			process_error(ph);
+		create_and_run_pthread(ph, node_th);
 		i++;
 	}
 	join_pthread(ph);

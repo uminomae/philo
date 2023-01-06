@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 15:35:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:05:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_philo
 	size_t					argv[6];
 	long					start_time;
 	size_t					id;
-	struct s_fork_list			fork_list;
+	struct s_fork_list		fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
@@ -102,7 +102,6 @@ typedef struct s_philo
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
 # define DIED_STR		"is died"
-
 
 # define FALSE		0
 # define TRUE		1
@@ -143,8 +142,8 @@ void	add_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
-void end_philo(t_philo *ph);
-int	exit_error(void);
+void	end_philo(t_philo *ph);
+int		exit_error(void);
 void	free_all(t_philo *ph);
 void	process_error(t_philo *ph);
 
