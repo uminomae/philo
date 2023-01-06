@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 14:10:20 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:22:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_list
 //すべての哲学者がnumber_of_times_each_philosopher_must_eat 回食べた場合、シミュレーションは停止します。
 typedef struct s_philo
 {
-	pthread_mutex_t			food_lock;
+	// pthread_mutex_t			food_lock;
 	long					sleep_seconds;
 	bool					must_eat;
 	size_t					argv[6];

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:17:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:21:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ void	*dining_philosophers_in_thread(void *ptr)
 	size_t			id;
 	t_list			*list_fork;
 
-	cnt = 0;
 	node_th = (t_pthread_node *)ptr;
 	list_fork = &node_th->ph->fork_list;
 	id = node_th->id;
+	cnt = 0;
 	while (1)
 	{
 		if (id == 1)
-			// usleep(40);←lower 後で考える。
 			x_usleep_ms(node_th->ph->sleep_seconds / 2);
+			// usleep(40);←lower 後で考える。
 		toggle_mutex_forks(TRUE, node_th, list_fork, id);
 		change_state_philosopher(EATING, node_th, node_th->ph->argv[3], id);
 		cnt++;
@@ -57,31 +57,3 @@ void	*dining_philosophers_in_thread(void *ptr)
 	}
 	return (NULL);
 }
-
-// static	void run_taken_fork(t_pthread_node *node_th, size_t id)
-// {
-// 	node_th->time_fork = get_time_milli_sec() - node_th->ph->start_time;
-// 	x_usleep_ms(0);
-// 	put_stamp(node_th->time_fork, id, TAKEN_FORK_STR);
-// }
-
-// static void	run_eating(t_pthread_node *node_th, size_t id)
-// {
-// 	node_th->time_eating = get_time_milli_sec() - node_th->ph->start_time;
-// 	x_usleep_ms(node_th->ph->argv[3]);
-// 	put_stamp(node_th->time_eating, id, EATING_STR);
-// }
-
-// static void	run_sleeping(t_pthread_node *node_th, size_t id)
-// {
-// 	node_th->time_sleeping = get_time_milli_sec() - node_th->ph->start_time;
-// 	x_usleep_ms(node_th->ph->argv[4]);
-// 	put_stamp(node_th->time_sleeping, id, SLEEPING_STR);
-// }
-
-// static void	run_thinking(t_pthread_node *node_th, size_t id)
-// {
-// 	node_th->time_thinking = get_time_milli_sec() - node_th->ph->start_time;
-// 	x_usleep_ms(0);
-// 	put_stamp(node_th->time_thinking, id, THINKING_STR);
-// }
