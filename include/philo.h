@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 14:22:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:24:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ typedef struct s_fork_node
 	struct s_fork_node	*next;
 }	t_fork_node;
 
-typedef struct s_list
+typedef struct s_fork_list
 {
 	struct s_fork_node	*head;
 	struct s_fork_node	*tail;
-}	t_list;
+}	t_fork_list;
 
 // program(s) should take the following arguments: 
 // [1]number_of_philosophers: 哲学者の数とフォークの数。
@@ -94,7 +94,7 @@ typedef struct s_philo
 	long					start_time;
 	// void					(*put_type[5])(size_t, long);
 	size_t					id;
-	struct s_list			fork_list;
+	struct s_fork_list			fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
@@ -126,7 +126,7 @@ void	create_pthread(t_philo *ph);
 void	join_pthread(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
-// t_fork_node	*get_fork_node(t_list *list, size_t c);
+// t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 
 void	x_usleep_ms(size_t ms);
 
@@ -140,10 +140,10 @@ int		ft_put_positivelong_fd(long n, int fd);
 int		ph_atoi(const char *str);
 char	*x_strdup(char *str);
 
-void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_list *list_fork, size_t id);
+void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
 void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
 
-void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
+void	add_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id);

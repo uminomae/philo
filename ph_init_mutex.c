@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:22:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:23:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static void	x_pthread_mutex_init(pthread_mutex_t *mutex)
 void	init_pthread_mutex(t_philo *ph)
 {
 	size_t	i;
-	size_t	num_philo;
+	size_t	num_people;
 	t_fork_node	*node_fork;
 
 	node_fork = ph->fork_list.head;
-	num_philo = ph->argv[1];
+	num_people = ph->argv[1];
 	// x_pthread_mutex_init(&ph->food_lock);
 	i = 0;
-	while (i < num_philo)
+	while (i < num_people)
 	{
 		x_pthread_mutex_init(&node_fork->mutex);
 		node_fork = node_fork->next;

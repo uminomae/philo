@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:21:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:24:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*dining_philosophers_in_thread(void *ptr)
 	t_pthread_node	*node_th;
 	size_t			cnt;
 	size_t			id;
-	t_list			*list_fork;
+	t_fork_list			*list_fork;
 
 	node_th = (t_pthread_node *)ptr;
 	list_fork = &node_th->ph->fork_list;
