@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:56:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 23:13:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static size_t	check_digit(int argc, char **argv)
 }
 
 //TODO　最終時　エラー処理
-bool	is_invalid_values(int argc, char **argv)
+bool	is_valid_values(int argc, char **argv)
 {
 	size_t ret;
 
 	if (argc < 5 || 6 < argc)
-		return (TRUE);
+		return (FALSE);
 	ret = check_digit(argc, argv);
 	if (ret == 1)
-		return (TRUE);
-	return (FALSE);
+		return (FALSE);
+	return (TRUE);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_start_routine.c                                 :+:      :+:    :+:   */
+/*   ph_run_start_routine.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:30:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 23:54:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,16 @@ static bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 
 void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id)
 {
-	node_th->time[i] = get_time_milli_sec() - node_th->ph->start_time;
-	x_usleep_ms(ms);
-	put_stamp(node_th->time[i], id, *node_th->status[i]);
+	long	ret;
+
+	ret = get_time_milli_sec();
+	if (ret < 0)
+		node_th->flag_err = TRUE;
+	node_th->time[i] = ret - node_th->ph->start_time;
+	if (x_usleep_ms(ms) < 0)
+		node_th->flag_err = TRUE;
+	if (put_stamp(node_th->time[i], id, *node_th->status[i]) < 0)
+		node_th->flag_err = TRUE;
 }
 
 void	*dining_philosophers_in_thread(void *ptr)

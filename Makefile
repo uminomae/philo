@@ -17,7 +17,7 @@ SRCS		:= 	ph_main.c \
 				ph_error_flag.c \
 				ph_error_check.c \
 				ph_list_malloc.c \
-				ph_run.c \
+				ph_run_parallel.c \
 				ph_run_start_routine.c \
 				ph_libft.c \
 				ph_atoi.c \

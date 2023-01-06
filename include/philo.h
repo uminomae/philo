@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 22:59:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 23:50:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ enum e_put_type {
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
-bool	is_invalid_values(int argc, char **argv);
+bool	is_valid_values(int argc, char **argv);
+
 void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_mutex(t_philo *ph);
 void	run_parallel_process(t_philo *ph);
@@ -129,11 +130,11 @@ int	x_usleep_ms(size_t ms);
 
 void	*dining_philosophers_in_thread(void *ptr);
 
-void	put_stamp(long time, size_t id, char *str);
+int		put_stamp(long time, size_t id, char *str);
 
 int		ft_isdigit(int c);
-void	ft_putstr_fd(char *s, int fd);
-int		ft_put_positivelong_fd(long n, int fd);
+// void	ft_putstr_fd(char *s, int fd);
+// int		ft_put_positivelong_fd(long n, int fd);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
