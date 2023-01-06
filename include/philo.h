@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 11:04:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 11:12:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ typedef struct s_philo
 }	t_philo;
 
 # define NL				"\n"
-# define TAKEN_FORK_STR	" has taken a fork"
-# define EATING_STR		" is eating"
-# define SLEEPING_STR	" is sleeping"
-# define THINKING_STR	" is thinking"
-# define DIED_STR		" is died"
+# define TAKEN_FORK_STR	"has taken a fork"
+# define EATING_STR		"is eating"
+# define SLEEPING_STR	"is sleeping"
+# define THINKING_STR	"is thinking"
+# define DIED_STR		"is died"
 
 # define FALSE		0
 # define TRUE		1
@@ -128,7 +128,7 @@ void	x_usleep_ms(size_t ms);
 
 void	*dining_philosophers(void *ptr);
 
-void	put_timestamp(t_philo *ph, long time, size_t id, size_t i);
+// void	put_timestamp(t_philo *ph, long time, size_t id, size_t i);
 void	put_stamp(long time, size_t id, char *str);
 
 int		ft_isdigit(int c);
@@ -136,11 +136,11 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_put_positivelong_fd(long n, int fd);
 int		ph_atoi(const char *str);
 
-void	put_taken_fork(size_t id, long time);
-void	put_eating(size_t id, long time);
-void	put_sleeping(size_t id, long time);
-void	put_thinking(size_t id, long time);
-void	put_died(size_t id, long time);
+// void	put_taken_fork(size_t id, long time);
+// void	put_eating(size_t id, long time);
+// void	put_sleeping(size_t id, long time);
+// void	put_thinking(size_t id, long time);
+// void	put_died(size_t id, long time);
 
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);

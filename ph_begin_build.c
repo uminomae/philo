@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 03:38:33 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 11:12:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static void	make_pthread_list(t_philo *ph)
 	}
 }
 
-static void	make_function_ptr_array(t_philo *ph)
-{
-	ph->put_type[TAKEN_FORK] = put_taken_fork;
-	ph->put_type[EATING] = put_eating;
-	ph->put_type[SLEEPING] = put_sleeping;
-	ph->put_type[THINKING] = put_thinking;
-	ph->put_type[DIED] = put_died;
-}
+// static void	make_function_ptr_array(t_philo *ph)
+// {
+// 	ph->put_type[TAKEN_FORK] = put_taken_fork;
+// 	ph->put_type[EATING] = put_eating;
+// 	ph->put_type[SLEEPING] = put_sleeping;
+// 	ph->put_type[THINKING] = put_thinking;
+// 	ph->put_type[DIED] = put_died;
+// }
 
 void	build_struct_and_list(t_philo *ph, int argc, char **argv)
 {
@@ -66,5 +66,5 @@ void	build_struct_and_list(t_philo *ph, int argc, char **argv)
 	ph->sleep_seconds = ph->argv[4];
 	make_fork_list(ph);
 	make_pthread_list(ph);
-	make_function_ptr_array(ph);
+	// make_function_ptr_array(ph);
 }

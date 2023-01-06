@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 11:04:47 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 11:11:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ void	*dining_philosophers(void *ptr)
 	{
 		id = node_th->id;
 		if (id == 1)
-			usleep(50);
-			// x_usleep_ms(node_th->ph->sleep_seconds);
+			// usleep(50);
+			x_usleep_ms(node_th->ph->sleep_seconds);
 		//taken_fork
 		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, TRUE);
 		//eating
 		node_th->time_eating = get_time_milli_sec() - node_th->ph->start_time;
 		x_usleep_ms(node_th->ph->argv[3]);
 		put_stamp(node_th->time_eating, id, EATING_STR);
-		// put_timestamp(node_th->ph, node_th->time_eating, id, EATING);
 		cnt++;
 		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, FALSE);
 		if (node_th->ph->must_eat == TRUE && node_th->ph->argv[5] == cnt){
@@ -47,10 +46,10 @@ void	*dining_philosophers(void *ptr)
 		//sleeping
 		node_th->time_sleeping = get_time_milli_sec() - node_th->ph->start_time;
 		x_usleep_ms(node_th->ph->argv[4]);
-		put_timestamp(node_th->ph, node_th->time_sleeping, id, SLEEPING);
+		put_stamp(node_th->time_sleeping, id, SLEEPING_STR);
 		//thinking
 		node_th->time_thinking = get_time_milli_sec() - node_th->ph->start_time;
-		put_timestamp(node_th->ph, node_th->time_thinking, id, THINKING);
+		put_stamp(node_th->time_thinking, id, THINKING_STR);
 	}
 	return (NULL);
 }
@@ -99,7 +98,7 @@ static void	toggle_mutex_forks(t_pthread_node *node_th, t_list *list, size_t id,
 		lock_mutex(node_fork);
 
 		node_th->time_fork = get_time_milli_sec() - node_th->ph->start_time;
-		put_timestamp(node_th->ph, node_th->time_fork, id, TAKEN_FORK);
+		put_stamp(node_th->time_fork, id, TAKEN_FORK_STR);
 
 		lock_mutex(node_fork->next);
 	}

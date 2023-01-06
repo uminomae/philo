@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 04:13:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 11:09:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	begin_philo(t_philo *ph, int argc, char **argv)
 	build_struct_and_list(ph, argc, argv);
 	// if (ph->argv[1] == 1)
 	// {
-	// 	put_timestamp(ph, time, 1, DIED);
+	// 	put_stamp(time, 1, DIED_STR);
 	// 	exit(0);
 	// }
 }
