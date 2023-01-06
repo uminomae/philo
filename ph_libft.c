@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 23:14:55 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 10:52:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:36:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,65 @@ int	ft_put_positivelong_fd(long n, int fd)
 	else
 		ft_put_positivelong_fd(n / 10, fd);
 	return (0);
+}
+
+
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*ucp_dst;
+	const unsigned char	*ucp_src;
+
+	ucp_dst = (unsigned char *)dst;
+	ucp_src = (const unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		ucp_dst[i] = ucp_src[i];
+		i++;
+	}
+	return (dst);
+}
+
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	len_src;
+
+	if (dst == NULL)
+		return (0);
+	len_src = ft_strlen(src);
+	if (len_src < dstsize)
+		ft_memcpy(dst, src, len_src + 1);
+	else if (0 < dstsize)
+	{
+		ft_memcpy(dst, src, dstsize - 1);
+		dst[dstsize - 1] = '\0';
+	}
+	return (len_src);
+}
+
+char	*ft_strdup(const char *src)
+{
+	char	*p_cpy;
+	size_t	len_src;
+
+	if (src == NULL)
+		return (NULL);
+	len_src = ft_strlen(src);
+	p_cpy = (char *) malloc(sizeof(char) * (len_src + 1));
+	if (p_cpy == NULL)
+		return (NULL);
+	ft_strlcpy(p_cpy, src, len_src + 1);
+	return (p_cpy);
+}
+
+char	*x_strdup(char *str)
+{
+	char	*ret;
+
+	ret = ft_strdup(str);
+	if (ret == NULL)
+		return (NULL);
+	return (ret);
 }

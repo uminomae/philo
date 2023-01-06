@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 11:12:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:46:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_pthread_node
 	long					time_eating;
 	long					time_sleeping;
 	long					time_thinking;
+	long					time[4];
+	char					**status[5];
 	struct s_pthread_node	*next;
 	struct s_philo			*ph;
 }	t_pthread_node;
@@ -90,11 +92,12 @@ typedef struct s_philo
 	bool					must_eat;
 	size_t					argv[6];
 	long					start_time;
-	void					(*put_type[5])(size_t, long);
+	// void					(*put_type[5])(size_t, long);
 	size_t					id;
 	struct s_list			fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
+	char					*status[5];
 }	t_philo;
 
 # define NL				"\n"
@@ -128,19 +131,16 @@ void	x_usleep_ms(size_t ms);
 
 void	*dining_philosophers(void *ptr);
 
-// void	put_timestamp(t_philo *ph, long time, size_t id, size_t i);
 void	put_stamp(long time, size_t id, char *str);
 
 int		ft_isdigit(int c);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_put_positivelong_fd(long n, int fd);
 int		ph_atoi(const char *str);
+char	*x_strdup(char *str);
 
-// void	put_taken_fork(size_t id, long time);
-// void	put_eating(size_t id, long time);
-// void	put_sleeping(size_t id, long time);
-// void	put_thinking(size_t id, long time);
-// void	put_died(size_t id, long time);
+void	toggle_mutex_forks(t_pthread_node *node_th, t_list *list_fork, size_t id, size_t flag);
+
 
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
