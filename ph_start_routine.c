@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:05:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:17:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,24 @@ void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t
 
 void	*dining_philosophers_in_thread(void *ptr)
 {
-	t_pthread_node *node_th;
-	size_t cnt;
-	size_t id;
+	t_pthread_node	*node_th;
+	size_t			cnt;
+	size_t			id;
+	t_list			*list_fork;
 
 	cnt = 0;
-	id = 0;
 	node_th = (t_pthread_node *)ptr;
+	list_fork = &node_th->ph->fork_list;
+	id = node_th->id;
 	while (1)
 	{
-		id = node_th->id;
 		if (id == 1)
 			// usleep(40);←lower 後で考える。
 			x_usleep_ms(node_th->ph->sleep_seconds / 2);
-		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, TRUE);
+		toggle_mutex_forks(TRUE, node_th, list_fork, id);
 		change_state_philosopher(EATING, node_th, node_th->ph->argv[3], id);
 		cnt++;
-		toggle_mutex_forks(node_th, &node_th->ph->fork_list, id, FALSE);
+		toggle_mutex_forks(FALSE, node_th, list_fork, id);
 		if (is_required_times_ate(node_th, cnt))
 			break;
 		change_state_philosopher(SLEEPING, node_th, node_th->ph->argv[4], id);
