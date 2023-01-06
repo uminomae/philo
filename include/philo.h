@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 13:46:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:55:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		ph_atoi(const char *str);
 char	*x_strdup(char *str);
 
 void	toggle_mutex_forks(t_pthread_node *node_th, t_list *list_fork, size_t id, size_t flag);
-
+void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
 
 void	add_list(t_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);

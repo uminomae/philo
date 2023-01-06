@@ -7,6 +7,7 @@ DFLAGS		:= -MMD -MP
 SRCS		:= 	ph_main.c \
 				ph_time.c \
 				ph_init_mutex.c \
+				ph_mutex_fork.c \
 				ph_begin.c \
 				ph_begin_check.c \
 				ph_begin_build.c \
