@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_list_fork.c                                     :+:      :+:    :+:   */
+/*   ph_begin_list_fork.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 16:07:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:53:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ static t_fork_node	*init_fork_node(t_ptr_list *ptr_list)
 	t_fork_node	*node;
 
 	node = (t_fork_node *)malloc_and_add_ptr_list(ptr_list, sizeof(t_fork_node));
-	node->data = 0;
-	node->next = NULL;
+	if (node == NULL)
+		return (NULL);
+	memset(node, 0, sizeof(t_fork_node));
+	// node->data = 0;
+	// node->flag_err = false;
+	// node->next = NULL;
 	return (node);
 }
 
@@ -35,14 +39,17 @@ static void	add_last_fork_node(t_fork_list *list, t_fork_node *node)
 	node->next = list->head;
 }
 
-void	add_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data)
+size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data)
 {
 	t_fork_node	*node;
 
 	node = init_fork_node(ptr_list);
+	if (node == NULL)
+		return (1);
 	node->data = data;
 	if (list->head == NULL)
 		make_first_fork_node(list, node);
 	else
 		add_last_fork_node(list, node);
+	return (0);
 }

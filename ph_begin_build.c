@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 15:59:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,52 @@ static void	argv_to_int(t_philo *ph, int argc, char **argv)
 	{
 		ret = ph_atoi(argv[i]);
 		if (ret == -1)
-			process_error(ph);
+			get_err_flag(ph);
 		ph->argv[i] = (size_t)ret;
 		i++;
 	}
 }
 
+// err どのリストでflag立てるか？
 static void	make_fork_list(t_philo *ph)
 {
 	size_t	id_fork;
+	size_t	ret;
 
 	id_fork = 0;
 	while (id_fork < ph->argv[1])
 	{
-		add_list(&ph->fork_list, &ph->alloc_list, id_fork);
+		ret = add_fork_list(&ph->fork_list, &ph->alloc_list, id_fork);
+		if (ret == 1)
+		{
+			ph->flag_err = TRUE;
+			return ;
+		}
 		id_fork++;
 	}
 }
 
 static void	make_pthread_list(t_philo *ph)
 {
-	size_t	id;	
+	size_t	id;
+	size_t	ret;
 
 	id = 0;
 	while (id < ph->argv[1])
 	{
-		add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id);
+		ret = add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id);
+		if (ret == 1)
+		{
+			ph->flag_err = TRUE;
+			return ;
+		}
 		id++;
 	}
 }
 
 static void	strdup_status_array(t_philo *ph)
 {
-	//TODO free
+	//TODO leak check
 	ph->status[0] = x_strdup(&ph->alloc_list, TAKEN_FORK_STR);
 	ph->status[1] = x_strdup(&ph->alloc_list, EATING_STR);
 	ph->status[2] = x_strdup(&ph->alloc_list, SLEEPING_STR);

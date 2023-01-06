@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin.c                                         :+:      :+:    :+:   */
+/*   ph_error_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/06 22:54:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_struct_philo(t_philo *ph)
+void	check_error_list_fork(t_philo *ph)
 {
-	memset(ph, 0, sizeof(t_philo));
+	t_fork_node	*node_fork;
+	size_t	i;
+
+	node_fork = ph->fork_list.head;
+	i = 0;
+	while (i < ph->id)
+	{
+		if (node_fork->flag_err == TRUE)
+		{
+			ph->flag_err = TRUE;
+			return ;
+		}
+		node_fork = node_fork->next;
+		i++;
+	}
+	return ;
 }
 
-// TODO 人数1名の時の処理
-void	begin_philo(t_philo *ph, int argc, char **argv)
+bool	is_error(t_philo *ph)
 {
-	size_t ret;
-
-	ret = check_valid_values(argc, argv);
-	if (ret == 1)
-		get_err_flag(ph);
-	init_struct_philo(ph);
-	build_struct_and_list(ph, argc, argv);
-	// if (ph->argv[1] == 1)
-	// {
-	// 	put_stamp(time, 1, DIED_STR);
-	// 	exit(0);
-	// }
+	check_error_list_fork(ph);
+	if (ph->flag_err == TRUE)
+		return (TRUE);
+	return (FALSE);
 }

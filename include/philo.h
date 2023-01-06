@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 21:29:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:46:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 typedef struct s_ptr_node
 {
 	void				*ptr;
+	bool				flag_err;
 	struct s_ptr_node	*next;
 }	t_ptr_node;
 
@@ -64,8 +65,9 @@ typedef struct s_pthread_list
 
 typedef struct s_fork_node
 {
-	size_t			data;
-	pthread_mutex_t	mutex;
+	size_t				data;
+	pthread_mutex_t		mutex;
+	bool				flag_err;
 	struct s_fork_node	*next;
 }	t_fork_node;
 
@@ -102,7 +104,6 @@ typedef struct s_philo
 # define SLEEPING_STR	"is sleeping"
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
-# define DIED_STR		"is died"
 
 # define FALSE		0
 # define TRUE		1
@@ -117,7 +118,7 @@ enum e_put_type {
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
-void	check_valid_values(int argc, char **argv);
+size_t	check_valid_values(int argc, char **argv);
 void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_mutex(t_philo *ph);
 void	run_parallel_process(t_philo *ph);
@@ -139,15 +140,19 @@ char	*x_strdup(t_ptr_list *list, char *str);
 void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
 void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
 
-void	add_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
-void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
+size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
+size_t	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
 void	end_philo(t_philo *ph);
-int		exit_error(void);
+// int		exit_error(void);
 void	free_all(t_philo *ph);
-void	process_error(t_philo *ph);
-void	process_error_node_th(t_pthread_node *node);
 
+void	get_err_flag(t_philo *ph);
+void	get_err_flag_node_th(t_pthread_node *node);
+void	get_err_flag_node_fork(t_fork_node *node);
+void	get_err_flag_node_ptr(t_ptr_node *node);
+
+bool	is_error(t_philo *ph);
 
 #endif

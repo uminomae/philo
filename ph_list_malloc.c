@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/04 00:43:46 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ static void	add_ptr_list(t_ptr_list *ptr_list, void *ptr)
 
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
 {
-	void	*ret;
+	void	*ptr;
 
 	(void)ptr_list;
-	ret = malloc(size);
-	if (ret == NULL)
-		exit(1);
-	add_ptr_list(ptr_list, ret);
-	return (ret);
+	ptr = malloc(size);
+	if (ptr == NULL)
+	{
+		get_err_flag_node_ptr(ptr);
+		return (NULL);
+	}
+	add_ptr_list(ptr_list, ptr);
+	return (ptr);
 }

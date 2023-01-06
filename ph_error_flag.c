@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin.c                                         :+:      :+:    :+:   */
+/*   ph_error_flag.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
+/*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
 /*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_struct_philo(t_philo *ph)
+void	get_err_flag(t_philo *ph)
 {
-	memset(ph, 0, sizeof(t_philo));
+	ph->flag_err = TRUE;
 }
 
-// TODO 人数1名の時の処理
-void	begin_philo(t_philo *ph, int argc, char **argv)
+void	get_err_flag_node_th(t_pthread_node *node)
 {
-	size_t ret;
+	node->flag_err = TRUE;
+}
 
-	ret = check_valid_values(argc, argv);
-	if (ret == 1)
-		get_err_flag(ph);
-	init_struct_philo(ph);
-	build_struct_and_list(ph, argc, argv);
-	// if (ph->argv[1] == 1)
-	// {
-	// 	put_stamp(time, 1, DIED_STR);
-	// 	exit(0);
-	// }
+void	get_err_flag_node_fork(t_fork_node *node)
+{
+	node->flag_err = TRUE;
+}
+
+void	get_err_flag_node_ptr(t_ptr_node *node)
+{
+	node->flag_err = TRUE;
 }

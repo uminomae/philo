@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 21:29:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	lock_mutex(t_fork_node *node)
 	ret = pthread_mutex_lock(&node->mutex);
 	// ret = 1;
 	if (ret != 0)
-		process_error_node_th(node);
+		get_err_flag_node_fork(node);
 }
 
 //TODO err
@@ -30,7 +30,7 @@ static void	unlock_mutex(t_fork_node *node)
 
 	ret = pthread_mutex_unlock(&node->mutex);
 	if (ret != 0)
-		process_error_node_th(node);
+		get_err_flag_node_fork(node);
 }
 
 static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)

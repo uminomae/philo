@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 02:39:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:31:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	check_digit(int argc, char **argv)
+static size_t	check_digit(int argc, char **argv)
 {
 	int	i;
 	int	j;
@@ -24,16 +24,23 @@ static void	check_digit(int argc, char **argv)
 		while (argv[i][j] != '\0')
 		{
 			if (ft_isdigit(argv[i][j]) == 0)
-				exit(1);
+				return (1);
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	check_valid_values(int argc, char **argv)
+//TODO　最終時　エラー処理
+size_t	check_valid_values(int argc, char **argv)
 {
+	size_t ret;
+
 	if (argc < 5 || 6 < argc)
-		exit(1);
-	check_digit(argc, argv);
+		return (1);
+	ret = check_digit(argc, argv);
+	if (ret == 1)
+		return (1);
+	return (0);
 }
