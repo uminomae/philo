@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 22:46:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:59:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ enum e_put_type {
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
-size_t	check_valid_values(int argc, char **argv);
+bool	is_invalid_values(int argc, char **argv);
 void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_mutex(t_philo *ph);
 void	run_parallel_process(t_philo *ph);

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:54:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 22:59:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static t_pthread_node	*init_pthread_node(t_ptr_list *ptr_list)
 	if (node == NULL)
 		return (NULL);
 	memset(node, 0, sizeof(t_pthread_node));
-	// node->flag_err = false;
-	// node->next = NULL;
 	return (node);
 }
 
