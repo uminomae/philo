@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 15:54:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:32:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	join_pthread(t_philo *ph)
 		node_th = get_pthread_node(&ph->thread_list, i);
 		ret = pthread_join(node_th->thread, NULL);
 		if (ret != 0)
-			process_error(ph);
+			process_error_node_th(node_th);
 		i++;
 	}
 }
@@ -52,8 +52,9 @@ static void create_and_run_pthread(t_philo *ph, t_pthread_node *node_th)
 	int	ret;
 
 	ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
+	ret = 1;
 	if (ret != 0)
-		process_error(ph);
+		process_error_node_th(node_th);
 }
 
 void	run_parallel_process(t_philo *ph)

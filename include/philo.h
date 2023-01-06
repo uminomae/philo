@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 16:05:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:29:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_pthread_node
 	char					**status[5];
 	struct s_pthread_node	*next;
 	struct s_philo			*ph;
+	bool					flag_err;
 }	t_pthread_node;
 
 typedef struct s_pthread_list
@@ -123,7 +124,7 @@ void	run_parallel_process(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
 
-void	x_usleep_ms(size_t ms);
+int	x_usleep_ms(size_t ms);
 
 void	*dining_philosophers_in_thread(void *ptr);
 
@@ -146,6 +147,7 @@ void	end_philo(t_philo *ph);
 int		exit_error(void);
 void	free_all(t_philo *ph);
 void	process_error(t_philo *ph);
+void	process_error_node_th(t_pthread_node *node);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 16:06:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:29:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	get_start_time(t_philo *ph)
 }
 
 // TODO　err処理
-void	x_usleep_ms(size_t ms)
+int	x_usleep_ms(size_t ms)
 {
 	int	ret;
 	ret = usleep(ms * 1000);
 	if (ret != 0)
-		return (1);
+		return (ret);
+	return (0);
 }

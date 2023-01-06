@@ -18,7 +18,7 @@ static t_pthread_node	*init_pthread_node(t_ptr_list *ptr_list)
 
 	node = (t_pthread_node *)malloc_and_add_ptr_list(ptr_list, \
 				sizeof(t_pthread_node));
-	node->thread = NULL;
+	// node->thread = NULL;
 	node->next = NULL;
 	return (node);
 }

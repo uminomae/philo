@@ -6,28 +6,31 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:24:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:29:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+//TODO err
 static void	lock_mutex(t_fork_node *node)
 {
 	int	ret;
 
 	ret = pthread_mutex_lock(&node->mutex);
+	// ret = 1;
 	if (ret != 0)
-		exit(1);
+		process_error_node_th(node);
 }
 
+//TODO err
 static void	unlock_mutex(t_fork_node *node)
 {
 	int	ret;
 
 	ret = pthread_mutex_unlock(&node->mutex);
 	if (ret != 0)
-		exit(1);
+		process_error_node_th(node);
 }
 
 static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)

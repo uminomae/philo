@@ -31,31 +31,31 @@ static size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	size_t	len_s;
+// void	ft_putstr_fd(char *s, int fd)
+// {
+// 	size_t	len_s;
 
-	if (s == NULL)
-		return ;
-	len_s = ft_strlen(s);
-	write(fd, s, len_s);
-}
+// 	if (s == NULL)
+// 		return ;
+// 	len_s = ft_strlen(s);
+// 	write(fd, s, len_s);
+// }
 
-int	ft_put_positivelong_fd(long n, int fd)
-{
-	char	c;
+// int	ft_put_positivelong_fd(long n, int fd)
+// {
+// 	char	c;
 	
-	if (n < 0)
-		return (-1);
-	if (0 <= n && n <= 9)
-	{
-		c = n % 10 + '0';
-		write(fd, &c, 1);
-	}
-	else
-		ft_put_positivelong_fd(n / 10, fd);
-	return (0);
-}
+// 	if (n < 0)
+// 		return (-1);
+// 	if (0 <= n && n <= 9)
+// 	{
+// 		c = n % 10 + '0';
+// 		write(fd, &c, 1);
+// 	}
+// 	else
+// 		ft_put_positivelong_fd(n / 10, fd);
+// 	return (0);
+// }
 
 
 static void	*ft_memcpy(void *dst, const void *src, size_t n)
