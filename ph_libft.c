@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 23:14:55 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 13:36:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:34:31 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (len_src);
 }
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(t_ptr_list *list, const char *src)
 {
 	char	*p_cpy;
 	size_t	len_src;
@@ -101,18 +101,18 @@ char	*ft_strdup(const char *src)
 	if (src == NULL)
 		return (NULL);
 	len_src = ft_strlen(src);
-	p_cpy = (char *) malloc(sizeof(char) * (len_src + 1));
+	p_cpy = (char *) malloc_and_add_ptr_list(list, sizeof(char) * (len_src + 1));
 	if (p_cpy == NULL)
 		return (NULL);
 	ft_strlcpy(p_cpy, src, len_src + 1);
 	return (p_cpy);
 }
 
-char	*x_strdup(char *str)
+char	*x_strdup(t_ptr_list *list, char *str)
 {
 	char	*ret;
 
-	ret = ft_strdup(str);
+	ret = ft_strdup(list, str);
 	if (ret == NULL)
 		return (NULL);
 	return (ret);

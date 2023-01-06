@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_init_mutex.c                                    :+:      :+:    :+:   */
+/*   ph_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:32:34 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/06 15:11:49 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/06 15:13:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	x_pthread_mutex_init(pthread_mutex_t *mutex)
+void	free_alloc_ptr(t_philo *ph)
 {
-	int ret;
+	t_ptr_node	*node;
 
-	ret = pthread_mutex_init(mutex, NULL);
-	if (ret != 0)
-		exit(1);
+	node = ph->alloc_list.head;
+	while (node != NULL)
+	{
+		free(node->ptr);
+		node = node->next;
+	}
 }
 
-void	init_mutex(t_philo *ph)
+void	free_alloc_list_node(t_philo *ph)
 {
-	size_t	i;
-	size_t	num_people;
-	t_fork_node	*node_fork;
+	t_ptr_node	*node;
+	t_ptr_node	*tmp;
 
-	node_fork = ph->fork_list.head;
-	num_people = ph->argv[1];
-	i = 0;
-	while (i < num_people)
+	node = ph->alloc_list.head;
+	while (node != NULL)
 	{
-		x_pthread_mutex_init(&node_fork->mutex);
-		node_fork = node_fork->next;
-		i++;
+		tmp = node;
+		node = node->next;
+		free(tmp);
 	}
+}
+
+void	free_all(t_philo *ph)
+{
+	free_alloc_ptr(ph);
+	free_alloc_list_node(ph);
 }

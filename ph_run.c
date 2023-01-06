@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_thread.c                                        :+:      :+:    :+:   */
+/*   ph_create_join_thread.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:01:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:27:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
+static t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
 {
 	size_t			i;
 	t_pthread_node	*node_th;
@@ -27,41 +27,45 @@ t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
 	return (node_th);
 }
 
-void	create_pthread(t_philo *ph)
+//TODO 関数が失敗した場合　manで確認する
+static void	join_pthread(t_philo *ph)
 {
 	size_t			i;
-	size_t			num_philo;
+	size_t			num_people;
 	int				ret;
 	t_pthread_node	*node_th;
 
-	num_philo = ph->argv[1];
+	num_people = ph->argv[1];
 	i = 0;
-	while (i < num_philo)
+	while (i < num_people)
+	{
+		node_th = get_pthread_node(&ph->thread_list, i);
+		ret = pthread_join(node_th->thread, NULL);
+		if (ret != 0)
+			process_error(ph);
+		i++;
+	}
+}
+
+//TODO 関数が失敗した場合
+void	run_parallel_process(t_philo *ph)
+{
+	size_t			i;
+	t_pthread_node	*node_th;
+	size_t			num_people;
+	int				ret;
+
+	num_people = ph->argv[1];
+	ret = 0;
+	i = 0;
+	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
 		node_th->id = i;
 		ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
 		if (ret != 0)
-			exit(1);
+			process_error(ph);
 		i++;
 	}
-}
-
-void	join_pthread(t_philo *ph)
-{
-	size_t			i;
-	size_t			num_philo;
-	int				ret;
-	t_pthread_node	*node_th;
-
-	num_philo = ph->argv[1];
-	i = 0;
-	while (i < num_philo)
-	{
-		node_th = get_pthread_node(&ph->thread_list, i);
-		ret = pthread_join(node_th->thread, NULL);
-		if (ret != 0)
-			exit(1);
-		i++;
-	}
+	join_pthread(ph);
 }

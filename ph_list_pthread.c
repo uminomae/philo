@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_list_thread.c                                   :+:      :+:    :+:   */
+/*   ph_list_pthread.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 13:45:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:47:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,29 @@ static void	add_last_pthread_node(t_pthread_list *list, t_pthread_node *node)
 	node->next = list->head;
 }
 
-void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
+void set_status_to_thread_list(t_philo *ph, t_pthread_node *node)
 {
-	t_pthread_node	*node;
 	size_t	i;
-	size_t	n;
 
-	node = init_pthread_node(ptr_list);
-	node->id = id;
-	node->ph = ph;
 	i = 0;
-	n = 5;
-	while (i < n)
+	while (i < PUT_TYPE_END)
 	{
 		node->status[i] = &ph->status[i];
 		i++;
 	}
+}
+
+void	add_pthread_list( \
+			t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
+{
+	t_pthread_node	*node_th;
+
+	node_th = init_pthread_node(ptr_list);
+	node_th->id = id;
+	node_th->ph = ph;
+	set_status_to_thread_list(ph, node_th);
 	if (list->head == NULL)
-		make_first_pthread_node(list, node);
+		make_first_pthread_node(list, node_th);
 	else
-		add_last_pthread_node(list, node);
-	// puts("b");
+		add_last_pthread_node(list, node_th);
 }

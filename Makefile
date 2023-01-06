@@ -11,15 +11,16 @@ SRCS		:= 	ph_main.c \
 				ph_begin.c \
 				ph_begin_check.c \
 				ph_begin_build.c \
-				ph_list.c \
-				ph_list_thread.c \
+				ph_list_fork.c \
+				ph_list_pthread.c \
 				ph_list_malloc.c \
-				ph_thread.c \
-				ph_start_routine.c \
-				ph_put.c \
-				ph_atoi.c \
+				ph_run.c \
+				ph_run_start_routine.c \
 				ph_libft.c \
+				ph_atoi.c \
+				ph_put.c \
 				ph_finish.c \
+				ph_free.c \
 
 # B_SRCS	:= 
 

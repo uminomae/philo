@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/06 14:24:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:35:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@ typedef struct s_pthread_node
 {
 	pthread_t				thread;
 	size_t					id;
-	// long					time_fork;
-	// long					time_eating;
-	// long					time_sleeping;
-	// long					time_thinking;
 	long					time[4];
 	char					**status[5];
 	struct s_pthread_node	*next;
@@ -87,12 +83,11 @@ typedef struct s_fork_list
 //すべての哲学者がnumber_of_times_each_philosopher_must_eat 回食べた場合、シミュレーションは停止します。
 typedef struct s_philo
 {
-	// pthread_mutex_t			food_lock;
 	long					sleep_seconds;
 	bool					must_eat;
+	bool					flag_err;
 	size_t					argv[6];
 	long					start_time;
-	// void					(*put_type[5])(size_t, long);
 	size_t					id;
 	struct s_fork_list			fork_list;
 	struct s_pthread_list	thread_list;
@@ -106,6 +101,8 @@ typedef struct s_philo
 # define SLEEPING_STR	"is sleeping"
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
+# define DIED_STR		"is died"
+
 
 # define FALSE		0
 # define TRUE		1
@@ -116,17 +113,16 @@ enum e_put_type {
 	SLEEPING,
 	THINKING,
 	DIED,
+	PUT_TYPE_END,
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
 void	check_valid_values(int argc, char **argv);
 void	build_struct_and_list(t_philo *ph, int argc, char **argv);
-void	init_pthread_mutex(t_philo *ph);
-void	create_pthread(t_philo *ph);
-void	join_pthread(t_philo *ph);
+void	init_mutex(t_philo *ph);
+void	run_parallel_process(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
-// t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 
 void	x_usleep_ms(size_t ms);
 
@@ -138,7 +134,7 @@ int		ft_isdigit(int c);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_put_positivelong_fd(long n, int fd);
 int		ph_atoi(const char *str);
-char	*x_strdup(char *str);
+char	*x_strdup(t_ptr_list *list, char *str);
 
 void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
 void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
@@ -146,9 +142,11 @@ void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t
 void	add_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 void	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
-t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id);
 
+void end_philo(t_philo *ph);
 int	exit_error(void);
+void	free_all(t_philo *ph);
+void	process_error(t_philo *ph);
 
 
 #endif
