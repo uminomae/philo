@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin.c                                         :+:      :+:    :+:   */
+/*   ph_finish.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 04:13:32 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/06 10:52:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_struct_philo(t_philo *ph)
+int	exit_error(void)
 {
-	memset(ph, 0, sizeof(t_philo));
-}
-
-void	begin_philo(t_philo *ph, int argc, char **argv)
-{
-	check_valid_values(argc, argv);
-	init_struct_philo(ph);
-	build_struct_and_list(ph, argc, argv);
-	// if (ph->argv[1] == 1)
-	// {
-	// 	put_timestamp(ph, time, 1, DIED);
-	// 	exit(0);
-	// }
+	return (-1);
 }

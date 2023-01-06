@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 03:48:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 04:09:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 	
 	create_pthread(&ph);
 	join_pthread(&ph);
-	// put_timestamp(&ph, 1, 0);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 03:40:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 04:09:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
 	i = 0;
 	while (i < id)
 	{
-		// printf("---a id %zu\n", id);
-		// puts("d");
 		node_th = node_th->next;
 		i++;
 	}
@@ -42,10 +40,7 @@ void	create_pthread(t_philo *ph)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
 		node_th->id = i;
-		// printf ("---b1 %zu\n", i);
-		// printf ("---b %zu id %zu\n", node_th->id, i);
 		ret = pthread_create(&node_th->thread, NULL, dining_philosophers, node_th);
-		// puts("c");
 		if (ret != 0)
 			exit(1);
 		i++;

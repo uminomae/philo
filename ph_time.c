@@ -6,15 +6,21 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 02:48:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 11:04:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	put_timestamp(t_philo *ph, size_t id, size_t i)
+void	put_timestamp(t_philo *ph, long time, size_t id, size_t i)
 {
-	ph->put_type[i](id);
+	ph->put_type[i](id, time);
+	// printf("%ld %zu%s\n", time, id, TAKEN_FORK_STR);
+}
+
+void	put_stamp(long time, size_t id, char *str)
+{
+	printf("%ld %zu%s\n", time, id, str);
 }
 
 long	get_time_milli_sec(void)

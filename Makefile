@@ -18,6 +18,7 @@ SRCS		:= 	ph_main.c \
 				ph_put.c \
 				ph_atoi.c \
 				ph_libft.c \
+				ph_finish.c \
 
 # B_SRCS	:= 
 
@@ -92,7 +93,7 @@ sani2: re
 # gcc -fsanitize=thread *.c
 run: 
 	make
-	./philo 5 300 100 100 3
+	./philo 5 300 100 100 2
 #	./philo 200 410 200 200
 #	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
