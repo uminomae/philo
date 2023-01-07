@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 19:51:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 20:41:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 
 static bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 {
-	// if (node_th->must_eat == TRUE && node_th->argv[5] == cnt)
-	if (node_th->flag_must_eat == TRUE && node_th->times_must_eat >= cnt)
+	if (node_th->flag_must_eat == TRUE && node_th->times_must_eat == cnt)
 		return (TRUE);
 	return (false);
 }
 
-void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id)
+void	change_state_and_putstamp(size_t i, t_pthread_node *node_th, long ms, size_t id)
 {
 	long	ret;
 
@@ -41,7 +40,7 @@ void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t
 void	run_case1()
 {
 	//gettimeofday入れる
-	usleep(1000);
+	usleep(100);
 	// usleep(40);←lower 後で考える。
 	// if (x_usleep_ms(node_th->ph->sleep_seconds / 2) < 0)
 	// 	node_th->flag_err = TRUE;
@@ -55,46 +54,40 @@ void	*dining_philosophers_in_thread(void *ptr)
 	t_pthread_node	*node_th;
 	size_t			cnt;
 	size_t			id;
-	t_fork_list		*list_fork;
 	t_fork_node		*node_fork;
 
 	node_th = (t_pthread_node *)ptr;
-	list_fork = &node_th->ph->fork_list;
 	id = node_th->id;
 	cnt = 0;
-	node_fork = get_fork_node(list_fork, id);
+	node_fork = get_fork_node(&node_th->ph->fork_list, id);
 	while (1)
 	{
 		if (id == 1)
 			run_case1();
-		toggle_mutex_forks(LOCK, node_fork);
-		// lock_mutex_monitor(&node_th->ph->monitor);
-
-		printf("-------------%zu-----a\n", node_th->ph->monitor.ate_cnt);
+		toggle_mutex(LOCK, &node_th->ph->monitor, node_fork);
+		//切り分ける----------------//
 		if (node_th->ph->monitor.ate_all == TRUE)
-			break;
-
-		change_state_philosopher(TAKEN_FORK, node_th, 0, id);
-		change_state_philosopher(EATING, node_th, node_th->ph->argv[3], id);
-		cnt++;
-
-		if (is_required_times_ate(node_th, cnt))
 		{
-			node_th->ph->monitor.ate_cnt++;
+			toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
 			break;
 		}
-			if (node_th->ph->monitor.ate_cnt >= id)
-			{
-				node_th->ph->monitor.ate_all = TRUE;
-				break;
-			}
-		
-		// unlock_mutex_monitor(&node_th->ph->monitor);
-		toggle_mutex_forks(UNLOCK, node_fork);
-
-		change_state_philosopher(SLEEPING, node_th, node_th->ph->argv[4], id);
-		change_state_philosopher(THINKING, node_th, 0, id);
+		//----------------//
+		change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
+		change_state_and_putstamp(EATING, node_th, node_th->ph->argv[3], id);
+		cnt++;
+		if (is_required_times_ate(node_th, cnt))
+			node_th->ph->monitor.ate_cnt++;
+		//切り分ける
+		if (node_th->ph->monitor.ate_cnt == node_th->ph->argv[1])
+		{
+			node_th->ph->monitor.ate_all = TRUE;
+			toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
+			break;
+		}
+		//----------------//
+		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
+		change_state_and_putstamp(SLEEPING, node_th, node_th->ph->argv[4], id);
+		change_state_and_putstamp(THINKING, node_th, 0, id);
 	}
-	destroy_mutex(node_th->ph);
 	return (NULL);
 }

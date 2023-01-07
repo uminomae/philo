@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/07 19:45:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 20:41:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,13 @@ int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
-void	toggle_mutex_forks(size_t flag, t_fork_node *node_fork);
-// void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork);
 
-// void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
-void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
+// void	toggle_mutex(size_t flag, t_fork_node *node_fork);
+// void	toggle_mutex(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+
+// void	toggle_mutex(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
+void	change_state_and_putstamp(size_t i, t_pthread_node *node_th, long ms, size_t id);
 
 size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id);

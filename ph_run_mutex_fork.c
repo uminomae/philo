@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 19:34:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 20:39:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,19 @@ t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 }
 
 // //unlock_mutex(node_fork->next);を先にしている
-void	toggle_mutex_forks(size_t flag, t_fork_node *node_fork)
-// void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id)
+// void	toggle_mutex(size_t flag, t_fork_node *node_fork)
+void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork)
 {
 
 	if (flag == LOCK)
 	{
 		lock_mutex(node_fork);
 		lock_mutex(node_fork->next);
+		lock_mutex_monitor(monitor);
 	}
 	else if (flag == UNLOCK)
 	{
+		unlock_mutex_monitor(monitor);
 		unlock_mutex(node_fork->next);
 		unlock_mutex(node_fork);
 	}
