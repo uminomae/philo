@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/07 17:15:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:45:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,6 @@ typedef struct s_ptr_list
 	struct s_ptr_node	*tail;
 }	t_ptr_list;
 
-typedef struct s_pthread_node
-{
-	pthread_t				thread;
-	size_t					id;
-	long					time[4];
-	char					**status[5];
-	struct s_pthread_node	*next;
-	struct s_philo			*ph;
-	bool					flag_err;
-	long					start_time;
-	bool					flag_must_eat;
-	size_t					times_must_eat;
-	bool					ate;
-}	t_pthread_node;
-
-typedef struct s_pthread_list
-{
-	struct s_pthread_node	*head;
-	struct s_pthread_node	*tail;
-}	t_pthread_list;
-
 typedef struct s_fork_node
 {
 	size_t				data;
@@ -80,6 +59,41 @@ typedef struct s_fork_list
 	struct s_fork_node	*head;
 	struct s_fork_node	*tail;
 }	t_fork_list;
+
+typedef struct s_pthread_node
+{
+	pthread_t				thread;
+	size_t					id;
+	long					time[4];
+	char					**status[5];
+	struct s_pthread_node	*next;
+	struct s_philo			*ph;
+	bool					flag_err;
+	long					start_time;
+	bool					flag_must_eat;
+	size_t					times_must_eat;
+	bool					ate;
+
+}	t_pthread_node;
+
+typedef struct s_pthread_list
+{
+	struct s_pthread_node	*head;
+	struct s_pthread_node	*tail;
+}	t_pthread_list;
+
+typedef struct s_monitor
+{
+	// pthread_t				thread;
+	pthread_mutex_t			mutex;
+	// char					**status[5];
+	struct s_philo			*ph;
+	bool					flag_err;
+	// long					start_time;
+	// bool					flag_must_eat;
+	size_t					ate_cnt;
+	bool					ate_all;
+}	t_monitor;
 
 // program(s) should take the following arguments: 
 // [1]number_of_philosophers: 哲学者の数とフォークの数。
@@ -99,7 +113,9 @@ typedef struct s_philo
 	struct s_fork_list		fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
+	struct s_monitor		monitor;
 	char					*status[5];
+	bool					ate_all;
 }	t_philo;
 
 # define NL				"\n"
@@ -111,6 +127,8 @@ typedef struct s_philo
 
 # define FALSE		0
 # define TRUE		1
+# define LOCK		1
+# define UNLOCK		0
 
 enum e_put_type {
 	TAKEN_FORK = 0,
@@ -142,7 +160,8 @@ int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
-void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+void	toggle_mutex_forks(size_t flag, t_fork_node *node_fork);
+// void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
 
 // void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id);
 void	change_state_philosopher(size_t i, t_pthread_node *node_th, long ms, size_t id);
@@ -159,9 +178,19 @@ void	get_err_flag(t_philo *ph);
 void	get_err_flag_node_th(t_pthread_node *node);
 void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
+void	get_err_flag_monitor(t_monitor *node);
 
 bool	is_error(t_philo *ph);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
+// void	*monitor_in_thread(void *ptr);
+// bool	is_ate_all(t_philo *ph);
+
+void	lock_mutex(t_fork_node *node);
+void	unlock_mutex(t_fork_node *node);
+void	lock_mutex_monitor(t_monitor *monitor);
+void	unlock_mutex_monitor(t_monitor *monitor);
+
+void	destroy_mutex(t_philo *ph);
 
 #endif

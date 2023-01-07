@@ -6,33 +6,56 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 14:32:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:51:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	x_pthread_mutex_init(pthread_mutex_t *mutex)
+// err
+static void	x_pthread_mutex_init(t_philo *ph, pthread_mutex_t *mutex)
 {
 	int ret;
 
 	ret = pthread_mutex_init(mutex, NULL);
 	if (ret != 0)
-		exit(1);
+		get_err_flag(ph);
 }
 
 void	init_mutex(t_philo *ph)
 {
 	size_t	i;
 	size_t	num_people;
-	t_fork_node	*node_fork;
+	t_fork_node	*node_fork;	
 
 	node_fork = ph->fork_list.head;
 	num_people = ph->argv[1];
+	x_pthread_mutex_init(ph, &ph->monitor.mutex);
 	i = 0;
 	while (i < num_people)
 	{
-		x_pthread_mutex_init(&node_fork->mutex);
+		x_pthread_mutex_init(ph, &node_fork->mutex);
+		node_fork = node_fork->next;
+		i++;
+	}
+}
+
+//TODO
+void	destroy_mutex(t_philo *ph)
+{
+	size_t	i;
+	size_t	num_people;
+	t_fork_node	*node_fork;	
+
+	node_fork = ph->fork_list.head;
+	num_people = ph->argv[1];
+	// x_pthread_mutex_init(ph, &ph->monitor.mutex);
+	pthread_mutex_destroy(&ph->monitor.mutex);
+	i = 0;
+	while (i < num_people)
+	{
+		// x_pthread_mutex_init(ph, &node_fork->mutex);
+		pthread_mutex_destroy(&node_fork->mutex);
 		node_fork = node_fork->next;
 		i++;
 	}

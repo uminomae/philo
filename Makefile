@@ -18,7 +18,8 @@ SRCS		:= 	ph_main.c \
 				ph_list_malloc.c \
 				ph_run_mutex_fork.c \
 				ph_run_parallel.c \
-				ph_run_start_routine.c \
+				ph_run_philo.c \
+				ph_run_monitor.c \
 				ph_libft.c \
 				ph_atoi.c \
 				ph_finish.c \
@@ -93,11 +94,13 @@ sani2: CFLAGS +=  -g  -fsanitize=thread
 sani2: re
 # gcc -fsanitize=thread *.c
 run: 
-	make sani2
-	./philo 5 300 100 100 2 > out
+	make 
+#	make sani2
+	./philo 5 300 100 100 2
+#	./philo 5 300 100 100 2 > out
 # valgrind --leak-check=full ./philo 5 300 100 100 2
 
-	./philo 200 410 200 200 10 >out2
+#	./philo 200 410 200 200 10 >out2
 #	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
 #	./philo 7 a 10 10

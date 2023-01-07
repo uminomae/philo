@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 17:10:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:33:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,20 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-static void create_and_run_pthread(t_pthread_node *node_th)
+// static void create_and_run_pthread_monitor(t_monitor *monitor)
+// {
+// 	int	ret;
+
+// 	ret = pthread_create(&monitor->thread, NULL, monitor_in_thread, monitor);
+// 	if (ret != 0)
+// 		get_err_flag_monitor(monitor);
+// }
+
+static void create_and_run_pthread_philo(t_pthread_node *node_th)
 {
 	int	ret;
 
 	ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
-	ret = 1;
 	if (ret != 0)
 		get_err_flag_node_th(node_th);
 }
@@ -66,6 +74,7 @@ void	run_parallel_process(t_philo *ph)
 	num_people = ph->argv[1];
 	i = 0;
 	get_start_time(ph);
+	// create_and_run_pthread_monitor(&ph->monitor);
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
@@ -73,7 +82,7 @@ void	run_parallel_process(t_philo *ph)
 		node_th->start_time = ph->start_time;
 		node_th->flag_must_eat = ph->flag_must_eat;
 		node_th->times_must_eat = ph->argv[5];
-		create_and_run_pthread(node_th);
+		create_and_run_pthread_philo(node_th);
 		i++;
 	}
 	join_pthread(ph);
