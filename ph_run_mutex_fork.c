@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 16:57:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:01:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_
 	if (flag == TRUE)
 	{
 		lock_mutex(node_fork);
-		change_state_philosopher(TAKEN_FORK, node_th, 0, id);
 		lock_mutex(node_fork->next);
+		change_state_philosopher(TAKEN_FORK, node_th, 0, id);
 	}
 	else if (flag == FALSE)
 	{

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:10:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	strdup_status_array(t_philo *ph)
 void	build_struct_and_list(t_philo *ph, int argc, char **argv)
 {
 	if (argc == 6)
-		ph->must_eat = TRUE;
+		ph->flag_must_eat = TRUE;
 	argv_to_int(ph, argc, argv);
 	strdup_status_array(ph);
 	ph->sleep_seconds = ph->argv[4];

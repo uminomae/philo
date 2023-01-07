@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 16:59:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:16:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 static bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 {
-	if (node_th->ph->must_eat == TRUE && node_th->ph->argv[5] == cnt)
+	// if (node_th->must_eat == TRUE && node_th->argv[5] == cnt)
+	if (node_th->flag_must_eat == TRUE && node_th->times_must_eat == cnt)
 		return (TRUE);
 	return (false);
 }
@@ -54,7 +55,6 @@ void	*dining_philosophers_in_thread(void *ptr)
 	cnt = 0;
 	while (1)
 	{
-
 		if (id == 1){
 			//gettimeofday入れる
 			// usleep(40);
@@ -68,6 +68,7 @@ void	*dining_philosophers_in_thread(void *ptr)
 		cnt++;
 		toggle_mutex_forks(FALSE, node_th, node_fork, id);
 		if (is_required_times_ate(node_th, cnt))
+			// node_th->ate = TRUE;
 			break;
 		change_state_philosopher(SLEEPING, node_th, node_th->ph->argv[4], id);
 		change_state_philosopher(THINKING, node_th, 0, id);

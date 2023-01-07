@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run.c                                           :+:      :+:    :+:   */
+/*   ph_run_parallel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:10:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	run_parallel_process(t_philo *ph)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
 		node_th->id = i;
+		node_th->start_time = ph->start_time;
+		node_th->flag_must_eat = ph->flag_must_eat;
+		node_th->times_must_eat = ph->argv[5];
 		create_and_run_pthread(node_th);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/07 16:57:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:15:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ typedef struct s_pthread_node
 	struct s_pthread_node	*next;
 	struct s_philo			*ph;
 	bool					flag_err;
+	long					start_time;
+	bool					flag_must_eat;
+	size_t					times_must_eat;
+	bool					ate;
 }	t_pthread_node;
 
 typedef struct s_pthread_list
@@ -87,7 +91,7 @@ typedef struct s_fork_list
 typedef struct s_philo
 {
 	long					sleep_seconds;
-	bool					must_eat;
+	bool					flag_must_eat;
 	bool					flag_err;
 	size_t					argv[6];
 	long					start_time;
