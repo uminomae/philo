@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:31:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/07 16:57:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	unlock_mutex(t_fork_node *node)
 		get_err_flag_node_fork(node);
 }
 
-static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
+t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 {
 	size_t	i;
 	t_fork_node	*node;
@@ -49,11 +49,12 @@ static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 }
 
 // //unlock_mutex(node_fork->next);を先にしている
-void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id)
+void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id)
+// void	toggle_mutex_forks(size_t flag, t_pthread_node *node_th, t_fork_list *list_fork, size_t id)
 {
-	t_fork_node	*node_fork;
+	// t_fork_node	*node_fork;
 
-	node_fork = get_fork_node(list_fork, id);
+	// node_fork = get_fork_node(list_fork, id);
 	if (flag == TRUE)
 	{
 		lock_mutex(node_fork);

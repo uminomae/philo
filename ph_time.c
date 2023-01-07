@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 23:56:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/06 23:58:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	put_stamp(long time, size_t id, char *str)
 	return (ret);
 }
 
-//TODO err
 long	get_time_milli_sec(void)
 {
 	struct timeval	tp;
@@ -46,7 +45,6 @@ void	get_start_time(t_philo *ph)
 		ph->start_time = get_time_milli_sec();
 }
 
-// TODO　err処理
 int	x_usleep_ms(size_t ms)
 {
 	int	ret;
