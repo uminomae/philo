@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/07 20:41:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:16:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 //削除予定
 // # define DELAY 1000
-# define FOOD 10
+// # define FOOD 10
 //
 
 typedef struct s_ptr_node
@@ -72,6 +72,7 @@ typedef struct s_pthread_node
 	long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
+	size_t					cnt;
 	bool					ate;
 
 }	t_pthread_node;
@@ -160,7 +161,8 @@ int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
-void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork);
+// void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork);
+int		lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
 
 // void	toggle_mutex(size_t flag, t_fork_node *node_fork);
 // void	toggle_mutex(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
@@ -184,14 +186,10 @@ void	get_err_flag_monitor(t_monitor *node);
 
 bool	is_error(t_philo *ph);
 
-t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
-// void	*monitor_in_thread(void *ptr);
-// bool	is_ate_all(t_philo *ph);
+// t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 
-void	lock_mutex(t_fork_node *node);
-void	unlock_mutex(t_fork_node *node);
-void	lock_mutex_monitor(t_monitor *monitor);
-void	unlock_mutex_monitor(t_monitor *monitor);
+// void	lock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
+// void	unlock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
 
 void	destroy_mutex(t_philo *ph);
 

@@ -16,10 +16,9 @@ SRCS		:= 	ph_main.c \
 				ph_error_flag.c \
 				ph_error_check.c \
 				ph_list_malloc.c \
-				ph_run_mutex_fork.c \
 				ph_run_parallel.c \
-				ph_run_philo.c \
-				ph_run_monitor.c \
+				ph_run_philo_func.c \
+				ph_run_lock_mutex.c \
 				ph_libft.c \
 				ph_atoi.c \
 				ph_finish.c \
