@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 20:16:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 03:21:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,6 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-// static void create_and_run_pthread_monitor(t_monitor *monitor)
-// {
-// 	int	ret;
-
-// 	ret = pthread_create(&monitor->thread, NULL, monitor_in_thread, monitor);
-// 	if (ret != 0)
-// 		get_err_flag_monitor(monitor);
-// }
-
 static void create_and_run_pthread_philo(t_pthread_node *node_th)
 {
 	int	ret;
@@ -85,6 +76,9 @@ void	run_parallel_process(t_philo *ph)
 		create_and_run_pthread_philo(node_th);
 		i++;
 	}
-	// printf("-------------%zu-----ret\n", i);
 	join_pthread(ph);
+	pthread_mutex_lock(&ph->die_monitor.mutex);
+	if (ph->die_monitor.flag_died == true)
+		change_state_and_putstamp(DIED, node_th, 0, node_th->id);
+	pthread_mutex_unlock(&ph->die_monitor.mutex);
 }

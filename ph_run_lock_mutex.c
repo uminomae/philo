@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:22:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 03:12:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,26 @@ static bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 	return (false);
 }
 
-int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id)
+int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat)
 {
 	toggle_mutex(LOCK, &node_th->ph->monitor, node_fork);
-	if (node_th->ph->monitor.ate_all == TRUE)
+	if (node_th->ph->monitor.ate_all == true)
 	{
 		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-		return (ERROR);
+		return (ATE_ALL);
 	}
 	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
-	change_state_and_putstamp(EATING, node_th, node_th->ph->argv[3], id);
+	change_state_and_putstamp(EATING, node_th, time_eat, id);
 	node_th->cnt++;
 	if (is_required_times_ate(node_th, node_th->cnt))
 		node_th->ph->monitor.ate_cnt++;
 	if (node_th->ph->monitor.ate_cnt == node_th->ph->argv[1])
 	{
-		node_th->ph->monitor.ate_all = TRUE;
+		node_th->ph->monitor.ate_all = true;
 		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-		return (ERROR);
+		return (ATE_ALL);
 	}
+	// TODO toggle消す。
 	toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-	return (SUCCESS);
+	return (0);
 }

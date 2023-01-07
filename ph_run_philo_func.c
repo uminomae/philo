@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:21:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 03:21:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 
 void	change_state_and_putstamp(size_t i, t_pthread_node *node_th, long ms, size_t id)
 {
-	long	ret;
+	long	time_current;
 
-	ret = get_time_milli_sec();
-	if (ret < 0)
+	time_current = get_time_milli_sec();
+	if (time_current < 0)
 		node_th->flag_err = TRUE;
-	node_th->time[i] = ret - node_th->ph->start_time;
+	node_th->time[i] = time_current - node_th->start_time;
 	if (ms != 0)
 	{
 		if (x_usleep_ms(ms) < 0)
@@ -58,26 +58,46 @@ void	run_case1person()
 }
 
 // err
-// モニタのスレッドを立てる。メモリ領域に同時に書き込みがある可能性。データレースでググる
+// モニタのスレッドを立てる?
+// longにargvを修正
 void	*dining_philosophers_in_thread(void *ptr)
 {
 	t_pthread_node	*node_th;
-	size_t			id;
 	t_fork_node		*node_fork;
+	long			time_eat;
+	long			time_sleep;
 	int				ret;
+	long	time_current;
 
 	node_th = (t_pthread_node *)ptr;
-	id = node_th->id;
-	node_fork = get_fork_node(&node_th->ph->fork_list, id);
+	time_eat = node_th->ph->argv[3];
+	time_sleep = node_th->ph->argv[4];
+	node_fork = get_fork_node(&node_th->ph->fork_list, node_th->id);
 	while (1)
 	{
-		if (id == 1)
+		time_current = get_time_milli_sec();
+		if (time_current < 0)
+			node_th->flag_err = TRUE;
+		if (node_th->id == 1)
 			run_case1person();
-		ret = lock_mutex_and_eat_starting(node_th, node_fork, id);
-		if(ret == ERROR)
+		if (time_current - (node_th->start_time + node_th->time[EATING]) >= (long)node_th->ph->argv[2])
+		{
+			//TODO err
+			pthread_mutex_lock(&node_th->ph->die_monitor.mutex);
+			node_th->ph->die_monitor.flag_died = true;
+			pthread_mutex_unlock(&node_th->ph->die_monitor.mutex);
 			break;
-		change_state_and_putstamp(SLEEPING, node_th, node_th->ph->argv[4], id);
-		change_state_and_putstamp(THINKING, node_th, 0, id);
+		}
+		pthread_mutex_lock(&node_th->ph->die_monitor.mutex);
+		if (node_th->ph->die_monitor.flag_died == true)
+			break ;
+		pthread_mutex_unlock(&node_th->ph->die_monitor.mutex);
+		//TODO ret消す
+		ret = lock_mutex_and_eat_starting(node_th, node_fork, node_th->id, time_eat);
+		if (ret > 0)
+			break ;
+		change_state_and_putstamp(SLEEPING, node_th, time_sleep, node_th->id);
+		change_state_and_putstamp(THINKING, node_th, 0, node_th->id);
 	}
 	return (NULL);
 }

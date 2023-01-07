@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 01:20:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 03:05:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_pthread_node
 	struct s_pthread_node	*next;
 	struct s_philo			*ph;
 	bool					flag_err;
+	bool					flag_died;
 	long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
@@ -83,17 +84,22 @@ typedef struct s_pthread_list
 	struct s_pthread_node	*tail;
 }	t_pthread_list;
 
-typedef struct s_monitor
+typedef struct s_die_monitor
 {
-	// pthread_t				thread;
 	pthread_mutex_t			mutex;
-	// char					**status[5];
 	struct s_philo			*ph;
 	bool					flag_err;
-	// long					start_time;
-	// bool					flag_must_eat;
+	bool					flag_died;
+}	t_die_monitor;
+
+typedef struct s_monitor
+{
+	pthread_mutex_t			mutex;
+	struct s_philo			*ph;
+	bool					flag_err;
 	size_t					ate_cnt;
 	bool					ate_all;
+	bool					flag_died;
 }	t_monitor;
 
 // program(s) should take the following arguments: 
@@ -117,6 +123,8 @@ typedef struct s_philo
 	struct s_monitor		monitor;
 	char					*status[5];
 	bool					ate_all;
+	// bool					flag_died;
+	struct s_die_monitor	die_monitor;
 }	t_philo;
 
 # define NL				"\n"
@@ -125,6 +133,7 @@ typedef struct s_philo
 # define SLEEPING_STR	"is sleeping"
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
+# define ERR_STR		"error"
 
 # define FALSE		0
 # define TRUE		1
@@ -132,6 +141,8 @@ typedef struct s_philo
 # define UNLOCK		0
 # define ERROR		1
 # define SUCCESS	0
+# define ATE_ALL	1
+# define DIED_PHILO	2
 
 enum e_put_type {
 	TAKEN_FORK = 0,
@@ -151,7 +162,7 @@ void	run_parallel_process(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
 
-int	x_usleep_ms(size_t ms);
+int		x_usleep_ms(size_t ms);
 
 void	*dining_philosophers_in_thread(void *ptr);
 
@@ -164,7 +175,8 @@ int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
 // void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork);
-int		lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+// void	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat);
 
 // void	toggle_mutex(size_t flag, t_fork_node *node_fork);
 // void	toggle_mutex(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
@@ -177,7 +189,7 @@ size_t	add_pthread_list(t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list,
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
 void	end_philo(t_philo *ph);
-// int		exit_error(void);
+void	end_error(t_philo *ph);
 void	free_all(t_philo *ph);
 
 void	get_err_flag(t_philo *ph);

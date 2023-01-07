@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:41:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 02:58:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_mutex(t_philo *ph)
 	node_fork = ph->fork_list.head;
 	num_people = ph->argv[1];
 	x_pthread_mutex_init(ph, &ph->monitor.mutex);
+	x_pthread_mutex_init(ph, &ph->die_monitor.mutex);
 	i = 0;
 	while (i < num_people)
 	{
