@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 23:10:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:39:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,24 @@ static void	check_error_list_ptr(t_philo *ph)
 	return ;
 }
 
+static void	check_error_monitor(t_philo *ph)
+{
+	if (ph->monitor.flag_err == TRUE)
+		ph->flag_err = TRUE;
+	return ;
+}
+
+//printfはerrorの時だから処理しなくても同じ
 bool	is_error(t_philo *ph)
 {
 	check_error_list_fork(ph);
 	check_error_list_th(ph);
 	check_error_list_ptr(ph);
+	check_error_monitor(ph);
 	if (ph->flag_err == TRUE)
+	{
+		// printf("%s", ERR_STR);
 		return (TRUE);
+	}
 	return (FALSE);
 }

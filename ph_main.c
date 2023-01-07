@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/07 20:08:33 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:45:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ int	main(int argc, char **argv)
 	t_philo	ph;
 
 	begin_philo(&ph, argc, argv);
+	if (is_error(&ph) == FALSE)
+		run_parallel_process(&ph);
 	if (is_error(&ph) == TRUE)
-		return (0);
-	init_mutex(&ph);
-	run_parallel_process(&ph);
-	destroy_mutex(&ph);
+	{
+		end_error(&ph);
+		return (ERROR);
+	}
 	end_philo(&ph);
 	// system("leaks -q philo");
-	return (0);
+	return (SUCCESS);
 }
