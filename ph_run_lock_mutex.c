@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_mutex.c                                     :+:      :+:    :+:   */
+/*   ph_run_lock_mutex.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:14:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:22:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	lock_mutex(pthread_mutex_t *mutex, t_monitor *monitor)
+static void	x_pthread_mutex_lock(pthread_mutex_t *mutex, t_monitor *monitor)
 {
 	int	ret;
 
@@ -21,7 +21,7 @@ static void	lock_mutex(pthread_mutex_t *mutex, t_monitor *monitor)
 		get_err_flag_monitor(monitor);
 }
 
-static void	unlock_mutex(pthread_mutex_t *mutex, t_monitor *monitor)
+static void	x_thread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor)
 {
 	int	ret;
 
@@ -35,15 +35,15 @@ static void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork
 
 	if (flag == LOCK)
 	{
-		lock_mutex(&node_fork->mutex, monitor);
-		lock_mutex(&node_fork->next->mutex, monitor);
-		lock_mutex(&monitor->mutex, monitor);
+		x_pthread_mutex_lock(&node_fork->mutex, monitor);
+		x_pthread_mutex_lock(&node_fork->next->mutex, monitor);
+		x_pthread_mutex_lock(&monitor->mutex, monitor);
 	}
 	else if (flag == UNLOCK)
 	{
-		unlock_mutex(&monitor->mutex, monitor);
-		unlock_mutex(&node_fork->next->mutex, monitor);
-		unlock_mutex(&node_fork->mutex, monitor);
+		x_thread_mutex_unlock(&monitor->mutex, monitor);
+		x_thread_mutex_unlock(&node_fork->next->mutex, monitor);
+		x_thread_mutex_unlock(&node_fork->mutex, monitor);
 	}
 }
 
@@ -60,7 +60,7 @@ int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork,
 	if (node_th->ph->monitor.ate_all == TRUE)
 	{
 		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-		return (1);
+		return (ERROR);
 	}
 	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
 	change_state_and_putstamp(EATING, node_th, node_th->ph->argv[3], id);
@@ -71,8 +71,8 @@ int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork,
 	{
 		node_th->ph->monitor.ate_all = TRUE;
 		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-		return (1);
+		return (ERROR);
 	}
 	toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-	return (0);
+	return (SUCCESS);
 }

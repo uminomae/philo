@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_philo.c                                     :+:      :+:    :+:   */
+/*   ph_run_philo_func.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:14:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:21:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	change_state_and_putstamp(size_t i, t_pthread_node *node_th, long ms, size_
 void	run_case1person()
 {
 	//gettimeofday入れる
-	usleep(100);
+	// usleep(100);
 	// usleep(40);←lower 後で考える。
 	// if (x_usleep_ms(node_th->ph->sleep_seconds / 2) < 0)
 	// 	node_th->flag_err = TRUE;
@@ -62,7 +62,6 @@ void	run_case1person()
 void	*dining_philosophers_in_thread(void *ptr)
 {
 	t_pthread_node	*node_th;
-	// size_t			cnt;
 	size_t			id;
 	t_fork_node		*node_fork;
 	int				ret;
@@ -70,13 +69,12 @@ void	*dining_philosophers_in_thread(void *ptr)
 	node_th = (t_pthread_node *)ptr;
 	id = node_th->id;
 	node_fork = get_fork_node(&node_th->ph->fork_list, id);
-	// node_th->cnt = 0;
 	while (1)
 	{
 		if (id == 1)
 			run_case1person();
 		ret = lock_mutex_and_eat_starting(node_th, node_fork, id);
-		if(ret == 1)
+		if(ret == ERROR)
 			break;
 		change_state_and_putstamp(SLEEPING, node_th, node_th->ph->argv[4], id);
 		change_state_and_putstamp(THINKING, node_th, 0, id);

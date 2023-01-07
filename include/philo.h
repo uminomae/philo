@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 01:16:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 01:20:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ typedef struct s_philo
 # define TRUE		1
 # define LOCK		1
 # define UNLOCK		0
+# define ERROR		1
+# define SUCCESS	0
 
 enum e_put_type {
 	TAKEN_FORK = 0,
