@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:15:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:40:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 	return (false);
 }
 
-bool	is_ate_all(t_monitor *monitor)
+bool	is_ate_all(t_eat_monitor *monitor)
 {
 	if (monitor->ate_all == true)
 	{
@@ -29,7 +29,7 @@ bool	is_ate_all(t_monitor *monitor)
 	return (false);
 }
 
-bool	judge_ate_all(t_monitor *monitor, size_t num_people)
+bool	judge_ate_all(t_eat_monitor *monitor, size_t num_people)
 {
 	if (monitor->ate_cnt == num_people)
 	{

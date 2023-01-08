@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 04:17:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:40:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_pthread_list
 
 typedef struct s_die_monitor
 {
-	pthread_mutex_t			mutex;
+	pthread_mutex_t			mutex_die;
 	struct s_philo			*ph;
 	bool					flag_err;
 	bool					flag_died;
@@ -89,15 +89,15 @@ typedef struct s_die_monitor
 	size_t					died_id;
 }	t_die_monitor;
 
-typedef struct s_monitor
+typedef struct s_eat_monitor
 {
 	pthread_mutex_t			mutex;
 	struct s_philo			*ph;
 	bool					flag_err;
+	bool					flag_died;
 	size_t					ate_cnt;
 	bool					ate_all;
-	bool					flag_died;
-}	t_monitor;
+}	t_eat_monitor;
 
 // program(s) should take the following arguments: 
 // [1]number_of_philosophers: 哲学者の数とフォークの数。
@@ -117,7 +117,7 @@ typedef struct s_philo
 	struct s_fork_list		fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
-	struct s_monitor		monitor;
+	struct s_eat_monitor		monitor;
 	char					*status[5];
 	bool					ate_all;
 	struct s_die_monitor	die_monitor;
@@ -174,16 +174,16 @@ void	get_err_flag(t_philo *ph);
 void	get_err_flag_node_th(t_pthread_node *node);
 void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
-void	get_err_flag_monitor(t_monitor *node);
+void	get_err_flag_monitor(t_eat_monitor *node);
 bool	is_error(t_philo *ph);
-void	x_lock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
+void	x_lock_mutex(pthread_mutex_t *mutex, t_eat_monitor *monitor);
+void	x_unlock_mutex(pthread_mutex_t *mutex, t_eat_monitor *monitor);
 void	destroy_mutex(t_philo *ph);
 bool	is_flag_died(t_pthread_node *node_th);
 bool	check_time_to_die(t_pthread_node *node_th, long time_current);
 bool	judge_ate_died(t_pthread_node *node_th);
-bool	is_ate_all(t_monitor *monitor);
-bool	judge_ate_all(t_monitor *monitor, size_t num_people);
+bool	is_ate_all(t_eat_monitor *monitor);
+bool	judge_ate_all(t_eat_monitor *monitor, size_t num_people);
 void	count_ate_person(t_pthread_node *node_th);
 bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt);
 #endif
