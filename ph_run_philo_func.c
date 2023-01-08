@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 15:50:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:59:33 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ void	change_state_and_putstamp(size_t i, t_pthread_node *node_th, long ms, size_
 
 	time_current = get_time_milli_sec();
 	if (time_current < 0)
-		node_th->flag_err = TRUE;
+		node_th->flag_err = true;
 	if (i != DIED)
 		node_th->time[i] = time_current - node_th->start_time;
 	if (put_stamp(node_th->time[i], id, *node_th->status[i]) < 0)
-		node_th->flag_err = TRUE;
+		node_th->flag_err = true;
 	if (ms != 0)
 	{
 		if (x_usleep_ms(ms) < 0)
-			node_th->flag_err = TRUE;
+			node_th->flag_err = true;
 	}
 }
 
@@ -116,7 +116,7 @@ void	*dining_philosophers_in_thread(void *ptr)
 	while (1)
 	{
 		if (get_time_milli_sec() < 0)
-			node_th->flag_err = TRUE;
+			node_th->flag_err = true;
 		if (node_th->ph->argv[1] == 1)
 		{
 			if (run_case1person(node_th))

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 15:46:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:59:33 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 {
-	if (node_th->flag_must_eat == TRUE && node_th->times_must_eat == cnt)
-		return (TRUE);
+	if (node_th->flag_must_eat == true && node_th->times_must_eat == cnt)
+		return (true);
 	return (false);
 }
 

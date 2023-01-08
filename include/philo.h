@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 16:58:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 17:00:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ typedef struct s_philo
 # define DIED_STR		"is died"
 # define ERR_STR		"error"
 
-// # define FALSE		0
-// # define TRUE		1
+// # define false		0
+// # define true		1
 # define LOCK		1
 # define UNLOCK		0
 # define ERROR		1

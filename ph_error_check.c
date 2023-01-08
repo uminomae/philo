@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 01:39:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 17:00:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static void	check_error_list_fork(t_philo *ph)
 	i = 0;
 	while (i < ph->id)
 	{
-		if (node_fork->flag_err == TRUE)
+		if (node_fork->flag_err == true)
 		{
-			ph->flag_err = TRUE;
+			ph->flag_err = true;
 			return ;
 		}
 		node_fork = node_fork->next;
@@ -41,9 +41,9 @@ static void	check_error_list_th(t_philo *ph)
 	i = 0;
 	while (i < ph->id)
 	{
-		if (node_th->flag_err == TRUE)
+		if (node_th->flag_err == true)
 		{
-			ph->flag_err = TRUE;
+			ph->flag_err = true;
 			return ;
 		}
 		node_th = node_th->next;
@@ -61,9 +61,9 @@ static void	check_error_list_ptr(t_philo *ph)
 	i = 0;
 	while (i < ph->id)
 	{
-		if (node_ptr->flag_err == TRUE)
+		if (node_ptr->flag_err == true)
 		{
-			ph->flag_err = TRUE;
+			ph->flag_err = true;
 			return ;
 		}
 		node_ptr = node_ptr->next;
@@ -74,8 +74,8 @@ static void	check_error_list_ptr(t_philo *ph)
 
 static void	check_error_monitor(t_philo *ph)
 {
-	if (ph->monitor.flag_err == TRUE)
-		ph->flag_err = TRUE;
+	if (ph->monitor.flag_err == true)
+		ph->flag_err = true;
 	return ;
 }
 
@@ -86,10 +86,10 @@ bool	is_error(t_philo *ph)
 	check_error_list_th(ph);
 	check_error_list_ptr(ph);
 	check_error_monitor(ph);
-	if (ph->flag_err == TRUE)
+	if (ph->flag_err == true)
 	{
 		// printf("%s", ERR_STR);
-		return (TRUE);
+		return (true);
 	}
-	return (FALSE);
+	return (false);
 }
