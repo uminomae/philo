@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 04:40:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:42:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_ptr_list
 typedef struct s_fork_node
 {
 	size_t				data;
-	pthread_mutex_t		mutex;
+	pthread_mutex_t		mutex_fork;
 	bool				flag_err;
 	struct s_fork_node	*next;
 }	t_fork_node;
