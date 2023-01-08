@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 13:56:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:08:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-static void create_and_run_pthread_philo(t_pthread_node *node_th)
+static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 {
 	int	ret;
 
-	
-	ret = pthread_create(&node_th->thread, NULL, dining_philosophers_in_thread, node_th);
+	ret = pthread_create(&node_th->thread, NULL, \
+		dining_philosophers_in_thread, node_th);
 	if (ret != 0)
 		get_err_flag_node_th(node_th);
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:59:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:05:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static t_fork_node	*init_fork_node(t_ptr_list *ptr_list)
 {
 	t_fork_node	*node;
 
-	node = (t_fork_node *)malloc_and_add_ptr_list(ptr_list, sizeof(t_fork_node));
+	node = (t_fork_node *)malloc_and_add_ptr_list(ptr_list, \
+				sizeof(t_fork_node));
 	if (node == NULL)
 		return (NULL);
 	memset(node, 0, sizeof(t_fork_node));

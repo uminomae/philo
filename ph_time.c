@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 14:56:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:21:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ long	get_time_milli_sec(void)
 	if (ret < 0)
 		return (-1);
 	milli_sec = tp.tv_sec * 1000;
-	milli_sec += tp.tv_usec /1000;
+	milli_sec += tp.tv_usec / 1000;
 	return (milli_sec);
 }
 
@@ -48,6 +48,7 @@ void	get_start_time(t_philo *ph)
 int	x_usleep_ms(size_t ms)
 {
 	int	ret;
+
 	ret = usleep(ms * 1000);
 	return (ret);
 }

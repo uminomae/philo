@@ -19,6 +19,7 @@ SRCS		:= 	ph_main.c \
 				ph_run_parallel.c \
 				ph_run_philo_func.c \
 				ph_run_lock_mutex.c \
+				ph_run_flag_died.c \
 				ph_util_libft.c \
 				ph_util_atoi.c \
 				ph_finish.c \

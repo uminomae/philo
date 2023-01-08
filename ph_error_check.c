@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 17:00:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:13:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_error_list_fork(t_philo *ph)
 {
 	t_fork_node	*node_fork;
-	size_t	i;
+	size_t		i;
 
 	node_fork = ph->fork_list.head;
 	i = 0;
@@ -35,7 +35,7 @@ static void	check_error_list_fork(t_philo *ph)
 static void	check_error_list_th(t_philo *ph)
 {
 	t_pthread_node	*node_th;
-	size_t	i;
+	size_t			i;
 
 	node_th = ph->thread_list.head;
 	i = 0;
@@ -55,7 +55,7 @@ static void	check_error_list_th(t_philo *ph)
 static void	check_error_list_ptr(t_philo *ph)
 {
 	t_ptr_node	*node_ptr;
-	size_t	i;
+	size_t		i;
 
 	node_ptr = ph->alloc_list.head;
 	i = 0;
@@ -79,7 +79,6 @@ static void	check_error_monitor(t_philo *ph)
 	return ;
 }
 
-//printfはerrorの時だから処理しなくても同じ
 bool	is_error(t_philo *ph)
 {
 	check_error_list_fork(ph);
@@ -87,9 +86,6 @@ bool	is_error(t_philo *ph)
 	check_error_list_ptr(ph);
 	check_error_monitor(ph);
 	if (ph->flag_err == true)
-	{
-		// printf("%s", ERR_STR);
 		return (true);
-	}
 	return (false);
 }
