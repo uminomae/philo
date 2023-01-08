@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:02:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:18:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,8 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 		if (run_eating(node_th, node_fork, node_th->id, \
 			node_th->ph->argv[3]) > 0)
 			break ;
-		// if (judge_ate_died(node_th))
-		// 	break ;
 		change_state_and_putstamp(SLEEPING, node_th, \
 				node_th->ph->argv[4], node_th->id);
-		// if (judge_ate_died(node_th))
-		// 	break ;
 		change_state_and_putstamp(THINKING, node_th, 0, node_th->id);
 	}
 }

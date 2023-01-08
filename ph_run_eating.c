@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_lock_mutex.c                                :+:      :+:    :+:   */
+/*   ph_run_eating.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:02:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:15:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ bool	is_ate_all(t_monitor *monitor)
 {
 	if (monitor->ate_all == true)
 	{
-		x_pthread_mutex_unlock(&monitor->mutex, monitor);
+		x_unlock_mutex(&monitor->mutex, monitor);
 		return (true);
 	}
 	return (false);
 }
 
-bool	check_ate_all(t_monitor *monitor, size_t num_people)
+bool	judge_ate_all(t_monitor *monitor, size_t num_people)
 {
 	if (monitor->ate_cnt == num_people)
 	{
 		monitor->ate_all = true;
-		x_pthread_mutex_unlock(&monitor->mutex, monitor);
+		x_unlock_mutex(&monitor->mutex, monitor);
 		return (true);
 	}
 	return (false);
@@ -62,14 +62,14 @@ void	count_ate_person(t_pthread_node *node_th)
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	x_pthread_mutex_lock(&node_fork->mutex, &node_th->ph->monitor);
-	x_pthread_mutex_lock(&node_fork->next->mutex, &node_th->ph->monitor);
+	x_lock_mutex(&node_fork->mutex, &node_th->ph->monitor);
+	x_lock_mutex(&node_fork->next->mutex, &node_th->ph->monitor);
 
 	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
 	change_state_and_putstamp(EATING, node_th, time_eat, id);
 	node_th->flag_wait_cnt = true;;
 	
-	x_pthread_mutex_unlock(&node_fork->next->mutex, &node_th->ph->monitor);
-	x_pthread_mutex_unlock(&node_fork->mutex, &node_th->ph->monitor);
+	x_unlock_mutex(&node_fork->next->mutex, &node_th->ph->monitor);
+	x_unlock_mutex(&node_fork->mutex, &node_th->ph->monitor);
 	return (SUCCESS);
 }
