@@ -19,11 +19,11 @@ SRCS		:= 	ph_main.c \
 				ph_run_parallel.c \
 				ph_run_philo_func.c \
 				ph_run_lock_mutex.c \
-				ph_libft.c \
-				ph_atoi.c \
+				ph_util_libft.c \
+				ph_util_atoi.c \
 				ph_finish.c \
 				ph_finish_free.c \
-				ph_x_util.c
+				ph_util_mutex.c
 
 # B_SRCS	:= 
 

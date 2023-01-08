@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 11:49:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 13:41:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_pthread_node
 {
 	pthread_t				thread;
 	size_t					id;
-	long					time[4];
+	long					time[5];
 	char					**status[5];
 	struct s_pthread_node	*next;
 	struct s_philo			*ph;
@@ -90,6 +90,8 @@ typedef struct s_die_monitor
 	struct s_philo			*ph;
 	bool					flag_err;
 	bool					flag_died;
+	long					time_died;
+	size_t					died_id;
 }	t_die_monitor;
 
 typedef struct s_monitor
@@ -175,8 +177,8 @@ int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
 // void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork);
-// void	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
-int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat);
+// void	eating(t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
+int	run_eating(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat);
 
 // void	toggle_mutex(size_t flag, t_fork_node *node_fork);
 // void	toggle_mutex(size_t flag, t_pthread_node *node_th, t_fork_node *node_fork, size_t id);
@@ -210,5 +212,7 @@ void	x_pthread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor);
 
 
 void	destroy_mutex(t_philo *ph);
+bool	check_ate_all(t_monitor *monitor, t_fork_node *node_fork, size_t num_people);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 12:18:33 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 13:09:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	check_ate_all(t_monitor *monitor, t_fork_node *node_fork, size_t num_people
 }
 
 //TODO longへ?argv
-int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat)
+int	run_eating(t_pthread_node *node_th, t_fork_node *node_fork, size_t id, long time_eat)
 {
 	toggle_mutex(LOCK, &node_th->ph->monitor, node_fork);
 	if (is_ate_all(&node_th->ph->monitor, node_fork))
