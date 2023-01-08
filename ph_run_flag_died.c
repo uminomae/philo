@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 03:32:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:04:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,29 @@ bool	is_flag_died(t_pthread_node *node_th)
 	return (ret);
 }
 
-bool	is_end_flag(t_pthread_node *node_th)
+bool	judge_ate_died(t_pthread_node *node_th)
 {
-	count_times_end_eating(node_th);
+	count_ate_person(node_th);
 	if (check_time_to_die(node_th, get_time_milli_sec()))
 		return (true);
 	if (is_flag_died(node_th))
 		return (true);
+
+	if (is_required_times_ate(node_th, node_th->cnt))
+	{
+		x_pthread_mutex_lock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
+		node_th->ph->monitor.ate_cnt++;
+		x_pthread_mutex_unlock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
+	}
+
 	x_pthread_mutex_lock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
 	if (is_ate_all(&node_th->ph->monitor))
 		return (true);
+	x_pthread_mutex_unlock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
+
+	x_pthread_mutex_lock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
+	if (check_ate_all(&node_th->ph->monitor, node_th->ph->argv[1]))
+		return (ATE_ALL);
 	x_pthread_mutex_unlock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
 	return (false);
 }

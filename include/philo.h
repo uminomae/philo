@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 03:24:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:58:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_pthread_node
 	size_t					times_must_eat;
 	size_t					cnt;
 	bool					ate;
+	bool					flag_wait_cnt;
 
 }	t_pthread_node;
 
@@ -180,9 +181,9 @@ void	x_pthread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor);
 void	destroy_mutex(t_philo *ph);
 bool	is_flag_died(t_pthread_node *node_th);
 bool	check_time_to_die(t_pthread_node *node_th, long time_current);
-bool	is_end_flag(t_pthread_node *node_th);
+bool	judge_ate_died(t_pthread_node *node_th);
 bool	is_ate_all(t_monitor *monitor);
 bool	check_ate_all(t_monitor *monitor, size_t num_people);
-void	count_times_end_eating(t_pthread_node *node_th);
-
+void	count_ate_person(t_pthread_node *node_th);
+bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt);
 #endif

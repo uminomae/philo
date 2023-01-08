@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 03:23:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:02:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	run_case1person(t_pthread_node	*node_th)
 {
 	while (1)
 	{
-		if (is_end_flag(node_th))
+		if (judge_ate_died(node_th))
 			return (1);
 	}
 }
@@ -59,24 +59,21 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 {
 	while (1)
 	{
-		if (is_end_flag(node_th))
+		if (judge_ate_died(node_th))
 			break ;
-		count_times_end_eating(node_th);
 		if (run_eating(node_th, node_fork, node_th->id, \
 			node_th->ph->argv[3]) > 0)
 			break ;
-		if (is_end_flag(node_th))
-			break ;
+		// if (judge_ate_died(node_th))
+		// 	break ;
 		change_state_and_putstamp(SLEEPING, node_th, \
 				node_th->ph->argv[4], node_th->id);
-		if (is_end_flag(node_th))
-			break ;
+		// if (judge_ate_died(node_th))
+		// 	break ;
 		change_state_and_putstamp(THINKING, node_th, 0, node_th->id);
 	}
 }
 
-// err処理 get_time_mille_secの失敗時
-// longにargvを修正
 //TODO 優先順位 tailだったら条件で。
 void	*dining_philosophers_in_thread(void *ptr)
 {
