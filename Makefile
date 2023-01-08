@@ -8,8 +8,7 @@ DFLAGS		:= -MMD -MP
 SRCS		:= 	ph_main.c \
 				ph_time.c \
 				ph_init_mutex.c \
-				ph_begin.c \
-				ph_is_valid.c \
+				ph_begin_is_valid.c \
 				ph_begin_build.c \
 				ph_begin_list_fork.c \
 				ph_begin_list_pthread.c \
@@ -91,7 +90,7 @@ re: fclean all
 sani: CFLAGS +=  -g  -fsanitize=address -fsanitize=undefined 
 sani: re
 
-sani2: CFLAGS +=  -g  -fsanitize=thread
+sani2: CFLAGS +=  -g  -fsanitize=thread 
 sani2: re
 # gcc -fsanitize=thread *.c
 run: 

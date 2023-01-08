@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_is_valid.c                                      :+:      :+:    :+:   */
+/*   ph_begin_is_valid.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 18:18:30 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 23:19:32 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ static void	argv_to_int(t_philo *ph, int argc, char **argv)
 	i = 0;
 	while (i < argc)
 	{
+		if (argv[i] == NULL)
+		{
+			get_err_flag(ph);
+			return ;
+		}
 		ret = ph_atoi(argv[i]);
 		if (ret < 0)
 			get_err_flag(ph);
@@ -53,13 +58,13 @@ static void	argv_to_int(t_philo *ph, int argc, char **argv)
 	}
 }
 
-//TODO　最終時　エラー処理
-// bool	is_valid_values(int argc)
 bool	is_valid_values(t_philo *ph, int argc, char **argv)
 {
 	size_t	ret;
 
 	if (argc < 5 || 6 < argc)
+		return (false);
+	if (argv == NULL)
 		return (false);
 	ret = check_digit(argc, argv);
 	if (ret == 1)

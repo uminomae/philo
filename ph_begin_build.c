@@ -6,13 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 17:58:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 23:15:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// err どのリストでflag立てるか？
 static void	make_fork_list(t_philo *ph)
 {
 	size_t	id_fork;
