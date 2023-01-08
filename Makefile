@@ -22,7 +22,8 @@ SRCS		:= 	ph_main.c \
 				ph_libft.c \
 				ph_atoi.c \
 				ph_finish.c \
-				ph_free.c \
+				ph_finish_free.c \
+				ph_x_util.c
 
 # B_SRCS	:= 
 

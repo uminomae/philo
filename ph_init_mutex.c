@@ -6,13 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 02:58:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 12:15:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// err
 static void	x_pthread_mutex_init(t_philo *ph, pthread_mutex_t *mutex)
 {
 	int ret;
