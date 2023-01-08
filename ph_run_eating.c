@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:42:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:45:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_ate_all(t_eat_monitor *monitor)
 {
 	if (monitor->ate_all == true)
 	{
-		x_unlock_mutex(&monitor->mutex, monitor);
+		x_unlock_mutex(&monitor->mutex_eat, monitor);
 		return (true);
 	}
 	return (false);
@@ -34,7 +34,7 @@ bool	judge_ate_all(t_eat_monitor *monitor, size_t num_people)
 	if (monitor->ate_cnt == num_people)
 	{
 		monitor->ate_all = true;
-		x_unlock_mutex(&monitor->mutex, monitor);
+		x_unlock_mutex(&monitor->mutex_eat, monitor);
 		return (true);
 	}
 	return (false);

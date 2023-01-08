@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 04:42:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:46:47 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct s_die_monitor
 
 typedef struct s_eat_monitor
 {
-	pthread_mutex_t			mutex;
+	pthread_mutex_t			mutex_eat;
 	struct s_philo			*ph;
 	bool					flag_err;
 	bool					flag_died;
@@ -176,8 +176,8 @@ void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
 void	get_err_flag_monitor(t_eat_monitor *node);
 bool	is_error(t_philo *ph);
-void	x_lock_mutex(pthread_mutex_t *mutex, t_eat_monitor *monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex, t_eat_monitor *monitor);
+void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *monitor);
+void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *monitor);
 void	destroy_mutex(t_philo *ph);
 bool	is_flag_died(t_pthread_node *node_th);
 bool	check_time_to_die(t_pthread_node *node_th, long time_current);
