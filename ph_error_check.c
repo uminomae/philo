@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 18:13:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:52:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	check_error_list_ptr(t_philo *ph)
 
 static void	check_error_monitor(t_philo *ph)
 {
-	if (ph->monitor.flag_err == true)
+	if (ph->eat_monitor.flag_err == true)
 		ph->flag_err = true;
 	return ;
 }

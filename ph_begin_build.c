@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 00:06:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:52:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	build_struct_and_list(t_philo *ph, int argc)
 	ph->sleep_seconds = ph->argv[4];
 	make_fork_list(ph);
 	make_pthread_list(ph);
-	ph->monitor.ph = ph;
+	ph->eat_monitor.ph = ph;
 	if (ph->flag_err == true)
 	{
 		printf("%s", ERR_STR);
