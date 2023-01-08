@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:56:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 05:11:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 {
-	if (node_th->flag_must_eat == true && node_th->times_must_eat == cnt)
+	if (node_th->flag_must_eat == true && \
+		node_th->times_must_eat == cnt)
 		return (true);
 	return (false);
 }
@@ -44,14 +45,18 @@ void	count_ate_person(t_pthread_node *node_th)
 {
 	long	time_current;
 	long	time_ate;
+	long	timeval;
+	long	time_to_eat;
 
-	time_current = get_time_milli_sec() - node_th->start_time;
-	if (time_current < 0)
+	timeval = get_time_milli_sec();
+	if (timeval < 0)
 		node_th->flag_err = true;
-	time_ate = node_th->time[EATING] + node_th->ph->argv[3];
+	time_to_eat = node_th->ph->argv[3];
+	time_current = timeval - node_th->start_time;
+	time_ate = node_th->time[EATING] + time_to_eat;
 	if (time_current > time_ate)
 	{
-		if(node_th->flag_wait_cnt == true)
+		if (node_th->flag_wait_cnt == true)
 		{
 			node_th->cnt++;
 			node_th->flag_wait_cnt = false;
@@ -59,6 +64,7 @@ void	count_ate_person(t_pthread_node *node_th)
 	}
 }
 
+// code整理完了
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
@@ -71,7 +77,7 @@ int	run_eating(t_pthread_node *node_th, \
 	x_lock_mutex(&node_fork->next->mutex_fork, eat_monitor);
 	put_state(TAKEN_FORK, node_th, 0, id);
 	put_state(EATING, node_th, time_eat, id);
-	node_th->flag_wait_cnt = true;;
+	node_th->flag_wait_cnt = true;
 	x_unlock_mutex(&node_fork->next->mutex_fork, eat_monitor);
 	x_unlock_mutex(mutex_fork, eat_monitor);
 	return (SUCCESS);

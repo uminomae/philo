@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 04:56:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 05:12:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_eat_monitor
 	pthread_mutex_t			mutex_eat;
 	struct s_philo			*ph;
 	bool					flag_err;
-	// bool					flag_died;
 	size_t					ate_cnt;
 	bool					ate_all;
 }	t_eat_monitor;

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:54:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 05:11:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	is_flag_died(t_pthread_node *node_th)
 {
 	bool			ret;
 	pthread_mutex_t	*mutex_died;
-	t_eat_monitor		*eat_monitor;
+	t_eat_monitor	*eat_monitor;
 	t_die_monitor	*die_monitor;
 
 	mutex_died = &node_th->ph->die_monitor.mutex_die;
@@ -62,7 +62,7 @@ bool	is_flag_died(t_pthread_node *node_th)
 void	count_ate_in_mutex_monitor(t_pthread_node *node_th)
 {
 	pthread_mutex_t	*mutex_eat;
-	t_eat_monitor		*eat_monitor;
+	t_eat_monitor	*eat_monitor;
 
 	mutex_eat = &node_th->ph->eat_monitor.mutex_eat;
 	eat_monitor = &node_th->ph->eat_monitor;
@@ -78,7 +78,7 @@ void	count_ate_in_mutex_monitor(t_pthread_node *node_th)
 bool	judge_ate_died(t_pthread_node *node_th)
 {
 	pthread_mutex_t	*mutex_eat;
-	t_eat_monitor		*eat_monitor;
+	t_eat_monitor	*eat_monitor;
 
 	mutex_eat = &node_th->ph->eat_monitor.mutex_eat;
 	eat_monitor = &node_th->ph->eat_monitor;
