@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 17:00:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 17:52:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,8 @@ typedef struct s_philo
 # define SLEEPING_STR	"is sleeping"
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
-# define ERR_STR		"error"
+# define ERR_STR		"error\n"
 
-// # define false		0
-// # define true		1
 # define LOCK		1
 # define UNLOCK		0
 # define ERROR		1
@@ -157,10 +155,13 @@ enum e_put_type {
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
-bool	is_valid_values(int argc);
+// bool	is_valid_values(int argc);
 // bool	is_valid_values(int argc, char **argv);
+bool	is_valid_values(t_philo *ph, int argc, char **argv);
 
-void	build_struct_and_list(t_philo *ph, int argc, char **argv);
+int	build_struct_and_list(t_philo *ph, int argc);
+// int		build_struct_and_list(t_philo *ph, int argc, char **argv);
+// void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_mutex(t_philo *ph);
 void	run_parallel_process(t_philo *ph);
 long	get_time_milli_sec(void);

@@ -9,7 +9,7 @@ SRCS		:= 	ph_main.c \
 				ph_time.c \
 				ph_init_mutex.c \
 				ph_begin.c \
-				ph_begin_check.c \
+				ph_is_valid.c \
 				ph_begin_build.c \
 				ph_begin_list_fork.c \
 				ph_begin_list_pthread.c \
@@ -96,19 +96,9 @@ sani2: re
 run: 
 #	make 
 	make sani2
-#	./philo 5 300 100 100 2
-	./philo 1 300 100 100
-	./philo 0 300 100 100
-	./philo 4 -300 100 100
-
 	./philo 5 300 100 100 2 > out
 # valgrind --leak-check=full ./philo 5 300 100 100 2
-
 	./philo 200 410 200 200  >out2
-#	./philo 1 100000000 10 10 1
-#	./philo 5 100000000 
-#	./philo 7 a 10 10
-#	./philo 123a 10 10 10 
 
 # n回食べたかの確認
 #  N=9; ./philo 20 300 100 100 $N | grep eating | sort -nk 2 | awk '{print "| "$2" "$3" "$4}' | uniq -c | tee >(cat) | awk -v N=$N '$1 < $N' | grep '^$' || echo "\nOK"
