@@ -14,7 +14,7 @@ SRCS		:= 	ph_main.c \
 				ph_begin_list_pthread.c \
 				ph_error_flag.c \
 				ph_error_check.c \
-				ph_list_malloc.c \
+				ph_malloc.c \
 				ph_run_parallel.c \
 				ph_run_philo_func.c \
 				ph_run_lock_mutex.c \
@@ -92,16 +92,24 @@ sani: re
 
 sani2: CFLAGS +=  -g  -fsanitize=thread 
 sani2: re
-# gcc -fsanitize=thread *.c
-run: 
-#	make 
-	make sani2
-	./philo 5 300 100 100 2 > out
-# valgrind --leak-check=full ./philo 5 300 100 100 2
-	./philo 200 410 200 200  >out2
 
-# n回食べたかの確認
-#  N=9; ./philo 20 300 100 100 $N | grep eating | sort -nk 2 | awk '{print "| "$2" "$3" "$4}' | uniq -c | tee >(cat) | awk -v N=$N '$1 < $N' | grep '^$' || echo "\nOK"
+run: 
+	make sani2
+	bash test.sh
+
+
+
+
+
+
+
+
+
+
+#	./philo 5 300 100 100 2 > out
+# valgrind --leak-check=full ./philo 5 300 100 100 2
+#	./philo 200 410 200 200  >out2
+
 
 # ./philo 200 410 200 200 | awk '{print $1}' | tee act | sort -n > exp; diff -u exp act
 

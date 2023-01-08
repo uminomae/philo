@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 18:19:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 00:14:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	run_eating(t_pthread_node *node_th, \
 	x_pthread_mutex_unlock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
 	x_pthread_mutex_lock(&node_fork->mutex, &node_th->ph->monitor);
 	x_pthread_mutex_lock(&node_fork->next->mutex, &node_th->ph->monitor);
+	if (is_end_flag(node_th))
+		return (1);
 	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
 	change_state_and_putstamp(EATING, node_th, time_eat, id);
 	node_th->cnt++;
