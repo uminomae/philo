@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:18:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:56:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 	return (node);
 }
 
-void	change_state_and_putstamp(size_t i, \
+void	put_state(size_t i, \
 		t_pthread_node *node_th, long ms, size_t id)
 {
 	long	time_current;
@@ -64,9 +64,9 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 		if (run_eating(node_th, node_fork, node_th->id, \
 			node_th->ph->argv[3]) > 0)
 			break ;
-		change_state_and_putstamp(SLEEPING, node_th, \
+		put_state(SLEEPING, node_th, \
 				node_th->ph->argv[4], node_th->id);
-		change_state_and_putstamp(THINKING, node_th, 0, node_th->id);
+		put_state(THINKING, node_th, 0, node_th->id);
 	}
 }
 

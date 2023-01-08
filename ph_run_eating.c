@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:53:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 04:56:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,17 @@ void	count_ate_person(t_pthread_node *node_th)
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	// pthread_mutex_t		*mutex_fork;
-	// t_eat_monitor		*eat_monitor;
-	x_lock_mutex(&node_fork->mutex_fork, &node_th->ph->eat_monitor);
-	x_lock_mutex(&node_fork->next->mutex_fork, &node_th->ph->eat_monitor);
-	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
-	change_state_and_putstamp(EATING, node_th, time_eat, id);
+	pthread_mutex_t		*mutex_fork;
+	t_eat_monitor		*eat_monitor;
+
+	mutex_fork = &node_fork->mutex_fork;
+	eat_monitor = &node_th->ph->eat_monitor;
+	x_lock_mutex(mutex_fork, eat_monitor);
+	x_lock_mutex(&node_fork->next->mutex_fork, eat_monitor);
+	put_state(TAKEN_FORK, node_th, 0, id);
+	put_state(EATING, node_th, time_eat, id);
 	node_th->flag_wait_cnt = true;;
-	x_unlock_mutex(&node_fork->next->mutex_fork, &node_th->ph->eat_monitor);
-	x_unlock_mutex(&node_fork->mutex_fork, &node_th->ph->eat_monitor);
+	x_unlock_mutex(&node_fork->next->mutex_fork, eat_monitor);
+	x_unlock_mutex(mutex_fork, eat_monitor);
 	return (SUCCESS);
 }
