@@ -98,6 +98,9 @@ run:
 	make sani2
 #	./philo 5 300 100 100 2
 	./philo 1 300 100 100
+	./philo 0 300 100 100
+	./philo 4 -300 100 100
+
 	./philo 5 300 100 100 2 > out
 # valgrind --leak-check=full ./philo 5 300 100 100 2
 

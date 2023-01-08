@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 15:45:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:58:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_philo
 	bool					flag_must_eat;
 	bool					flag_err;
 	size_t					argv[6];
+	// long					argv[6];
 	long					start_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
@@ -137,8 +138,8 @@ typedef struct s_philo
 # define DIED_STR		"is died"
 # define ERR_STR		"error"
 
-# define FALSE		0
-# define TRUE		1
+// # define FALSE		0
+// # define TRUE		1
 # define LOCK		1
 # define UNLOCK		0
 # define ERROR		1
@@ -156,7 +157,8 @@ enum e_put_type {
 };
 
 void	begin_philo(t_philo *ph, int argc, char **argv);
-bool	is_valid_values(int argc, char **argv);
+bool	is_valid_values(int argc);
+// bool	is_valid_values(int argc, char **argv);
 
 void	build_struct_and_list(t_philo *ph, int argc, char **argv);
 void	init_mutex(t_philo *ph);
