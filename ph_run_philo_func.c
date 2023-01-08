@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 03:21:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 11:50:51 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //食べる＞食べる時間経過させる＞眠る＞眠る時間経過させる＞起きる（考え開始時刻？考え中はいつでも食べられる？）
 //if 最後の食事の"開始"時刻から経過　＞die
 //※死は10ミリ秒以内に表示
-
+//TODO 優先順位 tailだったら条件で。
 static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 {
 	size_t	i;
@@ -66,7 +66,7 @@ void	*dining_philosophers_in_thread(void *ptr)
 	t_fork_node		*node_fork;
 	long			time_eat;
 	long			time_sleep;
-	int				ret;
+	// int				ret;
 	long	time_current;
 
 	node_th = (t_pthread_node *)ptr;
@@ -82,19 +82,19 @@ void	*dining_philosophers_in_thread(void *ptr)
 			run_case1person();
 		if (time_current - (node_th->start_time + node_th->time[EATING]) >= (long)node_th->ph->argv[2])
 		{
-			//TODO err
-			pthread_mutex_lock(&node_th->ph->die_monitor.mutex);
+			x_pthread_mutex_lock(&node_th->ph->die_monitor.mutex, &node_th->ph->monitor);
 			node_th->ph->die_monitor.flag_died = true;
-			pthread_mutex_unlock(&node_th->ph->die_monitor.mutex);
+			x_pthread_mutex_unlock(&node_th->ph->die_monitor.mutex, &node_th->ph->monitor);
 			break;
 		}
-		pthread_mutex_lock(&node_th->ph->die_monitor.mutex);
+		x_pthread_mutex_lock(&node_th->ph->die_monitor.mutex, &node_th->ph->monitor);
 		if (node_th->ph->die_monitor.flag_died == true)
 			break ;
-		pthread_mutex_unlock(&node_th->ph->die_monitor.mutex);
+		x_pthread_mutex_unlock(&node_th->ph->die_monitor.mutex, &node_th->ph->monitor);
 		//TODO ret消す
-		ret = lock_mutex_and_eat_starting(node_th, node_fork, node_th->id, time_eat);
-		if (ret > 0)
+		if (lock_mutex_and_eat_starting(node_th, node_fork, node_th->id, time_eat) > 0);
+		// ret = lock_mutex_and_eat_starting(node_th, node_fork, node_th->id, time_eat);
+		// if (ret > 0)
 			break ;
 		change_state_and_putstamp(SLEEPING, node_th, time_sleep, node_th->id);
 		change_state_and_putstamp(THINKING, node_th, 0, node_th->id);

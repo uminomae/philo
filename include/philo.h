@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 03:05:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 11:49:32 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ bool	is_error(t_philo *ph);
 
 // void	lock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
 // void	unlock_mutex(pthread_mutex_t *mutex, t_monitor *monitor);
+void	x_pthread_mutex_lock(pthread_mutex_t *mutex, t_monitor *monitor);
+void	x_pthread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor);
+
+
 
 void	destroy_mutex(t_philo *ph);
 

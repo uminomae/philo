@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 03:12:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 11:49:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	x_pthread_mutex_lock(pthread_mutex_t *mutex, t_monitor *monitor)
+void	x_pthread_mutex_lock(pthread_mutex_t *mutex, t_monitor *monitor)
 {
 	int	ret;
 
@@ -21,7 +21,7 @@ static void	x_pthread_mutex_lock(pthread_mutex_t *mutex, t_monitor *monitor)
 		get_err_flag_monitor(monitor);
 }
 
-static void	x_thread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor)
+void	x_pthread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor)
 {
 	int	ret;
 
@@ -41,9 +41,9 @@ static void	toggle_mutex(size_t flag, t_monitor *monitor, t_fork_node *node_fork
 	}
 	else if (flag == UNLOCK)
 	{
-		x_thread_mutex_unlock(&monitor->mutex, monitor);
-		x_thread_mutex_unlock(&node_fork->next->mutex, monitor);
-		x_thread_mutex_unlock(&node_fork->mutex, monitor);
+		x_pthread_mutex_unlock(&monitor->mutex, monitor);
+		x_pthread_mutex_unlock(&node_fork->next->mutex, monitor);
+		x_pthread_mutex_unlock(&node_fork->mutex, monitor);
 	}
 }
 
@@ -73,7 +73,6 @@ int	lock_mutex_and_eat_starting(t_pthread_node *node_th, t_fork_node *node_fork,
 		toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
 		return (ATE_ALL);
 	}
-	// TODO toggle消す。
 	toggle_mutex(UNLOCK, &node_th->ph->monitor, node_fork);
-	return (0);
+	return (SUCCESS);
 }
