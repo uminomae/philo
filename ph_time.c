@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 23:58:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 14:56:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	get_start_time(t_philo *ph)
 
 	ret = get_time_milli_sec();
 	if (ret < 0)
-		ph->flag_err = TRUE;
+		get_err_flag(ph);
 	else
 		ph->start_time = get_time_milli_sec();
 }

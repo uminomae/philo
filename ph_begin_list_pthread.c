@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/06 22:59:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 15:01:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ size_t	add_pthread_list( \
 		return (1);
 	node_th->id = id;
 	node_th->ph = ph;
+	// node_th->time[EATING] = 0;
 	set_status_to_thread_list(ph, node_th);
 	if (list->head == NULL)
 		make_first_pthread_node(list, node_th);

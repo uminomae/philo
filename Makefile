@@ -97,10 +97,11 @@ run:
 #	make 
 	make sani2
 #	./philo 5 300 100 100 2
+	./philo 1 300 100 100
 	./philo 5 300 100 100 2 > out
 # valgrind --leak-check=full ./philo 5 300 100 100 2
 
-	./philo 200 400 200 200  >out2
+	./philo 200 410 200 200  >out2
 #	./philo 1 100000000 10 10 1
 #	./philo 5 100000000 
 #	./philo 7 a 10 10

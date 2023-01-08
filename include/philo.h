@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 13:41:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/08 15:45:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct s_philo
 # define ERROR		1
 # define SUCCESS	0
 # define ATE_ALL	1
-# define DIED_PHILO	2
+# define END_FLAG	3
 
 enum e_put_type {
 	TAKEN_FORK = 0,
@@ -212,7 +212,12 @@ void	x_pthread_mutex_unlock(pthread_mutex_t *mutex, t_monitor *monitor);
 
 
 void	destroy_mutex(t_philo *ph);
-bool	check_ate_all(t_monitor *monitor, t_fork_node *node_fork, size_t num_people);
-
+bool	is_flag_died(t_pthread_node *node_th);
+bool	check_time_to_die(t_pthread_node *node_th, long time_current);
+bool	is_end_flag(t_pthread_node *node_th);
+bool	is_ate_all(t_monitor *monitor);
+bool	check_ate_all(t_monitor *monitor, size_t num_people);
+// bool	check_ate_all(t_monitor *monitor, t_fork_node *node_fork, size_t num_people);
+// bool	is_ate_all(t_monitor *monitor, t_fork_node *node_fork);
 
 #endif
