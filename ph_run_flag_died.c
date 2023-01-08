@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 18:11:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:32:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ bool	is_flag_died(t_pthread_node *node_th)
 
 bool	is_end_flag(t_pthread_node *node_th)
 {
+	count_times_end_eating(node_th);
 	if (check_time_to_die(node_th, get_time_milli_sec()))
 		return (true);
 	if (is_flag_died(node_th))

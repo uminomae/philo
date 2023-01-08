@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 00:14:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:28:38 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ bool	check_ate_all(t_monitor *monitor, size_t num_people)
 	return (false);
 }
 
+
+// TODO gettime err
+void	count_times_end_eating(t_pthread_node *node_th)
+{
+	long	time_current;
+	long	time_ate;
+
+	time_current = get_time_milli_sec() - node_th->start_time;
+	time_ate = node_th->time[EATING] + node_th->ph->argv[3];
+	if (time_current > time_ate)
+		node_th->cnt++;
+}
+
+// 食べ終えてからdied判定する
 //TODO longへ?argv
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
@@ -50,11 +64,9 @@ int	run_eating(t_pthread_node *node_th, \
 	x_pthread_mutex_unlock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);
 	x_pthread_mutex_lock(&node_fork->mutex, &node_th->ph->monitor);
 	x_pthread_mutex_lock(&node_fork->next->mutex, &node_th->ph->monitor);
-	if (is_end_flag(node_th))
-		return (1);
 	change_state_and_putstamp(TAKEN_FORK, node_th, 0, id);
 	change_state_and_putstamp(EATING, node_th, time_eat, id);
-	node_th->cnt++;
+	// node_th->cnt++;
 	x_pthread_mutex_unlock(&node_fork->next->mutex, &node_th->ph->monitor);
 	x_pthread_mutex_unlock(&node_fork->mutex, &node_th->ph->monitor);
 	x_pthread_mutex_lock(&node_th->ph->monitor.mutex, &node_th->ph->monitor);

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/08 23:15:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:24:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,6 @@ bool	check_time_to_die(t_pthread_node *node_th, long time_current);
 bool	is_end_flag(t_pthread_node *node_th);
 bool	is_ate_all(t_monitor *monitor);
 bool	check_ate_all(t_monitor *monitor, size_t num_people);
-// void	make_fork_list(t_philo *ph);
+void	count_times_end_eating(t_pthread_node *node_th);
 
 #endif
