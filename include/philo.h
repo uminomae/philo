@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 05:12:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 05:19:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,6 @@ typedef struct s_philo
 # define UNLOCK		0
 # define ERROR		1
 # define SUCCESS	0
-// # define ATE_ALL	1
-// # define END_FLAG	3
 
 enum e_put_type {
 	TAKEN_FORK = 0,
@@ -152,7 +150,7 @@ void	init_mutex(t_philo *ph);
 void	run_parallel_process(t_philo *ph);
 long	get_time_milli_sec(void);
 void	get_start_time(t_philo *ph);
-int		x_usleep_ms(size_t ms);
+int		usleep_ms(size_t ms);
 void	*dining_philosophers_in_thread(void *ptr);
 int		put_stamp(long time, size_t id, char *str);
 int		ft_isdigit(int c);

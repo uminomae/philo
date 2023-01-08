@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:56:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 05:14:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	put_state(size_t i, \
 		node_th->flag_err = true;
 	if (ms != 0)
 	{
-		if (x_usleep_ms(ms) < 0)
+		if (usleep_ms(ms) < 0)
 			node_th->flag_err = true;
 	}
 }
