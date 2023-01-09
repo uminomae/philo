@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 05:11:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:42:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 static void	set_flag_died(t_philo *ph, t_pthread_node *node_th)
 {
 	x_lock_mutex(&ph->die_monitor.mutex_die, &ph->eat_monitor);
-	ph->die_monitor.time_died = get_time_milli_sec() - node_th->start_time;
-	if (ph->die_monitor.time_died < 0)
-		get_err_flag(ph);
 	ph->die_monitor.flag_died = true;
 	ph->die_monitor.died_id = node_th->id;
 	x_unlock_mutex(&ph->die_monitor.mutex_die, &ph->eat_monitor);
@@ -44,18 +41,16 @@ bool	check_time_to_die(t_pthread_node *node_th, long time_current)
 bool	is_flag_died(t_pthread_node *node_th)
 {
 	bool			ret;
-	pthread_mutex_t	*mutex_died;
 	t_eat_monitor	*eat_monitor;
 	t_die_monitor	*die_monitor;
 
-	mutex_died = &node_th->ph->die_monitor.mutex_die;
-	eat_monitor = &node_th->ph->eat_monitor;
-	die_monitor = &node_th->ph->die_monitor;
 	ret = false;
-	x_lock_mutex(mutex_died, eat_monitor);
+	eat_monitor = &node_th->ph->eat_monitor;
+	x_lock_mutex(&node_th->ph->die_monitor.mutex_die, eat_monitor);
+	die_monitor = &node_th->ph->die_monitor;
 	if (die_monitor->flag_died == true)
 		ret = true;
-	x_unlock_mutex(mutex_died, eat_monitor);
+	x_unlock_mutex(&node_th->ph->die_monitor.mutex_die, eat_monitor);
 	return (ret);
 }
 

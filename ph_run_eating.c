@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 19:19:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:19:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	count_ate_person(t_pthread_node *node_th)
 bool	case_tail_person(t_pthread_node *node_th)
 {
 	if (node_th == node_th->ph->thread_list.tail)
-	{
-		// printf("%zu\n", node_th->id);
 		return (true);
-	}
 	return (false);
 }
 
@@ -118,10 +115,8 @@ void	unlock_mutex_forks(t_pthread_node *node_th, \
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	// pthread_mutex_t		*mutex_fork;
 	t_eat_monitor		*eat_monitor;
 
-	// mutex_fork = &node_fork->mutex_fork;
 	eat_monitor = &node_th->ph->eat_monitor;
 	lock_mutex_forks(node_th, node_fork, eat_monitor);
 	put_state(TAKEN_FORK, node_th, 0, id);
