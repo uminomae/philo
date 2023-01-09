@@ -18,11 +18,12 @@ SRCS		:= 	ph_main.c \
 				ph_run_parallel.c \
 				ph_run_philo_func.c \
 				ph_run_eating.c \
+				ph_run_flag_ate.c \
 				ph_run_flag_died.c \
-				ph_util_libft.c \
-				ph_util_atoi.c \
 				ph_finish.c \
 				ph_finish_free.c \
+				ph_util_libft.c \
+				ph_util_atoi.c \
 				ph_util_mutex.c
 
 # B_SRCS	:= 

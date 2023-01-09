@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 19:42:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:49:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ void	run_parallel_process(t_philo *ph)
 	}
 	join_pthread(ph);
 	if (ph->die_monitor.flag_died == true)
-		put_state(DIED, node_th, \
-				0, node_th->id);
+		put_state(DIED, node_th, 0, node_th->id);
 }

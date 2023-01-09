@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 19:42:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:55:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	count_ate_in_mutex_monitor(t_pthread_node *node_th)
 	}
 }
 
-//コード整理終了
 bool	judge_ate_died(t_pthread_node *node_th)
 {
 	pthread_mutex_t	*mutex_eat;

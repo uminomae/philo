@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 19:42:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:49:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 	}
 }
 
-//TODO 優先順位 tailだったら条件で。
 void	*dining_philosophers_in_thread(void *ptr)
 {
 	t_pthread_node	*node_th;
