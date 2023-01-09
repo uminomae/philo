@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:53:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:04:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	destroy_mutex(t_philo *ph)
 	}
 }
 
-// pthread_mutex_destroy は実際のところ、
-//mutex がアンロックされているかどうかを検査する 以外のことは何もしない。
 void	end_philo(t_philo *ph)
 {
 	destroy_mutex(ph);

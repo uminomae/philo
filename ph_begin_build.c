@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 04:52:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:04:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	make_pthread_list(t_philo *ph)
 	}
 }
 
-	//TODO leak check
 static void	strdup_status_array(t_philo *ph)
 {
 	ph->status[0] = x_strdup(&ph->alloc_list, TAKEN_FORK_STR);
