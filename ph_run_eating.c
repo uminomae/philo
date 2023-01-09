@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 05:21:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:19:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,69 @@ void	count_ate_person(t_pthread_node *node_th)
 	}
 }
 
+bool	case_tail_person(t_pthread_node *node_th)
+{
+	if (node_th == node_th->ph->thread_list.tail)
+	{
+		// printf("%zu\n", node_th->id);
+		return (true);
+	}
+	return (false);
+}
+
+void	lock_mutex_forks(t_pthread_node *node_th, \
+		t_fork_node *node_fork, t_eat_monitor *eat_monitor)
+{
+	pthread_mutex_t		*mutex_fork;
+	pthread_mutex_t		*mutex_next_fork;
+
+	mutex_fork = &node_fork->mutex_fork;
+	mutex_next_fork = &node_fork->next->mutex_fork;
+	if (case_tail_person(node_th))
+	{
+		x_lock_mutex(mutex_next_fork, eat_monitor);
+		x_lock_mutex(mutex_fork, eat_monitor);
+	}
+	else
+	{
+		x_lock_mutex(mutex_fork, eat_monitor);
+		x_lock_mutex(mutex_next_fork, eat_monitor);
+	}
+}
+
+void	unlock_mutex_forks(t_pthread_node *node_th, \
+		t_fork_node *node_fork, t_eat_monitor *eat_monitor)
+{
+	pthread_mutex_t		*mutex_fork;
+	pthread_mutex_t		*mutex_next_fork;
+
+	mutex_fork = &node_fork->mutex_fork;
+	mutex_next_fork = &node_fork->next->mutex_fork;
+	if (case_tail_person(node_th))
+	{
+		x_unlock_mutex(mutex_next_fork, eat_monitor);
+		x_unlock_mutex(mutex_fork, eat_monitor);
+	}
+	else
+	{
+		x_unlock_mutex(mutex_fork, eat_monitor);
+		x_unlock_mutex(mutex_next_fork, eat_monitor);
+	}
+}
 // x_lock_mutexのerrの格納先 phへ？
-// code整理完了
+//　時刻が経過したらstamp
 int	run_eating(t_pthread_node *node_th, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	pthread_mutex_t		*mutex_fork;
+	// pthread_mutex_t		*mutex_fork;
 	t_eat_monitor		*eat_monitor;
 
-	mutex_fork = &node_fork->mutex_fork;
+	// mutex_fork = &node_fork->mutex_fork;
 	eat_monitor = &node_th->ph->eat_monitor;
-	x_lock_mutex(mutex_fork, eat_monitor);
-	x_lock_mutex(&node_fork->next->mutex_fork, eat_monitor);
+	lock_mutex_forks(node_th, node_fork, eat_monitor);
 	put_state(TAKEN_FORK, node_th, 0, id);
 	put_state(EATING, node_th, time_eat, id);
 	node_th->flag_wait_cnt = true;
-	x_unlock_mutex(&node_fork->next->mutex_fork, eat_monitor);
-	x_unlock_mutex(mutex_fork, eat_monitor);
+	unlock_mutex_forks(node_th, node_fork, eat_monitor);
 	return (SUCCESS);
 }
