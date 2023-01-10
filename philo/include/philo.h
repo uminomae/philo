@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/10 17:02:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:15:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ typedef struct s_fork_list
 	struct s_fork_node	*tail;
 }	t_fork_list;
 
-typedef struct s_end_monitor
+typedef struct s_pthread_monitor
 {
 	pthread_t				monitor_th;
 	struct s_eat_monitor	*eat_monitor;
 	struct s_die_monitor	*die_monitor;
 	bool					flag_err;
-} 	t_end_monitor;
+} 	t_pthread_monitor;
 
 typedef struct s_pthread_node
 {
