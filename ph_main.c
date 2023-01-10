@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 00:02:09 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:19:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,11 @@ int	main(int argc, char **argv)
 	end_philo(&ph);
 	return (SUCCESS);
 }
-	// system("leaks -q philo");
+// system("leaks -q philo");
+// NG philo/に入れる
+// 関数を使う順番に並べ替える
+// 日本語のコメントはやめる
+// num_peopleとnum_forkは厳密には分けた方が誤解が少ない。意味は通じるけども。
+// taken a forkなので、それぞれ取った時に出力。
+// timeのズレは無しでピッタリにする。
+// NG case 4 410 200 200 死なないようにする。
