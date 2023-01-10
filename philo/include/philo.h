@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/09 05:19:46 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:52:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,11 @@ typedef struct s_eat_monitor
 }	t_eat_monitor;
 
 // program(s) should take the following arguments: 
-// [1]number_of_philosophers: 哲学者の数とフォークの数。
-// [2]time_to_die: time_to_die ミリ秒以内に食事を開始しなかった場合、哲学者は死亡します。
-// [3]time_to_eat: 哲学者が食事をするのにかかる時間。 
-// [4]time_to_sleep : 哲学者が睡眠に費やす時間。
+// [1]number_of_philosophers: 
+// [2]time_to_die:
+// [3]time_to_eat: 
+// [4]time_to_sleep : 
 // [5][number_of_times_each_philosopher_must_eat]: 
-//すべての哲学者がnumber_of_times_each_philosopher_must_eat 回食べた場合、シミュレーションは停止します。
 typedef struct s_philo
 {
 	long					sleep_seconds;
