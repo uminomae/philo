@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 17:14:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 22:25:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	join_pthread(t_philo *ph)
 	t_pthread_node	*node_th;
 
 	num_people = ph->argv[1];
+	ret = pthread_join(ph->end_monitor.monitor_th, NULL);
 	i = 0;
 	while (i < num_people)
 	{
@@ -46,8 +47,28 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-void	*run_monitor_thread(void *ptr)
+bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
 {
+	pthread_mutex_t	*mutex_eat;
+	t_eat_monitor	*eat_monitor;
+
+	mutex_eat = &end_monitor->eat_monitor.mutex_eat;
+	eat_monitor = &end_monitor->eat_monitor;
+	if (is_flag_died(end_monitor))
+		return (true);
+	x_lock_mutex(mutex_eat, eat_monitor);
+	if (judge_ate_all(eat_monitor, end_monitor->ph->argv[1]))
+		return (true);
+	x_unlock_mutex(mutex_eat, eat_monitor);
+	return (false);
+}
+
+void	*end_monitor_in_thread(void *ptr)
+{
+	t_pthread_monitor	*end_monitor;
+
+	end_monitor = (t_pthread_monitor *)ptr;
+	rutine_judge_end_in_thread(end_monitor);
 	return (ptr);
 }
 
@@ -61,13 +82,13 @@ static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 		get_err_flag_node_th(node_th);
 }
 
-static void	create_and_run_pthread_monitor(t_pthread_monitor *struct_monitor)
+static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 {
 	int	ret;
 
-	ret = pthread_create(&struct_monitor->monitor_th, NULL, run_monitor_thread, struct_monitor);
+	ret = pthread_create(&end_monitor->monitor_th, NULL, end_monitor_in_thread, end_monitor);
 	if (ret != 0)
-		get_err_flag_eat_monitor(struct_monitor->eat_monitor);
+		get_err_flag_eat_monitor(&end_monitor->eat_monitor);
 }
 
 void	run_parallel_process(t_philo *ph)
@@ -75,12 +96,13 @@ void	run_parallel_process(t_philo *ph)
 	size_t			i;
 	t_pthread_node	*node_th;
 	size_t			num_people;
-	t_pthread_monitor	struct_monitor;
+	t_pthread_monitor	*end_monitor;
 
 	num_people = ph->argv[1];
+	end_monitor = &ph->end_monitor;
 	i = 0;
 	get_start_time(ph);
-	create_and_run_pthread_monitor(&struct_monitor);
+	create_and_run_pthread_monitor(end_monitor);
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
@@ -92,6 +114,6 @@ void	run_parallel_process(t_philo *ph)
 		i++;
 	}
 	join_pthread(ph);
-	if (ph->die_monitor.flag_died == true)
+	if (ph->end_monitor.die_monitor.flag_died == true)
 		put_state(DIED, node_th, 0, node_th->id);
 }

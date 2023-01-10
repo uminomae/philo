@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 14:39:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 22:37:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	run_case1person(t_pthread_node	*node_th)
 {
 	while (1)
 	{
-		if (judge_ate_died(node_th))
+		if (check_time_to_die(node_th, get_time_milli_sec()))
 			return (1);
 	}
 }
@@ -58,17 +58,17 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 {
 	while (1)
 	{
-		// if (judge_ate_died(node_th))
-		// 	break ;
+		
+		count_ate_person(node_th);
+		if (check_time_to_die(node_th, get_time_milli_sec()))
+			break ;
+		count_ate_in_mutex_monitor(node_th);
+		
 		if (run_eating(node_th, node_fork, node_th->id, \
 			node_th->ph->argv[3]) > 0)
 			break ;
-		// if (judge_ate_died(node_th))
-		// 	break ;
 		put_state(SLEEPING, node_th, \
 				node_th->ph->argv[4], node_th->id);
-		// if (judge_ate_died(node_th))
-		// 	break ;
 		put_state(THINKING, node_th, 0, node_th->id);
 	}
 }

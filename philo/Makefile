@@ -2,6 +2,7 @@
 #make&test
 #=============================
 run: 
+# make re
 	make sani_thread
 	bash test.sh
 #=============================

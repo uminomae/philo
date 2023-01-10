@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/10 17:15:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 22:12:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,32 @@ typedef struct s_fork_list
 	struct s_fork_node	*tail;
 }	t_fork_list;
 
+typedef struct s_die_monitor
+{
+	pthread_mutex_t			mutex_die;
+	struct s_philo			*ph;
+	bool					flag_err;
+	bool					flag_died;
+	long					time_died;
+	size_t					died_id;
+}	t_die_monitor;
+
+typedef struct s_eat_monitor
+{
+	pthread_mutex_t			mutex_eat;
+	struct s_philo			*ph;
+	bool					flag_err;
+	size_t					ate_cnt;
+	bool					ate_all;
+}	t_eat_monitor;
+
 typedef struct s_pthread_monitor
 {
 	pthread_t				monitor_th;
-	struct s_eat_monitor	*eat_monitor;
-	struct s_die_monitor	*die_monitor;
+	struct s_eat_monitor	eat_monitor;
+	struct s_die_monitor	die_monitor;
 	bool					flag_err;
+	struct s_philo			*ph;
 } 	t_pthread_monitor;
 
 typedef struct s_pthread_node
@@ -86,25 +106,6 @@ typedef struct s_pthread_list
 	struct s_pthread_node	*tail;
 }	t_pthread_list;
 
-typedef struct s_die_monitor
-{
-	pthread_mutex_t			mutex_die;
-	struct s_philo			*ph;
-	bool					flag_err;
-	bool					flag_died;
-	long					time_died;
-	size_t					died_id;
-}	t_die_monitor;
-
-typedef struct s_eat_monitor
-{
-	pthread_mutex_t			mutex_eat;
-	struct s_philo			*ph;
-	bool					flag_err;
-	size_t					ate_cnt;
-	bool					ate_all;
-}	t_eat_monitor;
-
 // program(s) should take the following arguments: 
 // [1]number_of_philosophers: 
 // [2]time_to_die:
@@ -122,10 +123,11 @@ typedef struct s_philo
 	struct s_fork_list		fork_list;
 	struct s_pthread_list	thread_list;
 	struct s_ptr_list		alloc_list;
-	struct s_eat_monitor	eat_monitor;
 	char					*status[5];
 	bool					ate_all;
-	struct s_die_monitor	die_monitor;
+	struct s_pthread_monitor		end_monitor;
+	struct s_eat_monitor	*eat_monitor;
+	struct s_die_monitor	*die_monitor;
 }	t_philo;
 
 # define NL				"\n"
@@ -178,15 +180,19 @@ void	get_err_flag_node_th(t_pthread_node *node);
 void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
 void	get_err_flag_eat_monitor(t_eat_monitor *node);
+void	get_err_flag_end_monitor(t_pthread_monitor *node);
 bool	is_error(t_philo *ph);
 void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);
 void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);
 void	destroy_mutex(t_philo *ph);
-bool	is_flag_died(t_pthread_node *node_th);
+// bool	is_flag_died(t_pthread_node *node_th);
+bool	is_flag_died(t_pthread_monitor *eat_monitor);
+
 bool	check_time_to_die(t_pthread_node *node_th, long time_current);
-bool	judge_ate_died(t_pthread_node *node_th);
+// bool	judge_ate_died(t_pthread_node *node_th);
 bool	is_ate_all(t_eat_monitor *eat_monitor);
 bool	judge_ate_all(t_eat_monitor *eat_monitor, size_t num_people);
 void	count_ate_person(t_pthread_node *node_th);
 bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt);
+void	count_ate_in_mutex_monitor(t_pthread_node *node_th);
 #endif

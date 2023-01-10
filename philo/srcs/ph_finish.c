@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 20:04:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 22:16:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	destroy_mutex(t_philo *ph)
 
 	node_fork = ph->fork_list.head;
 	num_people = ph->argv[1];
-	x_pthread_mutex_destroy(ph, &ph->eat_monitor.mutex_eat);
-	x_pthread_mutex_destroy(ph, &ph->die_monitor.mutex_die);
+	x_pthread_mutex_destroy(ph, &ph->end_monitor.eat_monitor.mutex_eat);
+	x_pthread_mutex_destroy(ph, &ph->end_monitor.die_monitor.mutex_die);
 	i = 0;
 	while (i < num_people)
 	{
