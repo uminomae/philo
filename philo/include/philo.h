@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/10 22:12:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 23:56:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_pthread_monitor
 
 typedef struct s_pthread_node
 {
+	pthread_mutex_t			mutex_th;
 	pthread_t				thread;
 	size_t					id;
 	long					time[5];
@@ -92,6 +93,7 @@ typedef struct s_pthread_node
 	struct s_philo			*ph;
 	bool					flag_err;
 	bool					flag_died;
+	bool					flag_end;
 	long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
@@ -182,17 +184,25 @@ void	get_err_flag_node_ptr(t_ptr_node *node);
 void	get_err_flag_eat_monitor(t_eat_monitor *node);
 void	get_err_flag_end_monitor(t_pthread_monitor *node);
 bool	is_error(t_philo *ph);
-void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);
+
+void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_pthread_monitor *end_monitor);
+void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_pthread_monitor *end_monitor);
+void	x_lock_mutex_fork(t_fork_node *node_fork);
+void	x_unlock_mutex_fork(t_fork_node *node_fork);
+void	x_lock_mutex_th(t_pthread_node *node_th);
+void	x_unlock_mutex_th(t_pthread_node *node_th);
+
+
+
 void	destroy_mutex(t_philo *ph);
 // bool	is_flag_died(t_pthread_node *node_th);
 bool	is_flag_died(t_pthread_monitor *eat_monitor);
 
 bool	check_time_to_die(t_pthread_node *node_th, long time_current);
 // bool	judge_ate_died(t_pthread_node *node_th);
-bool	is_ate_all(t_eat_monitor *eat_monitor);
-bool	judge_ate_all(t_eat_monitor *eat_monitor, size_t num_people);
+bool	is_ate_all(t_pthread_monitor *end_monitor);
+bool	judge_ate_all(t_pthread_monitor *end_monitor, size_t num_people);
 void	count_ate_person(t_pthread_node *node_th);
 bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt);
-void	count_ate_in_mutex_monitor(t_pthread_node *node_th);
+void	count_ate_in_eat_monitor(t_pthread_node *node_th);
 #endif

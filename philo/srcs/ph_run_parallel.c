@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 22:25:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 00:04:51 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,29 @@ static void	join_pthread(t_philo *ph)
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
+		// x_lock_mutex_th(node_th);
 		ret = pthread_join(node_th->thread, NULL);
 		if (ret != 0)
 			get_err_flag_node_th(node_th);
+		// x_unlock_mutex_th(node_th);
+		i++;
+	}
+}
+
+void	end_flag_th(t_philo *ph)
+{
+	size_t			i;
+	size_t			num_people;
+	t_pthread_node	*node_th;
+
+	num_people = ph->argv[1];
+	i = 0;
+	while (i < num_people)
+	{
+		node_th = get_pthread_node(&ph->thread_list, i);
+		x_lock_mutex_th(node_th);
+		node_th->flag_end = true;
+		x_unlock_mutex_th(node_th);
 		i++;
 	}
 }
@@ -50,16 +70,14 @@ static void	join_pthread(t_philo *ph)
 bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
 {
 	pthread_mutex_t	*mutex_eat;
-	t_eat_monitor	*eat_monitor;
 
 	mutex_eat = &end_monitor->eat_monitor.mutex_eat;
-	eat_monitor = &end_monitor->eat_monitor;
 	if (is_flag_died(end_monitor))
 		return (true);
-	x_lock_mutex(mutex_eat, eat_monitor);
-	if (judge_ate_all(eat_monitor, end_monitor->ph->argv[1]))
+	x_lock_mutex(mutex_eat, end_monitor);
+	if (judge_ate_all(end_monitor, end_monitor->ph->argv[1]))
 		return (true);
-	x_unlock_mutex(mutex_eat, eat_monitor);
+	x_unlock_mutex(mutex_eat, end_monitor);
 	return (false);
 }
 
@@ -68,7 +86,13 @@ void	*end_monitor_in_thread(void *ptr)
 	t_pthread_monitor	*end_monitor;
 
 	end_monitor = (t_pthread_monitor *)ptr;
-	rutine_judge_end_in_thread(end_monitor);
+	while (1)
+	{
+		if (rutine_judge_end_in_thread(end_monitor))
+			break ;
+	}
+	end_flag_th(end_monitor->ph);
+	// join_pthread(end_monitor->ph);
 	return (ptr);
 }
 
@@ -89,6 +113,8 @@ static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 	ret = pthread_create(&end_monitor->monitor_th, NULL, end_monitor_in_thread, end_monitor);
 	if (ret != 0)
 		get_err_flag_eat_monitor(&end_monitor->eat_monitor);
+	// join_pthread(end_monitor->ph);
+	// join_pthread(end_monitor->ph);
 }
 
 void	run_parallel_process(t_philo *ph)

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 22:13:47 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 23:01:43 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,43 @@ bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 	return (false);
 }
 
-void	count_ate_in_mutex_monitor(t_pthread_node *node_th)
+void	count_ate_in_eat_monitor(t_pthread_node *node_th)
 {
 	pthread_mutex_t	*mutex_eat;
-	t_eat_monitor	*eat_monitor;
+	t_pthread_monitor	*end_monitor;
 
 	mutex_eat = &node_th->ph->end_monitor.eat_monitor.mutex_eat;
-	eat_monitor = &node_th->ph->end_monitor.eat_monitor;
+	end_monitor = &node_th->ph->end_monitor;
 	if (is_required_times_ate(node_th, node_th->cnt))
 	{
-		x_lock_mutex(mutex_eat, eat_monitor);
+		x_lock_mutex(mutex_eat, end_monitor);
 		node_th->ph->end_monitor.eat_monitor.ate_cnt++;
-		x_unlock_mutex(mutex_eat, eat_monitor);
+		x_unlock_mutex(mutex_eat, end_monitor);
 	}
 }
 
-bool	is_ate_all(t_eat_monitor *eat_monitor)
+bool	is_ate_all(t_pthread_monitor *end_monitor)
 {
-	if (eat_monitor->ate_all == true)
+	pthread_mutex_t	*mutex_eat;
+
+	mutex_eat = &end_monitor->eat_monitor.mutex_eat;
+	if (end_monitor->eat_monitor.ate_all == true)
 	{
-		x_unlock_mutex(&eat_monitor->mutex_eat, eat_monitor);
+		x_unlock_mutex(mutex_eat, end_monitor);
 		return (true);
 	}
 	return (false);
 }
 
-bool	judge_ate_all(t_eat_monitor *eat_monitor, size_t num_people)
+bool	judge_ate_all(t_pthread_monitor *end_monitor, size_t num_people)
 {
-	if (eat_monitor->ate_cnt == num_people)
+	pthread_mutex_t	*mutex_eat;
+
+	mutex_eat = &end_monitor->eat_monitor.mutex_eat;
+	if (end_monitor->eat_monitor.ate_cnt == num_people)
 	{
-		eat_monitor->ate_all = true;
-		x_unlock_mutex(&eat_monitor->mutex_eat, eat_monitor);
+		end_monitor->eat_monitor.ate_all = true;
+		x_unlock_mutex(mutex_eat, end_monitor);
 		return (true);
 	}
 	return (false);

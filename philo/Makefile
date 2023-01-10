@@ -1,10 +1,4 @@
-#=============================
-#make&test
-#=============================
-run: 
-# make re
-	make sani_thread
-	bash test.sh
+
 #=============================
 #flags
 #=============================
@@ -30,7 +24,7 @@ ph_error_flag.c \
 ph_error_check.c \
 ph_malloc.c \
 ph_run_parallel.c \
-ph_run_philo_func.c \
+ph_run_dining_philo_func.c \
 ph_run_eating.c \
 ph_run_flag_ate.c \
 ph_run_flag_died.c \
@@ -107,6 +101,13 @@ sani_add: re
 
 sani_thread: CFLAGS +=  -g  -fsanitize=thread 
 sani_thread: re
+#=============================
+#make&test
+#=============================
+run: 
+# make re
+	make sani_thread
+	bash test.sh
 
 .PHONY: all clean fclean re bonus sani run sani2
 

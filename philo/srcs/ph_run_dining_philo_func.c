@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_philo_func.c                                :+:      :+:    :+:   */
+/*   ph_run_dining_philo_func.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 22:37:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 23:57:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,18 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 {
 	while (1)
 	{
-		
+		x_lock_mutex_th(node_th);
+		if (node_th->flag_end == true)
+		{
+			x_unlock_mutex_th(node_th);
+			break ;
+		}
+		x_unlock_mutex_th(node_th);
+
 		count_ate_person(node_th);
 		if (check_time_to_die(node_th, get_time_milli_sec()))
 			break ;
-		count_ate_in_mutex_monitor(node_th);
+		count_ate_in_eat_monitor(node_th);
 		
 		if (run_eating(node_th, node_fork, node_th->id, \
 			node_th->ph->argv[3]) > 0)
