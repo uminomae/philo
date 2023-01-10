@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/10 14:52:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:02:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ typedef struct s_fork_list
 	struct s_fork_node	*tail;
 }	t_fork_list;
 
+typedef struct s_end_monitor
+{
+	pthread_t				monitor_th;
+	struct s_eat_monitor	*eat_monitor;
+	struct s_die_monitor	*die_monitor;
+	bool					flag_err;
+} 	t_end_monitor;
+
 typedef struct s_pthread_node
 {
 	pthread_t				thread;
@@ -70,7 +78,6 @@ typedef struct s_pthread_node
 	size_t					cnt;
 	bool					ate;
 	bool					flag_wait_cnt;
-
 }	t_pthread_node;
 
 typedef struct s_pthread_list
@@ -170,7 +177,7 @@ void	get_err_flag(t_philo *ph);
 void	get_err_flag_node_th(t_pthread_node *node);
 void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
-void	get_err_flag_monitor(t_eat_monitor *node);
+void	get_err_flag_eat_monitor(t_eat_monitor *node);
 bool	is_error(t_philo *ph);
 void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);
 void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_eat_monitor *eat_monitor);

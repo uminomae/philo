@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 19:49:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:11:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
+void	*run_monitor_thread(void *ptr)
+{
+	return (ptr);
+}
+
 static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 {
 	int	ret;
@@ -56,15 +61,26 @@ static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 		get_err_flag_node_th(node_th);
 }
 
+static void	create_and_run_pthread_monitor(t_end_monitor *end_monitor)
+{
+	int	ret;
+
+	ret = pthread_create(&end_monitor->monitor_th, NULL, run_monitor_thread, end_monitor);
+	if (ret != 0)
+		get_err_flag_eat_monitor(end_monitor->eat_monitor);
+}
+
 void	run_parallel_process(t_philo *ph)
 {
 	size_t			i;
 	t_pthread_node	*node_th;
 	size_t			num_people;
+	t_end_monitor	end_monitor;
 
 	num_people = ph->argv[1];
 	i = 0;
 	get_start_time(ph);
+	create_and_run_pthread_monitor(&end_monitor);
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
