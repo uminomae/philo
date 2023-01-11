@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/11 19:10:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:21:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,18 @@ typedef struct s_eat_monitor
 	bool					flag_err;
 }	t_eat_monitor;
 
-typedef struct s_pthread_monitor_node
+typedef struct s_monitor_node
 {
 	pthread_t				monitor_th;
+	pthread_mutex_t			mutex_monitor;
+	size_t					id;
 	struct s_eat_monitor	eat_monitor;
 	struct s_die_monitor	die_monitor;
 	bool					flag_err;
-	struct s_philo_main			*ph;
-} 	t_pthread_monitor_node;
+	struct s_philo_main		*ph;
+	char					**status[5];
+	struct s_monitor_node	*next;
+} 	t_monitor_node;
 
 typedef struct s_monitor_list
 {
@@ -152,7 +156,7 @@ typedef struct s_philo_main
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
-	struct s_pthread_monitor_node		end_monitor;
+	struct s_monitor_node		end_monitor;
 	struct s_eat_monitor	*eat_monitor;
 	struct s_die_monitor	*die_monitor;
 	struct s_mutex			mutex_struct;
@@ -164,6 +168,8 @@ enum e_err_type {
 	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
 	ERR_ADD_PTHREAD_LIST,
+	ERR_ADD_FORK_LIST,
+	ERR_ADD_MONITOR_LIST,
 	ERR_TYPE_END,
 };
 
@@ -213,6 +219,9 @@ void	put_state(size_t i, \
 size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_pthread_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
+size_t	add_monitor_list( \
+			t_philo_main *ph, t_monitor_list *list, t_ptr_list *ptr_list, size_t id);
+
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
 void	end_error(t_philo_main *ph);
@@ -224,13 +233,13 @@ void	get_err_flag_node_th(t_philo_node *node);
 void	get_err_flag_node_fork(t_fork_node *node);
 void	get_err_flag_node_ptr(t_ptr_node *node);
 void	get_err_flag_eat_monitor(t_eat_monitor *node);
-void	get_err_flag_end_monitor(t_pthread_monitor_node *node);
+void	get_err_flag_end_monitor(t_monitor_node *node);
 void	get_err_num(t_mutex *mutex_struct, size_t err_num);
 void	get_err_num_ph(t_philo_main *ph, size_t err_num);
 bool	is_error(t_philo_main *ph);
 
-void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_pthread_monitor_node *end_monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_pthread_monitor_node *end_monitor);
+void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor_node *end_monitor);
+void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_monitor_node *end_monitor);
 void	x_lock_mutex_fork(t_fork_node *node_fork);
 void	x_unlock_mutex_fork(t_fork_node *node_fork);
 void	x_lock_mutex_philo(t_philo_node *node_th);
@@ -239,7 +248,7 @@ void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 
 void	destroy_mutex(t_philo_main *ph);
-bool	is_flag_died(t_pthread_monitor_node *eat_monitor);
+bool	is_flag_died(t_monitor_node *eat_monitor);
 
 bool	check_time_to_die(t_philo_node *node_th, long time_current);
 bool	judge_ate_all(t_philo_main *ph, size_t num_people);

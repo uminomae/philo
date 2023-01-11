@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:23:47 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static void	make_list(t_philo_main *ph)
 		if (add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id) == 1)
 			get_err_num_ph(ph, ERR_ADD_PTHREAD_LIST);
 		if (add_fork_list(&ph->fork_list, &ph->alloc_list, id) == 1)
-			get_err_num_ph(ph, ERR_ADD_PTHREAD_LIST);
+			get_err_num_ph(ph, ERR_ADD_FORK_LIST);
+		if (add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id) == 1)
+			get_err_num_ph(ph, ERR_ADD_MONITOR_LIST);
 		id++;
 	}
 }

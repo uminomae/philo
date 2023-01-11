@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:14:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	end_flag_th(t_philo_main *ph)
 	}
 }
 
-bool rutine_judge_end_in_thread(t_pthread_monitor_node *end_monitor)
+bool rutine_judge_end_in_thread(t_monitor_node *end_monitor)
 {
 	t_mutex	*mutex_struct;
 	t_philo_main *ph;
@@ -85,9 +85,9 @@ bool rutine_judge_end_in_thread(t_pthread_monitor_node *end_monitor)
 
 void	*end_monitor_in_thread(void *ptr)
 {
-	t_pthread_monitor_node	*end_monitor;
+	t_monitor_node	*end_monitor;
 
-	end_monitor = (t_pthread_monitor_node *)ptr;
+	end_monitor = (t_monitor_node *)ptr;
 	while (1)
 	{
 		if (rutine_judge_end_in_thread(end_monitor))
@@ -108,7 +108,7 @@ static void	create_and_run_pthread_philo(t_philo_node *node_th)
 }
 
 
-static void	create_and_run_pthread_monitor(t_pthread_monitor_node *end_monitor)
+static void	create_and_run_pthread_monitor(t_monitor_node *end_monitor)
 {
 	int	ret;
 
@@ -149,7 +149,7 @@ void	run_parallel_process(t_philo_main *ph)
 {
 	size_t			i;
 	size_t			num_people;
-	t_pthread_monitor_node	*end_monitor;
+	t_monitor_node	*end_monitor;
 
 	num_people = ph->argv[1];
 	end_monitor = &ph->end_monitor;

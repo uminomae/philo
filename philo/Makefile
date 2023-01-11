@@ -19,7 +19,8 @@ ph_init_mutex.c \
 ph_begin_is_valid.c \
 ph_begin_build.c \
 ph_begin_list_fork.c \
-ph_begin_list_pthread.c \
+ph_begin_list_philo.c \
+ph_begin_list_monitor.c \
 ph_error_flag.c \
 ph_error_check.c \
 ph_malloc.c \

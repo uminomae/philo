@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:14:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	count_ate_in_eat_monitor(t_philo_node *node_th)
 	}
 }
 
-// bool	is_ate_all(t_pthread_monitor_node *end_monitor)
+// bool	is_ate_all(t_monitor_node *end_monitor)
 // {
 // 	pthread_mutex_t	*mutex_eat;
 

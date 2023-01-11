@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:14:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	check_time_to_die(t_philo_node *node_th, long time_current)
 	return (false);
 }
 
-bool	is_flag_died(t_pthread_monitor_node *end_monitor)
+bool	is_flag_died(t_monitor_node *end_monitor)
 {
 	bool			ret;
 	t_die_struct	*died_struct;

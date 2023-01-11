@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:14:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	get_err_flag_eat_monitor(t_eat_monitor *node)
 	node->flag_err = true;
 }
 
-void	get_err_flag_end_monitor(t_pthread_monitor_node *node)
+void	get_err_flag_end_monitor(t_monitor_node *node)
 {
 	node->flag_err = true;
 }
