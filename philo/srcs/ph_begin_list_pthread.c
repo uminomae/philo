@@ -6,38 +6,38 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 17:58:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_pthread_node	*init_pthread_node(t_ptr_list *ptr_list)
+static t_philo_node	*init_philo_node(t_ptr_list *ptr_list)
 {
-	t_pthread_node	*node;
+	t_philo_node	*node;
 
-	node = (t_pthread_node *)malloc_and_add_ptr_list(ptr_list, \
-				sizeof(t_pthread_node));
+	node = (t_philo_node *)malloc_and_add_ptr_list(ptr_list, \
+				sizeof(t_philo_node));
 	if (node == NULL)
 		return (NULL);
-	memset(node, 0, sizeof(t_pthread_node));
+	memset(node, 0, sizeof(t_philo_node));
 	return (node);
 }
 
-static void	make_first_pthread_node(t_pthread_list *list, t_pthread_node *node)
+static void	make_first_philo_node(t_philo_list *list, t_philo_node *node)
 {
 	list->head = node;
 	list->tail = node;
 }
 
-static void	add_last_pthread_node(t_pthread_list *list, t_pthread_node *node)
+static void	add_last_philo_node(t_philo_list *list, t_philo_node *node)
 {
 	list->tail->next = node;
 	list->tail = node;
 	node->next = list->head;
 }
 
-static void	set_status_to_thread_list(t_philo *ph, t_pthread_node *node)
+static void	set_status_to_thread_list(t_philo_main *ph, t_philo_node *node)
 {
 	size_t	i;
 
@@ -50,19 +50,19 @@ static void	set_status_to_thread_list(t_philo *ph, t_pthread_node *node)
 }
 
 size_t	add_pthread_list( \
-			t_philo *ph, t_pthread_list *list, t_ptr_list *ptr_list, size_t id)
+			t_philo_main *ph, t_philo_list *list, t_ptr_list *ptr_list, size_t id)
 {
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 
-	node_th = init_pthread_node(ptr_list);
+	node_th = init_philo_node(ptr_list);
 	if (node_th == NULL)
 		return (1);
 	node_th->id = id;
 	node_th->ph = ph;
 	set_status_to_thread_list(ph, node_th);
 	if (list->head == NULL)
-		make_first_pthread_node(list, node_th);
+		make_first_philo_node(list, node_th);
 	else
-		add_last_pthread_node(list, node_th);
+		add_last_philo_node(list, node_th);
 	return (0);
 }

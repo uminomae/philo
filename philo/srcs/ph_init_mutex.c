@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:43:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	x_pthread_mutex_init(t_philo *ph, pthread_mutex_t *mutex)
+static void	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex)
 {
 	int	ret;
 
@@ -21,7 +21,7 @@ static void	x_pthread_mutex_init(t_philo *ph, pthread_mutex_t *mutex)
 		get_err_flag(ph);
 }
 
-void	init_mutex(t_philo *ph)
+void	init_mutex(t_philo_main *ph)
 {
 	size_t		i;
 	size_t		num_people;

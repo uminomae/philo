@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:59:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	make_list(t_philo *ph)
+static void	make_list(t_philo_main *ph)
 {
 	size_t	id;
 
@@ -27,7 +27,7 @@ static void	make_list(t_philo *ph)
 	}
 }
 
-static void	strdup_status_array(t_philo *ph)
+static void	strdup_status_array(t_philo_main *ph)
 {
 	ph->status[0] = x_strdup(&ph->alloc_list, TAKEN_FORK_STR);
 	ph->status[1] = x_strdup(&ph->alloc_list, EATING_STR);
@@ -36,7 +36,7 @@ static void	strdup_status_array(t_philo *ph)
 	ph->status[4] = x_strdup(&ph->alloc_list, DIED_STR);
 }
 
-int	build_struct_and_list(t_philo *ph, int argc)
+int	build_struct_and_list(t_philo_main *ph, int argc)
 {
 	if (argc == 6)
 		ph->flag_must_eat = true;

@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:38:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
+bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 {
 	if (node_th->flag_must_eat == true && \
 		node_th->times_must_eat == cnt)
@@ -20,7 +20,7 @@ bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 	return (false);
 }
 
-void	count_ate_in_eat_monitor(t_pthread_node *node_th)
+void	count_ate_in_eat_monitor(t_philo_node *node_th)
 {
 	t_mutex				*mutex_struct;
 
@@ -33,7 +33,7 @@ void	count_ate_in_eat_monitor(t_pthread_node *node_th)
 	}
 }
 
-// bool	is_ate_all(t_pthread_monitor *end_monitor)
+// bool	is_ate_all(t_pthread_monitor_node *end_monitor)
 // {
 // 	pthread_mutex_t	*mutex_eat;
 
@@ -46,7 +46,7 @@ void	count_ate_in_eat_monitor(t_pthread_node *node_th)
 // 	return (false);
 // }
 
-bool	judge_ate_all(t_philo *ph, size_t num_people)
+bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
 	if (ph->ate_struct.ate_cnt == num_people)
 	{
@@ -57,7 +57,7 @@ bool	judge_ate_all(t_philo *ph, size_t num_people)
 	return (false);
 }
 
-void	count_ate_person(t_pthread_node *node_th)
+void	count_ate_person(t_philo_node *node_th)
 {
 	long	time_current;
 	long	time_ate;

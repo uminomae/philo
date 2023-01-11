@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/09 05:14:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ long	get_time_milli_sec(void)
 	return (milli_sec);
 }
 
-void	get_start_time(t_philo *ph)
+void	get_start_time(t_philo_main *ph)
 {
 	long	ret;
 

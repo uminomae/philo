@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:40:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:08:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
+static t_philo_node	*get_philo_node(t_philo_list *list_th, size_t id)
 {
 	size_t			i;
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 
 	node_th = list_th->head;
 	i = 0;
@@ -27,19 +27,19 @@ static t_pthread_node	*get_pthread_node(t_pthread_list *list_th, size_t id)
 	return (node_th);
 }
 
-static void	join_pthread(t_philo *ph)
+static void	join_pthread(t_philo_main *ph)
 {
 	size_t			i;
 	size_t			num_people;
 	int				ret;
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 
 	num_people = ph->argv[1];
 	ret = pthread_join(ph->end_monitor.monitor_th, NULL);
 	i = 0;
 	while (i < num_people)
 	{
-		node_th = get_pthread_node(&ph->thread_list, i);
+		node_th = get_philo_node(&ph->thread_list, i);
 		// x_lock_mutex_philo(node_th);
 		ret = pthread_join(node_th->thread, NULL);
 		if (ret != 0)
@@ -49,17 +49,17 @@ static void	join_pthread(t_philo *ph)
 	}
 }
 
-void	end_flag_th(t_philo *ph)
+void	end_flag_th(t_philo_main *ph)
 {
 	size_t			i;
 	size_t			num_people;
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 
 	num_people = ph->argv[1];
 	i = 0;
 	while (i < num_people)
 	{
-		node_th = get_pthread_node(&ph->thread_list, i);
+		node_th = get_philo_node(&ph->thread_list, i);
 		x_lock_mutex_philo(node_th);
 		node_th->flag_end = true;
 		x_unlock_mutex_philo(node_th);
@@ -67,10 +67,10 @@ void	end_flag_th(t_philo *ph)
 	}
 }
 
-bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
+bool rutine_judge_end_in_thread(t_pthread_monitor_node *end_monitor)
 {
 	t_mutex	*mutex_struct;
-	t_philo *ph;
+	t_philo_main *ph;
 
 	ph = end_monitor->ph;
 	mutex_struct = &end_monitor->ph->mutex_struct;
@@ -85,9 +85,9 @@ bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
 
 void	*end_monitor_in_thread(void *ptr)
 {
-	t_pthread_monitor	*end_monitor;
+	t_pthread_monitor_node	*end_monitor;
 
-	end_monitor = (t_pthread_monitor *)ptr;
+	end_monitor = (t_pthread_monitor_node *)ptr;
 	while (1)
 	{
 		if (rutine_judge_end_in_thread(end_monitor))
@@ -97,7 +97,7 @@ void	*end_monitor_in_thread(void *ptr)
 	return (ptr);
 }
 
-static void	create_and_run_pthread_philo(t_pthread_node *node_th)
+static void	create_and_run_pthread_philo(t_philo_node *node_th)
 {
 	int	ret;
 
@@ -108,7 +108,7 @@ static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 }
 
 
-static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
+static void	create_and_run_pthread_monitor(t_pthread_monitor_node *end_monitor)
 {
 	int	ret;
 
@@ -117,11 +117,11 @@ static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 		get_err_flag_eat_monitor(&end_monitor->eat_monitor);
 }
 
-void	set_and_run_philo(t_philo *ph, size_t id)
+void	set_and_run_philo(t_philo_main *ph, size_t id)
 {
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 
-	node_th = get_pthread_node(&ph->thread_list, id);
+	node_th = get_philo_node(&ph->thread_list, id);
 	node_th->id = id;
 	node_th->start_time = ph->start_time;
 	node_th->flag_must_eat = ph->flag_must_eat;
@@ -132,11 +132,11 @@ void	set_and_run_philo(t_philo *ph, size_t id)
 	create_and_run_pthread_philo(node_th);
 }
 
-// void	set_and_run_monitor(t_philo *ph, size_t id)
+// void	set_and_run_monitor(t_philo_main *ph, size_t id)
 // {
-// 	t_pthread_node	*node_th;
+// 	t_philo_node	*node_th;
 
-// 	node_th = get_pthread_node(&ph->thread_list, id);
+// 	node_th = get_philo_node(&ph->thread_list, id);
 // 	node_th->id = id;
 // 	node_th->start_time = ph->start_time;
 // 	node_th->flag_must_eat = ph->flag_must_eat;
@@ -145,11 +145,11 @@ void	set_and_run_philo(t_philo *ph, size_t id)
 // }
 
 //create thread num_people and monitor
-void	run_parallel_process(t_philo *ph)
+void	run_parallel_process(t_philo_main *ph)
 {
 	size_t			i;
 	size_t			num_people;
-	t_pthread_monitor	*end_monitor;
+	t_pthread_monitor_node	*end_monitor;
 
 	num_people = ph->argv[1];
 	end_monitor = &ph->end_monitor;

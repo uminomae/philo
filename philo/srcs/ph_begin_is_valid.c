@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 17:06:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static size_t	check_digit(int argc, char **argv)
 	return (0);
 }
 
-static void	init_struct_philo(t_philo *ph)
+static void	init_struct_philo(t_philo_main *ph)
 {
-	memset(ph, 0, sizeof(t_philo));
+	memset(ph, 0, sizeof(t_philo_main));
 	// ph->ate_struct.ate_cnt = 0;
 }
 
-static void	argv_to_int(t_philo *ph, int argc, char **argv)
+static void	argv_to_int(t_philo_main *ph, int argc, char **argv)
 {
 	int	i;
 	int	ret;
@@ -59,7 +59,7 @@ static void	argv_to_int(t_philo *ph, int argc, char **argv)
 	}
 }
 
-bool	is_valid_values(t_philo *ph, int argc, char **argv)
+bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 {
 	size_t	ret;
 

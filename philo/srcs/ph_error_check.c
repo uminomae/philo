@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 22:09:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	check_error_list_fork(t_philo *ph)
+static void	check_error_list_fork(t_philo_main *ph)
 {
 	t_fork_node	*node_fork;
 	size_t		i;
@@ -32,9 +32,9 @@ static void	check_error_list_fork(t_philo *ph)
 	return ;
 }
 
-static void	check_error_list_th(t_philo *ph)
+static void	check_error_list_th(t_philo_main *ph)
 {
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 	size_t			i;
 
 	node_th = ph->thread_list.head;
@@ -52,7 +52,7 @@ static void	check_error_list_th(t_philo *ph)
 	return ;
 }
 
-static void	check_error_list_ptr(t_philo *ph)
+static void	check_error_list_ptr(t_philo_main *ph)
 {
 	t_ptr_node	*node_ptr;
 	size_t		i;
@@ -72,14 +72,14 @@ static void	check_error_list_ptr(t_philo *ph)
 	return ;
 }
 
-static void	check_error_end_monitor(t_philo *ph)
+static void	check_error_end_monitor(t_philo_main *ph)
 {
 	if (ph->end_monitor.flag_err == true)
 		ph->flag_err = true;
 	return ;
 }
 
-bool	is_error(t_philo *ph)
+bool	is_error(t_philo_main *ph)
 {
 	check_error_list_fork(ph);
 	check_error_list_th(ph);

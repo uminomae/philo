@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 15:49:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:03:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_fork_node	*get_fork_node(t_fork_list *list, size_t c)
 }
 
 void	put_state(size_t i, \
-		t_pthread_node *node_th, long ms, size_t id)
+		t_philo_node *node_th, long ms, size_t id)
 {
 	long	time_current;
 
@@ -45,7 +45,7 @@ void	put_state(size_t i, \
 	}
 }
 
-int	run_case1person(t_pthread_node	*node_th)
+int	run_case1person(t_philo_node	*node_th)
 {
 	while (1)
 	{
@@ -54,7 +54,7 @@ int	run_case1person(t_pthread_node	*node_th)
 	}
 }
 
-void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
+void	run_rutine_philo(t_philo_node	*node_th, t_fork_node *node_fork)
 {
 	while (1)
 	{
@@ -82,10 +82,10 @@ void	run_rutine_philo(t_pthread_node	*node_th, t_fork_node *node_fork)
 
 void	*dining_philosophers_in_thread(void *ptr)
 {
-	t_pthread_node	*node_th;
+	t_philo_node	*node_th;
 	t_fork_node		*node_fork;
 
-	node_th = (t_pthread_node *)ptr;
+	node_th = (t_philo_node *)ptr;
 	node_fork = get_fork_node(&node_th->ph->fork_list, node_th->id);
 	if (node_th->ph->argv[1] == 1)
 		run_case1person(node_th);

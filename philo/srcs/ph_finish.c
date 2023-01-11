@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:43:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	x_pthread_mutex_destroy(t_philo *ph, pthread_mutex_t *mutex)
+static void	x_pthread_mutex_destroy(t_philo_main *ph, pthread_mutex_t *mutex)
 {
 	int	ret;
 
@@ -21,7 +21,7 @@ static void	x_pthread_mutex_destroy(t_philo *ph, pthread_mutex_t *mutex)
 		get_err_flag(ph);
 }
 
-void	destroy_mutex(t_philo *ph)
+void	destroy_mutex(t_philo_main *ph)
 {
 	size_t		i;
 	size_t		num_people;
@@ -42,13 +42,13 @@ void	destroy_mutex(t_philo *ph)
 	}
 }
 
-void	end_philo(t_philo *ph)
+void	end_philo(t_philo_main *ph)
 {
 	destroy_mutex(ph);
 	free_all(ph);
 }
 
-void	end_error(t_philo *ph)
+void	end_error(t_philo_main *ph)
 {
 	printf("%s", ERR_STR);
 	free_all(ph);
