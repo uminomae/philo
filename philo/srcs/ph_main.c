@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 00:16:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:55:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // errnoで格納　size_t
 // 監視役th
+// detachとwhile(1)で終了
 int	main(int argc, char **argv)
 {
 	t_philo	ph;

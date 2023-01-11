@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 22:08:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:39:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	make_fork_list(t_philo *ph)
 		id_fork++;
 	}
 }
-
+//共通化
 static void	make_pthread_list(t_philo *ph)
 {
 	size_t	id;
@@ -62,9 +62,9 @@ int	build_struct_and_list(t_philo *ph, int argc)
 	if (argc == 6)
 		ph->flag_must_eat = true;
 	strdup_status_array(ph);
-	ph->sleep_seconds = ph->argv[4];
 	make_fork_list(ph);
 	make_pthread_list(ph);
+	ph->sleep_seconds = ph->argv[4];
 	ph->end_monitor.ph = ph;
 	if (ph->flag_err == true)
 	{

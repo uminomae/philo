@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 23:19:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:06:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static size_t	check_digit(int argc, char **argv)
 static void	init_struct_philo(t_philo *ph)
 {
 	memset(ph, 0, sizeof(t_philo));
+	// ph->ate_struct.ate_cnt = 0;
 }
 
 static void	argv_to_int(t_philo *ph, int argc, char **argv)

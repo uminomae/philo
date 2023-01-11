@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 00:26:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:25:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static void	join_pthread(t_philo *ph)
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
-		// x_lock_mutex_th(node_th);
+		// x_lock_mutex_philo(node_th);
 		ret = pthread_join(node_th->thread, NULL);
 		if (ret != 0)
 			get_err_flag_node_th(node_th);
-		// x_unlock_mutex_th(node_th);
+		// x_unlock_mutex_philo(node_th);
 		i++;
 	}
 }
@@ -60,24 +60,28 @@ void	end_flag_th(t_philo *ph)
 	while (i < num_people)
 	{
 		node_th = get_pthread_node(&ph->thread_list, i);
-		x_lock_mutex_th(node_th);
+		x_lock_mutex_philo(node_th);
 		node_th->flag_end = true;
-		x_unlock_mutex_th(node_th);
+		x_unlock_mutex_philo(node_th);
 		i++;
 	}
 }
 
 bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
 {
-	pthread_mutex_t	*mutex_eat;
+	t_mutex	*mutex_struct;
+	t_philo *ph;
 
-	mutex_eat = &end_monitor->eat_monitor.mutex_eat;
+	ph = end_monitor->ph;
+	mutex_struct = &end_monitor->ph->mutex_struct;
 	if (is_flag_died(end_monitor))
 		return (true);
-	x_lock_mutex(mutex_eat, end_monitor);
-	if (judge_ate_all(end_monitor, end_monitor->ph->argv[1]))
+	x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+	// x_lock_mutex(mutex_eat, end_monitor);
+	if (judge_ate_all(ph, ph->argv[1]))
 		return (true);
-	x_unlock_mutex(mutex_eat, end_monitor);
+	x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+	// x_unlock_mutex(mutex_eat, end_monitor);
 	return (false);
 }
 
@@ -114,15 +118,39 @@ static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 	ret = pthread_create(&end_monitor->monitor_th, NULL, end_monitor_in_thread, end_monitor);
 	if (ret != 0)
 		get_err_flag_eat_monitor(&end_monitor->eat_monitor);
-	// join_pthread(end_monitor->ph);
-	// join_pthread(end_monitor->ph);
 }
+
+void	set_and_run_philo(t_philo *ph, size_t id)
+{
+	t_pthread_node	*node_th;
+
+	node_th = get_pthread_node(&ph->thread_list, id);
+	node_th->id = id;
+	node_th->start_time = ph->start_time;
+	node_th->flag_must_eat = ph->flag_must_eat;
+	node_th->times_must_eat = ph->argv[5];
+	node_th->mutex_struct = &ph->mutex_struct;
+	node_th->ate_struct = &ph->ate_struct;
+	node_th->died_struct = &ph->died_struct;
+	create_and_run_pthread_philo(node_th);
+}
+
+// void	set_and_run_monitor(t_philo *ph, size_t id)
+// {
+// 	t_pthread_node	*node_th;
+
+// 	node_th = get_pthread_node(&ph->thread_list, id);
+// 	node_th->id = id;
+// 	node_th->start_time = ph->start_time;
+// 	node_th->flag_must_eat = ph->flag_must_eat;
+// 	node_th->times_must_eat = ph->argv[5];
+// 	create_and_run_pthread_philo(node_th);
+// }
 
 //create thread num_people and monitor
 void	run_parallel_process(t_philo *ph)
 {
 	size_t			i;
-	t_pthread_node	*node_th;
 	size_t			num_people;
 	t_pthread_monitor	*end_monitor;
 
@@ -134,15 +162,11 @@ void	run_parallel_process(t_philo *ph)
 	create_and_run_pthread_monitor(end_monitor);
 	while (i < num_people)
 	{
-		node_th = get_pthread_node(&ph->thread_list, i);
-		node_th->id = i;
-		node_th->start_time = ph->start_time;
-		node_th->flag_must_eat = ph->flag_must_eat;
-		node_th->times_must_eat = ph->argv[5];
-		create_and_run_pthread_philo(node_th);
+		set_and_run_philo(ph, i);
+		// set_and_run_monitor(ph, i);
 		i++;
 	}
 	join_pthread(ph);
-	if (ph->end_monitor.die_monitor.flag_died == true)
-		put_state(DIED, node_th, 0, node_th->id);
+	if (ph->died_struct.died_flag == true)
+		put_stamp(get_time_milli_sec() - ph->start_time, ph->died_struct.died_id, DIED_STR);
 }
