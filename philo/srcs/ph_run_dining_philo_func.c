@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:32:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:29:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 		
 		// if (check_time_to_die(node_philo, get_time_milli_sec()))
 		// 	break ;
-		// count_ate_in_eat_monitor(node_philo);
+		count_ate_in_philo(node_philo);
 		
 		if (run_eating(node_philo, node_fork, node_philo->id, \
 			node_philo->ph->argv[3]) > 0)

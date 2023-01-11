@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_flag_ate.c                                  :+:      :+:    :+:   */
+/*   ph_run_is_ate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:14:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:29:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 	return (false);
 }
 
-void	count_ate_in_eat_monitor(t_philo_node *node_th)
+void	count_ate_in_philo(t_philo_node *node_th)
 {
 	t_mutex				*mutex_struct;
 
@@ -46,16 +46,7 @@ void	count_ate_in_eat_monitor(t_philo_node *node_th)
 // 	return (false);
 // }
 
-bool	judge_ate_all(t_philo_main *ph, size_t num_people)
-{
-	if (ph->ate_struct.ate_cnt == num_people)
-	{
-		ph->ate_struct.ate_all = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
-		return (true);
-	}
-	return (false);
-}
+
 
 void	count_ate_person(t_philo_node *node_th)
 {

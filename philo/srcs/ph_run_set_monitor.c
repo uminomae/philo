@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:08:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:27:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,33 @@ static t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id)
 }
 
 
+bool	judge_ate_all(t_philo_main *ph, size_t num_people)
+{
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+	if (ph->ate_struct.ate_cnt == num_people)
+	{
+		ph->ate_struct.ate_all = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+		return (true);
+	}
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+
+	return (false);
+}
 
 bool rutine_judge_end_in_thread(t_monitor_node *end_monitor)
 {
-	t_mutex	*mutex_struct;
-	t_philo_main *ph;
+	// t_mutex	*mutex_struct;
+	// t_philo_main *ph;
 
-	ph = end_monitor->ph;
-	mutex_struct = &end_monitor->ph->mutex_struct;
+	// ph = end_monitor->ph;
+	// mutex_struct = &end_monitor->ph->mutex_struct;
 	if (is_flag_died(end_monitor))
 		return (true);
-	x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-	if (judge_ate_all(ph, ph->argv[1]))
-		return (true);
-	x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+	// x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+	// if (judge_ate_all(ph, ph->argv[1]))
+	// 	return (true);
+	// x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
 	return (false);
 }
 
@@ -50,17 +63,28 @@ bool rutine_judge_end_in_thread(t_monitor_node *end_monitor)
 
 void	*run_monitor_in_thread(void *ptr)
 {
-	t_monitor_node	*end_monitor;
+	t_monitor_node	*node_monitor;
+	// t_mutex			*mutex_struct;
+	bool			ret;
 
-	end_monitor = (t_monitor_node *)ptr;
+	node_monitor = (t_monitor_node *)ptr;
+	// mutex_struct = node_monitor->mutex_struct;
 	while (1)
 	{
 		//ate_all?
+		// x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+		ret = judge_ate_all(node_monitor->ph, node_monitor->ph->argv[1]);
+		// x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
+
 		//ate_flag_each_philo
+		if (ret == true)
+		{
+
+		}
 
 		//died? time to eat
 		//flag_die_each philo
-		if (rutine_judge_end_in_thread(end_monitor))
+		if (rutine_judge_end_in_thread(node_monitor))
 			break ;
 	}
 	// end_flag_th(end_monitor->ph);

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/11 20:18:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:29:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ bool	check_time_to_die(t_philo_node *node_th, long time_current);
 bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 void	count_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
-void	count_ate_in_eat_monitor(t_philo_node *node_th);
+void	count_ate_in_philo(t_philo_node *node_th);
 
 
 #endif

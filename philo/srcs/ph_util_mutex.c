@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:04:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:07:09 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 {
-	pthread_mutex_unlock(mutex);
+	// pthread_mutex_unlock(mutex);
 	if (pthread_mutex_unlock(mutex) != 0)
 		get_err_num(mutex_struct, ERR_PTHREAD_UNLOCK);
 }
