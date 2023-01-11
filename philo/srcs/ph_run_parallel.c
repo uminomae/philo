@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 00:04:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 00:26:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ static void	create_and_run_pthread_philo(t_pthread_node *node_th)
 		get_err_flag_node_th(node_th);
 }
 
+
 static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 {
 	int	ret;
@@ -117,6 +118,7 @@ static void	create_and_run_pthread_monitor(t_pthread_monitor *end_monitor)
 	// join_pthread(end_monitor->ph);
 }
 
+//create thread num_people and monitor
 void	run_parallel_process(t_philo *ph)
 {
 	size_t			i;
@@ -128,6 +130,7 @@ void	run_parallel_process(t_philo *ph)
 	end_monitor = &ph->end_monitor;
 	i = 0;
 	get_start_time(ph);
+	//監視者スレッド作成
 	create_and_run_pthread_monitor(end_monitor);
 	while (i < num_people)
 	{

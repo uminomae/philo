@@ -6,12 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/10 11:19:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 00:16:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// errnoで格納　size_t
+// 監視役th
 int	main(int argc, char **argv)
 {
 	t_philo	ph;
