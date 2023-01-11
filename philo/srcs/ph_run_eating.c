@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:03:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:24:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 static bool	case_tail_person(t_philo_node *node_th)
 {
-	if (node_th == node_th->ph->thread_list.tail)
+	if (node_th == node_th->ph->philo_list.tail)
 		return (true);
 	return (false);
 }
 
-static void	lock_mutex_forks(t_philo_node *node_th, \
-		t_fork_node *node_fork)
+static void	lock_mutex_forks(t_philo_node *node_philo, \
+		t_fork_node *node_fork, size_t id)
 {
 	t_fork_node		*node_next_fork;
 
 	node_next_fork = node_fork->next;
-	if (case_tail_person(node_th))
+	if (case_tail_person(node_philo))
 	{
 		x_lock_mutex_fork(node_next_fork);
+		put_state(TAKEN_FORK, node_philo, 0, id);
 		x_lock_mutex_fork(node_fork);
+		put_state(TAKEN_FORK, node_philo, 0, id);
 	}
 	else
 	{
 		x_lock_mutex_fork(node_fork);
+		put_state(TAKEN_FORK, node_philo, 0, id);
 		x_lock_mutex_fork(node_next_fork);
+		put_state(TAKEN_FORK, node_philo, 0, id);
 	}
 }
 
@@ -55,13 +59,14 @@ static void	unlock_mutex_forks(t_philo_node *node_th, \
 	}
 }
 
-int	run_eating(t_philo_node *node_th, \
+// wait見直す
+int	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	lock_mutex_forks(node_th, node_fork);
-	put_state(TAKEN_FORK, node_th, 0, id);
-	put_state(EATING, node_th, time_eat, id);
-	node_th->flag_wait_cnt = true;
-	unlock_mutex_forks(node_th, node_fork);
+	lock_mutex_forks(node_philo, node_fork, id);
+	// put_state(TAKEN_FORK, node_philo, 0, id);
+	put_state(EATING, node_philo, time_eat, id);
+	node_philo->flag_wait_cnt = true;
+	unlock_mutex_forks(node_philo, node_fork);
 	return (SUCCESS);
 }

@@ -25,10 +25,12 @@ ph_error_flag.c \
 ph_error_check.c \
 ph_malloc.c \
 ph_run_parallel.c \
+ph_run_set_monitor.c \
+ph_run_set_philo.c \
 ph_run_dining_philo_func.c \
 ph_run_eating.c \
-ph_run_flag_ate.c \
-ph_run_flag_died.c \
+ph_run_is_ate.c \
+ph_run_is_died.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \
@@ -106,9 +108,14 @@ sani_thread: re
 #make&test
 #=============================
 run: 
-# make re
+#	make re
 	make sani_thread
 	bash test.sh
+
+run2: 
+	make re
+#	make sani_thread
+	./philo 5 800 200 200 7 
 
 .PHONY: all clean fclean re bonus sani run sani2
 

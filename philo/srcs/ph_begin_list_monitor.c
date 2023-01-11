@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:23:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:30:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,34 @@ static void	add_last_monitor_node(t_monitor_list *list, t_monitor_node *node)
 	node->next = list->head;
 }
 
-static void	set_status_to_list_monitor(t_philo_main *ph, t_monitor_node *node)
-{
-	size_t	i;
+// static void	set_status_to_list_monitor(t_philo_main *ph, t_monitor_node *node)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < PUT_TYPE_END)
-	{
-		node->status[i] = &ph->status[i];
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < PUT_TYPE_END)
+// 	{
+// 		node->status[i] = &ph->status[i];
+// 		printf("%s\n", *node->status[i]);
+// 		i++;
+// 	}
+// }
 
 size_t	add_monitor_list( \
-			t_philo_main *ph, t_monitor_list *list, t_ptr_list *ptr_list, size_t id)
+			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id)
 {
 	t_monitor_node	*node_monitor;
 
+	// printf("=========c\n");
 	node_monitor = init_monitor_node(ptr_list);
 	if (node_monitor == NULL)
 		return (1);
 	node_monitor->id = id;
 	node_monitor->ph = ph;
-	set_status_to_list_monitor(ph, node_monitor);
-	if (list->head == NULL)
-		make_first_monitor_node(list, node_monitor);
+	// set_status_to_list_monitor(ph, node_monitor);
+	if (monitor_list->head == NULL)
+		make_first_monitor_node(monitor_list, node_monitor);
 	else
-		add_last_monitor_node(list, node_monitor);
+		add_last_monitor_node(monitor_list, node_monitor);
 	return (0);
 }

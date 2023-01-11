@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:31:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	check_error_list_th(t_philo_main *ph)
 	t_philo_node	*node_th;
 	size_t			i;
 
-	node_th = ph->thread_list.head;
+	node_th = ph->philo_list.head;
 	i = 0;
 	while (i < ph->id)
 	{

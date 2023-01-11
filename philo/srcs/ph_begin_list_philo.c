@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_begin_list_pthread.c                            :+:      :+:    :+:   */
+/*   ph_begin_list_philo.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:28:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	set_status_to_thread_list(t_philo_main *ph, t_philo_node *node)
 	while (i < PUT_TYPE_END)
 	{
 		node->status[i] = &ph->status[i];
+		// printf("%s\n", *node->status[i]);
 		i++;
 	}
 }

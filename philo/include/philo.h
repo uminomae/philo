@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/11 19:21:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:18:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,22 @@ typedef struct s_eat_monitor
 
 typedef struct s_monitor_node
 {
+	struct s_monitor_node	*next;
 	pthread_t				monitor_th;
 	pthread_mutex_t			mutex_monitor;
 	size_t					id;
 	struct s_eat_monitor	eat_monitor;
 	struct s_die_monitor	die_monitor;
+	long					start_time;
+	bool					flag_must_eat;
+	size_t					times_must_eat;
 	bool					flag_err;
 	struct s_philo_main		*ph;
+	long					time[5];
 	char					**status[5];
-	struct s_monitor_node	*next;
+	struct s_mutex			*mutex_struct;
+	struct s_ate_struct		*ate_struct;
+	struct s_die_struct		*died_struct;
 } 	t_monitor_node;
 
 typedef struct s_monitor_list
@@ -152,7 +159,8 @@ typedef struct s_philo_main
 	long					start_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
-	struct s_philo_list		thread_list;
+	struct s_philo_list		philo_list;
+	struct s_monitor_list	monitor_list;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
@@ -203,7 +211,7 @@ long	get_time_milli_sec(void);
 void	get_start_time(t_philo_main *ph);
 int		usleep_ms(size_t ms);
 
-void	*dining_philosophers_in_thread(void *ptr);
+void	*run_dining_philo_in_thread(void *ptr);
 int		put_stamp(long time, size_t id, char *str);
 
 int		ft_isdigit(int c);
@@ -211,6 +219,11 @@ int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 
 void	run_parallel_process(t_philo_main *ph);
+void	set_and_run_philo(t_philo_main *ph, size_t id);
+void	set_and_run_monitor(t_philo_main *ph, size_t id);
+t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
+
+
 int		run_eating(t_philo_node *node_th, \
 		t_fork_node *node_fork, size_t id, long time_eat);
 void	put_state(size_t i, \
@@ -220,7 +233,7 @@ size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_pthread_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
 size_t	add_monitor_list( \
-			t_philo_main *ph, t_monitor_list *list, t_ptr_list *ptr_list, size_t id);
+			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id);
 
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
