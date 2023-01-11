@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:29:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:38:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,13 @@ bool	is_required_times_ate(t_pthread_node *node_th, size_t cnt)
 void	count_ate_in_eat_monitor(t_pthread_node *node_th)
 {
 	t_mutex				*mutex_struct;
-	// t_pthread_monitor	*end_monitor;
 
 	mutex_struct = &node_th->ph->mutex_struct;
-	// end_monitor = &node_th->ph->end_monitor;
 	if (is_required_times_ate(node_th, node_th->cnt))
 	{
-		// x_lock_mutex(mutex_eat, end_monitor);
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 		node_th->ph->ate_struct.ate_cnt++;
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
-		// x_unlock_mutex(mutex_eat, end_monitor);
 	}
 }
 
@@ -52,13 +48,9 @@ void	count_ate_in_eat_monitor(t_pthread_node *node_th)
 
 bool	judge_ate_all(t_philo *ph, size_t num_people)
 {
-	// pthread_mutex_t	*mutex_eat;
-
-	// mutex_eat = &end_monitor->eat_monitor.mutex_eat;
 	if (ph->ate_struct.ate_cnt == num_people)
 	{
 		ph->ate_struct.ate_all = true;
-		// x_unlock_mutex(mutex_eat, end_monitor);
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
 		return (true);
 	}

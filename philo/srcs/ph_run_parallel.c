@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 18:25:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:40:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ bool rutine_judge_end_in_thread(t_pthread_monitor *end_monitor)
 	if (is_flag_died(end_monitor))
 		return (true);
 	x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-	// x_lock_mutex(mutex_eat, end_monitor);
 	if (judge_ate_all(ph, ph->argv[1]))
 		return (true);
 	x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-	// x_unlock_mutex(mutex_eat, end_monitor);
 	return (false);
 }
 
@@ -96,7 +94,6 @@ void	*end_monitor_in_thread(void *ptr)
 			break ;
 	}
 	end_flag_th(end_monitor->ph);
-	// join_pthread(end_monitor->ph);
 	return (ptr);
 }
 

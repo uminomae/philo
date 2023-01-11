@@ -6,44 +6,23 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 16:39:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:59:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	make_fork_list(t_philo *ph)
-{
-	size_t	id_fork;
-	size_t	ret;
-
-	id_fork = 0;
-	while (id_fork < ph->argv[1])
-	{
-		ret = add_fork_list(&ph->fork_list, &ph->alloc_list, id_fork);
-		if (ret == 1)
-		{
-			get_err_flag(ph);
-			return ;
-		}
-		id_fork++;
-	}
-}
-//共通化
-static void	make_pthread_list(t_philo *ph)
+static void	make_list(t_philo *ph)
 {
 	size_t	id;
-	size_t	ret;
 
 	id = 0;
 	while (id < ph->argv[1])
 	{
-		ret = add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id);
-		if (ret == 1)
-		{
-			get_err_flag(ph);
-			return ;
-		}
+		if (add_pthread_list(ph, &ph->thread_list, &ph->alloc_list, id) == 1)
+			get_err_num_ph(ph, ERR_ADD_PTHREAD_LIST);
+		if (add_fork_list(&ph->fork_list, &ph->alloc_list, id) == 1)
+			get_err_num_ph(ph, ERR_ADD_PTHREAD_LIST);
 		id++;
 	}
 }
@@ -62,8 +41,7 @@ int	build_struct_and_list(t_philo *ph, int argc)
 	if (argc == 6)
 		ph->flag_must_eat = true;
 	strdup_status_array(ph);
-	make_fork_list(ph);
-	make_pthread_list(ph);
+	make_list(ph);
 	ph->sleep_seconds = ph->argv[4];
 	ph->end_monitor.ph = ph;
 	if (ph->flag_err == true)

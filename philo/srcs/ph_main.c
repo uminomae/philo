@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 15:55:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:56:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	if (build_struct_and_list(&ph, argc) == 1)
 		return (ERROR);
 	init_mutex(&ph);
-	if (ph.flag_err == true)
+	if (ph.error_num != 0 || ph.flag_err == true)
 	{
 		end_error(&ph);
 		return (ERROR);
