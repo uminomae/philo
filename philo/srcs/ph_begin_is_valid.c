@@ -6,11 +6,35 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 18:39:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:02:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static size_t	check_digit(int argc, char **argv);
+static void		argv_to_int(t_philo_main *ph, int argc, char **argv);
+
+bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
+{
+	size_t	ret;
+
+	if (argc < 5 || 6 < argc)
+		return (false);
+	if (argv == NULL)
+		return (false);
+	ret = check_digit(argc, argv);
+	if (ret == 1)
+		return (false);
+	memset(ph, 0, sizeof(t_philo_main));
+	argv_to_int(ph, argc, argv);
+	if (ph->error_num > 10)
+		return (false);
+	if (ph->argv[1] == 0)
+		return (false);
+	return (true);
+}
+
 
 static size_t	check_digit(int argc, char **argv)
 {
@@ -30,12 +54,6 @@ static size_t	check_digit(int argc, char **argv)
 		i++;
 	}
 	return (0);
-}
-
-static void	init_struct_philo(t_philo_main *ph)
-{
-	memset(ph, 0, sizeof(t_philo_main));
-	// ph->ate_struct.ate_cnt = 0;
 }
 
 static void	argv_to_int(t_philo_main *ph, int argc, char **argv)
@@ -60,24 +78,4 @@ static void	argv_to_int(t_philo_main *ph, int argc, char **argv)
 		ph->argv[i] = (size_t)ret;
 		i++;
 	}
-}
-
-bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
-{
-	size_t	ret;
-
-	if (argc < 5 || 6 < argc)
-		return (false);
-	if (argv == NULL)
-		return (false);
-	ret = check_digit(argc, argv);
-	if (ret == 1)
-		return (false);
-	init_struct_philo(ph);
-	argv_to_int(ph, argc, argv);
-	if (ph->error_num > 10)
-		return (false);
-	if (ph->argv[1] == 0)
-		return (false);
-	return (true);
 }

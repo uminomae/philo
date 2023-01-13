@@ -6,11 +6,32 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 18:39:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:04:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void check_error_num(t_philo_main *ph);
+static void	check_error_num_ptr(t_philo_main *ph);
+static void	check_error_num_list_fork(t_philo_main *ph);
+static void	check_error_num_list_philo(t_philo_main *ph);
+
+bool	is_error(t_philo_main *ph)
+{
+	check_error_num(ph);
+	if (ph->error_num > NUM_ERR_LOW)
+		return (true);
+	return (false);
+}
+
+static void check_error_num(t_philo_main *ph)
+{
+	ph->error_num = ph->mutex_struct.error_num;
+	check_error_num_ptr(ph);
+	check_error_num_list_fork(ph);
+	check_error_num_list_philo(ph);
+}
 
 static void	check_error_num_ptr(t_philo_main *ph)
 {
@@ -72,18 +93,3 @@ static void	check_error_num_list_philo(t_philo_main *ph)
 	return ;
 }
 
-static void check_error_num(t_philo_main *ph)
-{
-	ph->error_num = ph->mutex_struct.error_num;
-	check_error_num_list_fork(ph);
-	check_error_num_ptr(ph);
-	check_error_num_list_philo(ph);
-}
-
-bool	is_error(t_philo_main *ph)
-{
-	check_error_num(ph);
-	if (ph->error_num > NUM_ERR_LOW)
-		return (true);
-	return (false);
-}

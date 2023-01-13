@@ -6,11 +6,33 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 19:55:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:01:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static t_philo_node	*init_philo_node(t_ptr_list *ptr_list);
+static void	make_first_philo_node(t_philo_list *list, t_philo_node *node);
+static void	add_last_philo_node(t_philo_list *list, t_philo_node *node);
+
+size_t	add_philo_list( \
+			t_philo_main *ph, t_philo_list *list, t_ptr_list *ptr_list, size_t id)
+{
+	t_philo_node	*node_philo;
+
+	node_philo = init_philo_node(ptr_list);
+	if (node_philo == NULL)
+		return (1);
+	node_philo->id = id;
+	node_philo->ph = ph;
+	node_philo->mutex_struct = &ph->mutex_struct;
+	if (list->head == NULL)
+		make_first_philo_node(list, node_philo);
+	else
+		add_last_philo_node(list, node_philo);
+	return (0);
+}
 
 static t_philo_node	*init_philo_node(t_ptr_list *ptr_list)
 {
@@ -35,37 +57,4 @@ static void	add_last_philo_node(t_philo_list *list, t_philo_node *node)
 	list->tail->next = node;
 	list->tail = node;
 	node->next = list->head;
-}
-
-// static void	set_status_to_thread_list(t_philo_main *ph, t_philo_node *node)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < PUT_TYPE_END)
-// 	{
-// 		node->status[i] = ph->status[i];
-// 		// printf("%s\n", *node->status[i]);
-// 		i++;
-// 	}
-// }
-
-size_t	add_philo_list( \
-			t_philo_main *ph, t_philo_list *list, t_ptr_list *ptr_list, size_t id)
-{
-	t_philo_node	*node_philo;
-
-	node_philo = init_philo_node(ptr_list);
-	if (node_philo == NULL)
-		return (1);
-	node_philo->id = id;
-	node_philo->ph = ph;
-	node_philo->mutex_struct = &ph->mutex_struct;
-	// node_philo->cnt = 0;
-	// set_status_to_thread_list(ph, node_philo);
-	if (list->head == NULL)
-		make_first_philo_node(list, node_philo);
-	else
-		add_last_philo_node(list, node_philo);
-	return (0);
 }

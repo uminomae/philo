@@ -6,11 +6,32 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 19:24:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:00:40 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static t_monitor_node	*init_monitor_node(t_ptr_list *ptr_list);
+static void	make_first_monitor_node(t_monitor_list *list, t_monitor_node *node);
+static void	add_last_monitor_node(t_monitor_list *list, t_monitor_node *node);
+
+size_t	add_monitor_list( \
+			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id)
+{
+	t_monitor_node	*node_monitor;
+
+	node_monitor = init_monitor_node(ptr_list);
+	if (node_monitor == NULL)
+		return (1);
+	node_monitor->ph = ph;
+	node_monitor->node_philo = get_philo_node(&ph->philo_list, id);
+	if (monitor_list->head == NULL)
+		make_first_monitor_node(monitor_list, node_monitor);
+	else
+		add_last_monitor_node(monitor_list, node_monitor);
+	return (0);
+}
 
 static t_monitor_node	*init_monitor_node(t_ptr_list *ptr_list)
 {
@@ -35,23 +56,4 @@ static void	add_last_monitor_node(t_monitor_list *list, t_monitor_node *node)
 	list->tail->next = node;
 	list->tail = node;
 	node->next = list->head;
-}
-
-size_t	add_monitor_list( \
-			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id)
-{
-	t_monitor_node	*node_monitor;
-
-	// printf("=========c\n");
-	node_monitor = init_monitor_node(ptr_list);
-	if (node_monitor == NULL)
-		return (1);
-	// node_monitor->id = id;
-	node_monitor->ph = ph;
-	node_monitor->node_philo = get_philo_node(&ph->philo_list, id);
-	if (monitor_list->head == NULL)
-		make_first_monitor_node(monitor_list, node_monitor);
-	else
-		add_last_monitor_node(monitor_list, node_monitor);
-	return (0);
 }
