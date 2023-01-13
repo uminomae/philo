@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 14:36:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:41:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 	const long time_sleep = node_philo->ph->argv[4];
 	while (1)
 	{
-		// printf("run philo a\n");
 		// judge end flag 
 		x_lock_mutex_philo(node_philo);
 		if (node_philo->flag_end == true)
 		{
-			printf("========end_flag id:%lu\n", node_philo->id);
 			x_unlock_mutex_philo(node_philo);
 			break ;
 		}
