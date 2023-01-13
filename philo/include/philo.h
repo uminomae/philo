@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 16:03:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:16:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_philo_main
 	size_t					error_num;
 	size_t					argv[6];
 	long					start_time;
+	long					passed_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
@@ -176,7 +177,7 @@ typedef struct s_philo_main
 }	t_philo_main;
 
 enum e_err_type {
-	ERR_PTHREAD_UNLOCK,
+	ERR_PTHREAD_UNLOCK = 11,
 	ERR_PTHREAD_LOCK,
 	ERR_ADD_PHILO_list,
 	ERR_ADD_FORK_LIST,
@@ -275,7 +276,7 @@ void	destroy_mutex(t_philo_main *ph);
 bool	is_flag_died(t_monitor_node *eat_monitor);
 
 bool	check_time_to_die(t_philo_node *node_th, long time_current);
-bool	judge_ate_all(t_philo_main *ph, size_t num_people);
+// bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 void	wait_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 void	count_ate_in_philo(t_philo_node *node_th);

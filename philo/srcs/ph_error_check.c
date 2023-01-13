@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:31:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:02:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ bool	is_error(t_philo_main *ph)
 	check_error_list_ptr(ph);
 	check_error_end_monitor(ph);
 	if (ph->flag_err == true)
+		return (true);
+	if (ph->error_num > 10)
 		return (true);
 	return (false);
 }

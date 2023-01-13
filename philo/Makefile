@@ -129,6 +129,11 @@ run4:
 #	make sani_thread
 	./philo 3 800 200 200 2
 
+test: 
+#	make re
+	make re
+	bash test.sh
+
 .PHONY: all clean fclean re bonus sani run sani2
 
 #=============================
