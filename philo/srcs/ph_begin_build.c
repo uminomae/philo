@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:52:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:39:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	strdup_status_array(t_philo_main *ph)
 	ph->status[4] = x_strdup(&ph->alloc_list, DIED_STR);
 }
 
-//TODO flag delete
 int	build_struct_and_list(t_philo_main *ph, int argc)
 {
 	if (argc == 6)
@@ -47,11 +46,6 @@ int	build_struct_and_list(t_philo_main *ph, int argc)
 	make_list(ph);
 	ph->sleep_seconds = ph->argv[4];
 	if (ph->error_num > NUM_ERR_LOW)
-	{
-		printf("%s", ERR_STR);
-		return (1);
-	}
-	if (ph->flag_err == true)
 	{
 		printf("%s", ERR_STR);
 		return (1);

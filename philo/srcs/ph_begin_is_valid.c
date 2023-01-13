@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:25:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:39:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 		return (false);
 	init_struct_philo(ph);
 	argv_to_int(ph, argc, argv);
-	if (ph->flag_err)
-		return (false);
 	if (ph->error_num > 10)
 		return (false);
 	if (ph->argv[1] == 0)

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 18:25:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:37:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 typedef struct s_ptr_node
 {
 	void				*ptr;
-	bool				flag_err;
+	// bool				flag_err;
+	size_t				error_num;
 	struct s_ptr_node	*next;
 }	t_ptr_node;
 
@@ -56,17 +57,6 @@ typedef struct s_fork_list
 	struct s_fork_node	*tail;
 }	t_fork_list;
 
-// typedef struct s_die_monitor
-// {
-// 	struct s_philo_main			*ph;
-// 	bool					flag_err;
-// }	t_die_monitor;
-
-// typedef struct s_eat_monitor
-// {
-// 	struct s_philo_main			*ph;
-// 	bool					flag_err;
-// }	t_eat_monitor;
 
 typedef struct s_monitor_node
 {
@@ -75,15 +65,12 @@ typedef struct s_monitor_node
 	pthread_mutex_t			mutex_monitor;
 	struct s_philo_node		*node_philo;
 	size_t					id;
-	// struct s_eat_monitor	eat_monitor;
-	// struct s_die_monitor	die_monitor;
 	long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
 	bool					flag_err;
 	struct s_philo_main		*ph;
 	long					time[5];
-	// char					**status[5];
 	struct s_mutex			*mutex_struct;
 	struct s_ate_struct		*ate_struct;
 	struct s_die_struct		*died_struct;
@@ -113,7 +100,6 @@ typedef struct s_mutex
 	pthread_mutex_t			mutex_cnt_ate;
 	pthread_mutex_t			mutex_ate_all;
 	pthread_mutex_t			mutex_die;
-	pthread_mutex_t			mutex_time_eat_start;
 	pthread_mutex_t			mutex_end;
 	size_t					error_num;
 }	t_mutex;
@@ -124,10 +110,8 @@ typedef struct s_philo_node
 	pthread_t				philo_th;
 	size_t					id;
 	long					time[5];
-	// char					*status[5];
 	struct s_philo_node		*next;
 	struct s_philo_main		*ph;
-	// bool					flag_err;
 	bool					flag_died;
 	bool					flag_end;
 	long					start_time;
@@ -137,10 +121,6 @@ typedef struct s_philo_node
 	bool					ate;
 	bool					flag_wait_ate;
 	size_t					error_num;
-
-	// struct s_mutex			*mutex_struct;
-	// struct s_ate_struct		*ate_struct;
-	// struct s_die_struct		*died_struct;
 }	t_philo_node;
 
 typedef struct s_philo_list
@@ -172,9 +152,6 @@ typedef struct s_philo_main
 	char					*status[5];
 	bool					ate_all;
 	bool					flag_end;
-	// struct s_monitor_node	end_monitor;
-	// struct s_eat_monitor	*eat_monitor;
-	// struct s_die_monitor	*die_monitor;
 	struct s_mutex			mutex_struct;
 	struct s_ate_struct		ate_struct;
 	struct s_die_struct		died_struct;
@@ -197,6 +174,8 @@ enum e_err_type {
 	ERR_GETTEIME_MS,
 	ERR_PUTSTAMP,
 	ERR_USLEEP,
+	ERR_MALLOC,
+	ERR_PTHREAD_MUTEX_INIT,
 	ERR_TYPE_END,
 };
 
@@ -268,16 +247,11 @@ void	end_error(t_philo_main *ph);
 void	end_philo(t_philo_main *ph);
 void	free_all(t_philo_main *ph);
 
-void	get_err_flag(t_philo_main *ph);
-void	get_err_flag_node_th(t_philo_node *node);
-void	get_err_flag_node_fork(t_fork_node *node);
-void	get_err_flag_node_ptr(t_ptr_node *node);
-// void	get_err_flag_eat_monitor(t_eat_monitor *node);
-void	get_err_flag_end_monitor(t_monitor_node *node);
 void	get_err_num(t_mutex *mutex_struct, size_t err_num);
 void	get_err_num_ph(t_philo_main *ph, size_t err_num);
 void	get_err_num_fork(t_fork_node *node_fork, size_t err_num);
 void	get_err_num_philo(t_philo_node *node_philo, size_t err_num);
+void	get_err_num_ptr(t_ptr_node *node_ptr, size_t err_num);
 bool	is_error(t_philo_main *ph);
 
 void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor_node *end_monitor);

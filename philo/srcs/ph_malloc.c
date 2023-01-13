@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_list_malloc.c                                   :+:      :+:    :+:   */
+/*   ph_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 23:51:33 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:34:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
 	ptr = malloc(size);
 	if (ptr == NULL)
 	{
-		get_err_flag_node_ptr(ptr);
+		get_err_num_ptr(ptr, ERR_MALLOC);
 		return (NULL);
 	}
 	add_ptr_list(ptr_list, ptr);
