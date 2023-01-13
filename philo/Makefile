@@ -116,13 +116,13 @@ run:
 	bash test.sh
 
 run2: 
-	make 
+	make re
 #	make sani_thread
 	./philo 3 800 200 200 2
 
 run3: 
 	make sani_thread
-	./philo 2 801 202 203 1
+	./philo 2 401 200 200 
 
 run4: 
 	make sani_add

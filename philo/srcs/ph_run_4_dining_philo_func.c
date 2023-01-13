@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 15:46:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:18:20 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 	while (end == false)
 	{
 		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (node_philo->ph->flag_end == false)
+		if (node_philo->ph->flag_end == true)
 			end = true;
 		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
 		run_eating(node_philo, node_fork, node_philo->id, time_eat);

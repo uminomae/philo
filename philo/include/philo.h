@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 14:06:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:03:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_monitor_node
 	struct s_monitor_node	*next;
 	pthread_t				monitor_th;
 	pthread_mutex_t			mutex_monitor;
+	struct s_philo_node		*node_philo;
 	size_t					id;
 	struct s_eat_monitor	eat_monitor;
 	struct s_die_monitor	die_monitor;
@@ -182,6 +183,7 @@ enum e_err_type {
 	ERR_ADD_MONITOR_LIST,
 	ERR_PTHREAD_JOIN,
 	ERR_PTHREAD_CREATE,
+	ERR_GETTEIMEOFDAY,
 	ERR_TYPE_END,
 };
 

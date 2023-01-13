@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:30:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:04:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ size_t	add_monitor_list( \
 		return (1);
 	node_monitor->id = id;
 	node_monitor->ph = ph;
+	node_monitor->node_philo = get_philo_node(&ph->philo_list, id);
 	// set_status_to_list_monitor(ph, node_monitor);
 	if (monitor_list->head == NULL)
 		make_first_monitor_node(monitor_list, node_monitor);

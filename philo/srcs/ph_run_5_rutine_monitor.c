@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 15:48:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:19:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,42 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 {
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
-	bool			ret;
+	// bool			ret;
 	size_t	num_people;
-	
+	long	time_current;
+	bool	end;
 
+	end = false;
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
-	ret = false;
+	// ret = false;
 	num_people = ph->argv[1];
-	while (1)
+	while (end == false)
 	{
 		// printf("========moni th\n");
 		//ate_all?
-		ret = judge_ate_all(ph, num_people);
-		if (ret == true)
-		{
-			// printf("end----------------\n");
-			break ;
-		}
+		judge_ate_all(ph, num_people);
+		// if (ret == true)
+		// {
+		// 	// printf("end----------------\n");
+		// 	break ;
+		// }
+		time_current = get_time_milli_sec();
+		if (time_current < 0)
+			get_err_num_ph(node_monitor->ph, ERR_GETTEIMEOFDAY);
+		
+		x_lock_mutex_philo(node_monitor->node_philo);
+		check_time_to_die(node_monitor->node_philo, time_current);
+		// if (ret == true)
+		// {
+		// 	break;
+		// }
+		x_unlock_mutex_philo(node_monitor->node_philo);
 
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (ph->flag_end == true)
+			end = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 		// flag end break
 		// x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 		// if (is_flag_end(ph))
