@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 11:57:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:54:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_monitor_node
 	bool					flag_err;
 	struct s_philo_main		*ph;
 	long					time[5];
-	char					**status[5];
+	// char					**status[5];
 	struct s_mutex			*mutex_struct;
 	struct s_ate_struct		*ate_struct;
 	struct s_die_struct		*died_struct;
@@ -118,7 +118,7 @@ typedef struct s_mutex
 typedef struct s_philo_node
 {
 	pthread_mutex_t			mutex_philo;
-	pthread_t				thread;
+	pthread_t				philo_th;
 	size_t					id;
 	long					time[5];
 	// char					*status[5];
@@ -132,7 +132,7 @@ typedef struct s_philo_node
 	size_t					times_must_eat;
 	size_t					cnt;
 	bool					ate;
-	bool					flag_wait_cnt;
+	bool					flag_wait_ate;
 	struct s_mutex			*mutex_struct;
 	struct s_ate_struct		*ate_struct;
 	struct s_die_struct		*died_struct;
@@ -165,6 +165,7 @@ typedef struct s_philo_main
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
+	bool					flag_end;
 	struct s_monitor_node		end_monitor;
 	struct s_eat_monitor	*eat_monitor;
 	struct s_die_monitor	*die_monitor;
@@ -176,9 +177,11 @@ typedef struct s_philo_main
 enum e_err_type {
 	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
-	ERR_add_philo_list,
+	ERR_ADD_PHILO_list,
 	ERR_ADD_FORK_LIST,
 	ERR_ADD_MONITOR_LIST,
+	ERR_PTHREAD_JOIN,
+	ERR_PTHREAD_CREATE,
 	ERR_TYPE_END,
 };
 
@@ -270,7 +273,7 @@ bool	is_flag_died(t_monitor_node *eat_monitor);
 
 bool	check_time_to_die(t_philo_node *node_th, long time_current);
 bool	judge_ate_all(t_philo_main *ph, size_t num_people);
-void	count_ate_person(t_philo_node *node_th);
+void	wait_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 void	count_ate_in_philo(t_philo_node *node_th);
 

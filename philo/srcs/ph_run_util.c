@@ -6,33 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 11:55:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:27:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// static void	join_pthread(t_philo_main *ph)
-// {
-// 	size_t			i;
-// 	size_t			num_people;
-// 	int				ret;
-// 	t_philo_node	*node_th;
 
-// 	num_people = ph->argv[1];
-// 	ret = pthread_join(ph->end_monitor.monitor_th, NULL);
-// 	i = 0;
-// 	while (i < num_people)
-// 	{
-// 		node_th = get_philo_node(&ph->philo_list, i);
-// 		// x_lock_mutex_philo(node_th);
-// 		ret = pthread_join(node_th->thread, NULL);
-// 		if (ret != 0)
-// 			get_err_flag_node_th(node_th);
-// 		// x_unlock_mutex_philo(node_th);
-// 		i++;
-// 	}
-// }
 
 int	put_stamp(long time, size_t id, const char *str)
 {
@@ -49,10 +29,10 @@ void	put_state(size_t i, t_philo_node *node_philo, long ms, size_t id)
 	if (time_current < 0)
 		node_philo->flag_err = true;
 	node_philo->time[i] = time_current - node_philo->start_time;
-	// printf("put c-----%ld, %zu, %zu %s\n", node_philo->time[i], i, id, node_philo->ph->status[i]);
 	if (put_stamp(node_philo->time[i], id, node_philo->ph->status[i]) < 0)
 		node_philo->flag_err = true;
-	if (ms != 0)
+	// printf("put_state i:%zu id:%zu, ms:%ld\n", i, id, ms);
+	if (ms > 0)
 	{
 		if (usleep_ms(ms) < 0)
 			node_philo->flag_err = true;

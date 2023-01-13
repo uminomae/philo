@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 11:34:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:48:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,34 @@ static int	run_case_1person(t_philo_node	*node_th)
 	}
 }
 
+bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
+{
+	if (node_th->flag_must_eat == true && \
+		node_th->times_must_eat == cnt)
+		return (true);
+	return (false);
+}
+
+void	count_ate_in_philo(t_philo_node *node_philo)
+{
+	t_mutex				*mutex_struct;
+
+	mutex_struct = &node_philo->ph->mutex_struct;
+	// printf("--------- cnt philo %zu\n", node_philo->cnt);
+	if (is_required_times_ate(node_philo, node_philo->cnt))
+	{
+		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+		node_philo->ph->ate_struct.ate_cnt++;
+		// node_philo->ate == true;
+		// printf("======cnt_mustate_person %zu id:%zu\n", node_philo->ph->ate_struct.ate_cnt, node_philo->ph->id);
+		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+	}
+}
+
 void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 {
 	const long time_eat = node_philo->ph->argv[3];
+	const long time_sleep = node_philo->ph->argv[4];
 	while (1)
 	{
 		// printf("run philo a\n");
@@ -31,33 +56,25 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 		x_lock_mutex_philo(node_philo);
 		if (node_philo->flag_end == true)
 		{
+			printf("========end_flag id:%lu\n", node_philo->id);
 			x_unlock_mutex_philo(node_philo);
 			break ;
 		}
+		// wait_ate_person(node_philo);
 		x_unlock_mutex_philo(node_philo);
 
-		// count_ate_person(node_philo);
-		
-		// if (check_time_to_die(node_philo, get_time_milli_sec()))
-		// 	break ;
-		count_ate_in_philo(node_philo);
-
-			// printf("c\n");
-
 		// x_lock_mutex_philo(node_philo);
-		// printf("run philo b\n");
-		run_eating(node_philo, node_fork, node_philo->id, \
-			time_eat);
-				printf("------ cnt philo %zu id:%zu\n", node_philo->cnt, node_philo->id);
-
-		// run_eating(node_philo, node_fork, node_philo->id, \
-		// 	node_philo->ph->argv[3]);
+		run_eating(node_philo, node_fork, node_philo->id, time_eat);
+		count_ate_in_philo(node_philo);
 		// x_unlock_mutex_philo(node_philo);
 
-		printf("run philo c\n");
-		put_state(SLEEPING, node_philo, \
-				node_philo->ph->argv[4], node_philo->id);
+		x_lock_mutex_philo(node_philo);
+		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
+		x_unlock_mutex_philo(node_philo);
+
+		x_lock_mutex_philo(node_philo);
 		put_state(THINKING, node_philo, 0, node_philo->id);
+		x_unlock_mutex_philo(node_philo);
 	}
 }
 

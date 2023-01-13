@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 11:29:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:33:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ int	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
 	lock_mutex_forks(node_philo, node_fork, id);
-	printf("eat d---- %ld, %zu\n", time_eat, id);
+	// printf("eat d---- %ld, %zu\n", time_eat, id);
+	x_lock_mutex_philo(node_philo);
 	put_state(EATING, node_philo, time_eat, id);
+	// printf("eat e\n");
 	node_philo->cnt++;
-	printf("eat e\n");
-	node_philo->flag_wait_cnt = true;
-	printf("eat f\n");
+	node_philo->flag_wait_ate = true;
+	x_unlock_mutex_philo(node_philo);
 	unlock_mutex_forks(node_philo, node_fork);
+	// printf("eat f\n");
 	return (SUCCESS);
 }

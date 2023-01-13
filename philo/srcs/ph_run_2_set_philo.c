@@ -6,21 +6,21 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 11:46:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:27:51 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	create_and_run_pthread_philo(t_philo_node *node_th)
+static void	create_and_run_pthread_philo(t_philo_node *node_philo)
 {
 	int	ret;
 
-	ret = pthread_create(&node_th->thread, NULL, \
-		run_rutine_dining_philo_in_thread, node_th);
+	ret = pthread_create(&node_philo->philo_th, NULL, \
+		run_rutine_dining_philo_in_thread, node_philo);
 	// printf("put %d\n", ret);
 	if (ret != 0)
-		get_err_flag_node_th(node_th);
+		get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
 }
 
 void	set_and_run_philo(t_philo_main *ph, size_t id)

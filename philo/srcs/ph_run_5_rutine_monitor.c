@@ -6,57 +6,25 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 11:01:46 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:02:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 
-// bool rutine_judge_end_in_thread(t_monitor_node *end_monitor)
-// {
-// 	// t_mutex	*mutex_struct;
-// 	// t_philo_main *ph;
-
-// 	// ph = end_monitor->ph;
-// 	// mutex_struct = &end_monitor->ph->mutex_struct;
-// 	if (is_flag_died(end_monitor))
-// 		return (true);
-// 	// x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-// 	// if (judge_ate_all(ph, ph->argv[1]))
-// 	// 	return (true);
-// 	// x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-// 	return (false);
-// }
-
-
-
 bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
-	// printf("judge\n");
-	x_lock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 	if (ph->ate_struct.ate_cnt == num_people)
 	{
+		printf("===============ate_all\n");
 		ph->ate_struct.ate_all = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 		return (true);
 	}
-	x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
-
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 	return (false);
-}
-
-
-static void	set_flag_ate(t_philo_node *node_philo)
-{
-	x_lock_mutex_philo(node_philo);
-	node_philo->ate = true;
-	// x_unlock_mutex_philo(node_philo);
-	// x_lock_mutex_philo(node_philo);
-	node_philo->flag_end = true;
-	x_unlock_mutex_philo(node_philo);
-				printf("set ate\n");
-
 }
 
 static void	set_flag_ate_in_philo(t_philo_list *list_philo, size_t num_people)
@@ -70,39 +38,59 @@ static void	set_flag_ate_in_philo(t_philo_list *list_philo, size_t num_people)
 	{
 		//getnodeしてそれぞれのmutexを
 		node_philo = get_philo_node(list_philo, i);
+		
+		x_lock_mutex_philo(node_philo);
+		node_philo->ate = true;
+		node_philo->flag_end = true;
+		x_unlock_mutex_philo(node_philo);
 
-		set_flag_ate(node_philo);
 		node_philo = node_philo->next;
 		i++;
 	}
 }
 
-
+bool	is_flag_end(t_philo_main *ph)
+{
+	if (ph->flag_end == true)
+		return (true);
+	return (false);
+}
 //TODO argv[1]をinitでnum_peopleに
 void	*run_rutine_monitor_in_thread(void *ptr)
 {
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	bool			ret;
+	size_t	num_people;
+	
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
+	ret = false;
+	num_people = ph->argv[1];
 	while (1)
 	{
+		// printf("========moni th\n");
 		//ate_all?
-		ret = judge_ate_all(ph, ph->argv[1]);
-		//ate_flag_each_philo
+		ret = judge_ate_all(ph, num_people);
 		if (ret == true)
 		{
-			set_flag_ate_in_philo(&ph->philo_list, ph->argv[1]);
+			set_flag_ate_in_philo(&ph->philo_list, num_people);
+			x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			//flag end
+			ph->flag_end = true;
+			x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			break ;
 		}
-			// printf("moni rutine while1\n");
 
-		//died? time to eat
-		//flag_die_each philo
-		// if (rutine_judge_end_in_thread(node_monitor))
-		// 	break ;
+		// flag end break
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (is_flag_end(ph))
+		{
+			x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			break;
+		}
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 	}
-	// end_flag_th(end_monitor->ph);
 	return (ptr);
 }
