@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 20:46:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:17:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 	if (end_struct->flag_end == true)
 		ret = true;
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-	// x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 	return (ret);
 }
 
@@ -68,21 +67,14 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 	end = false;
 	while (end == false)
 	{
-		end = is_end(end_struct, mutex_struct);
-		
 		run_eating(node_philo, node_fork, node_philo->id, time_eat);
-		
 		if (ph->flag_must_eat == true)
 			count_ate_in_philo(node_philo);
-
-		end = is_end(end_struct, mutex_struct);
-
-		// x_lock_mutex_philo(node_monitor->node_philo);
+		// end = is_end(end_struct, mutex_struct);
 		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-
-		end = is_end(end_struct, mutex_struct);
-
+		// end = is_end(end_struct, mutex_struct);
 		put_state(THINKING, node_philo, 0, node_philo->id);
+		end = is_end(end_struct, mutex_struct);
 	}
 }
 
@@ -97,6 +89,5 @@ void	*run_rutine_philo(void *ptr)
 		run_case_1person(node_philo);
 	else
 		run_rutine_philo_dining(node_philo->ph, node_philo, node_fork);
-		// run_rutine_philo_dining(node_philo, node_fork);
 	return (NULL);
 }
