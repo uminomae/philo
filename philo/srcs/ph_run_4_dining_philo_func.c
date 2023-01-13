@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 21:17:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:41:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 			count_ate_in_philo(node_philo);
 		// end = is_end(end_struct, mutex_struct);
 		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-		// end = is_end(end_struct, mutex_struct);
+		end = is_end(end_struct, mutex_struct);
 		put_state(THINKING, node_philo, 0, node_philo->id);
 		end = is_end(end_struct, mutex_struct);
 	}

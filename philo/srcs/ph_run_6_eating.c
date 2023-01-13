@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 21:14:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:40:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	unlock_mutex_forks(t_philo_node *node_philo, \
 	}
 }
 
-// wait見直す
 int	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {

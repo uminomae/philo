@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 20:26:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:53:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct s_philo_node
 	struct s_philo_main		*ph;
 	// bool					flag_died;
 	// bool					flag_end;
-	long					start_time;
+	// long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
 	size_t					cnt;
@@ -147,7 +147,7 @@ typedef struct s_philo_main
 	bool					flag_err;
 	size_t					error_num;
 	size_t					argv[6];
-	long					start_time;
+	// long					start_time;
 	long					passed_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
@@ -178,7 +178,7 @@ enum e_err_type {
 	ERR_ARGV_NULL,
 	ERR_ATOI,
 	ERR_GETTEIME_MS,
-	ERR_PUTSTAMP,
+	ERR_PRINTF,
 	ERR_USLEEP,
 	ERR_MALLOC,
 	ERR_PTHREAD_MUTEX_INIT,
@@ -214,8 +214,8 @@ int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
 
 long	get_time_milli_sec(void);
-void	get_start_time(t_philo_main *ph);
-long	get_time_passed(t_philo_main *ph);
+// void	get_start_time(t_philo_main *ph);
+// long	get_time_passed(t_philo_main *ph);
 int		usleep_ms(size_t ms);
 
 void	*run_rutine_philo(void *ptr);

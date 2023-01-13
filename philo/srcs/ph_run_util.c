@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 20:57:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:53:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	put_state(size_t i, t_philo_node *node_philo, long ms, size_t id)
 	
 	if (time_current < 0)
 		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
-	node_philo->time[i] = time_current - node_philo->start_time;
+	node_philo->time[i] = time_current;
 	if (put_stamp(node_philo->time[i], id, node_philo->ph->status[i]) < 0)
-		get_err_num_philo(node_philo, ERR_PUTSTAMP);
+		get_err_num_philo(node_philo, ERR_PRINTF);
 	if (ms > 0)
 	{
 		if (usleep_ms(ms) < 0)

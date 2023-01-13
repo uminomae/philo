@@ -30,7 +30,6 @@ ph_run_3_set_monitor.c \
 ph_run_4_dining_philo_func.c \
 ph_run_5_rutine_monitor.c \
 ph_run_6_eating.c \
-ph_run_is_died.c \
 ph_run_util.c \
 ph_finish.c \
 ph_finish_free.c \

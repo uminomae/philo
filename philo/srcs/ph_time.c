@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 18:51:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 21:32:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,17 @@ long	get_time_milli_sec(void)
 	return (milli_sec);
 }
 
-void	get_start_time(t_philo_main *ph)
-{
-	long	ret;
+// long	get_time_passed(t_philo_main *ph)
+// {
+// 	long	ret;
 
-	ret = get_time_milli_sec();
-	if (ret < 0)
-		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
-	else
-		ph->start_time = ret;
-}
-
-long	get_time_passed(t_philo_main *ph)
-{
-	long	ret;
-
-	ret = get_time_milli_sec();
-	if (ret < 0)
-		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
-	else
-		ph->passed_time = ret - ph->start_time;
-	return (ret);
-}
+// 	ret = get_time_milli_sec();
+// 	if (ret < 0)
+// 		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
+// 	else
+// 		ph->passed_time = ret;
+// 	return (ret);
+// }
 
 int	usleep_ms(size_t ms)
 {
