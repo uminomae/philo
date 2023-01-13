@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 16:40:04 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:53:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 	}
 }
 
-void	*run_rutine_dining_philo_in_thread(void *ptr)
+void	*run_rutine_dining_in_thread(void *ptr)
 {
 	t_philo_node	*node_th;
 	t_fork_node		*node_fork;

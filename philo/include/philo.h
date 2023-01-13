@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 17:16:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:53:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_fork_node
 	size_t				data;
 	pthread_mutex_t		mutex_fork;
 	bool				flag_err;
+	struct s_philo_main	*ph;
+	size_t				error_num;
 	struct s_fork_node	*next;
 }	t_fork_node;
 
@@ -177,14 +179,19 @@ typedef struct s_philo_main
 }	t_philo_main;
 
 enum e_err_type {
-	ERR_PTHREAD_UNLOCK = 11,
+	NUM_ERR_LOW = 10,
+	NUM_ERR_TYPE_START,
+	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
-	ERR_ADD_PHILO_list,
+	ERR_ADD_PHILO_LIST,
 	ERR_ADD_FORK_LIST,
 	ERR_ADD_MONITOR_LIST,
 	ERR_PTHREAD_JOIN,
 	ERR_PTHREAD_CREATE,
+	ERR_PTHREAD_DESTROY,
 	ERR_GETTEIMEOFDAY,
+	ERR_ARGV_NULL,
+	ERR_ATOI,
 	ERR_TYPE_END,
 };
 
@@ -195,6 +202,8 @@ enum e_err_type {
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
 # define ERR_STR		"error\n"
+// # define NUM_ERR_LOW	11
+
 
 # define LOCK		1
 # define UNLOCK		0
@@ -218,7 +227,7 @@ long	get_time_milli_sec(void);
 void	get_start_time(t_philo_main *ph);
 int		usleep_ms(size_t ms);
 
-void	*run_rutine_dining_philo_in_thread(void *ptr);
+void	*run_rutine_dining_in_thread(void *ptr);
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void	*run_rutine_monitor_in_thread(void *ptr);
@@ -241,7 +250,8 @@ int		run_eating(t_philo_node *node_th, \
 void	put_state(size_t i, \
 		t_philo_node *node_th, long ms, size_t id);
 
-size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
+// size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
+size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
 size_t	add_monitor_list( \
@@ -261,6 +271,7 @@ void	get_err_flag_eat_monitor(t_eat_monitor *node);
 void	get_err_flag_end_monitor(t_monitor_node *node);
 void	get_err_num(t_mutex *mutex_struct, size_t err_num);
 void	get_err_num_ph(t_philo_main *ph, size_t err_num);
+void	get_err_num_fork(t_fork_node *node_fork, size_t err_num);
 bool	is_error(t_philo_main *ph);
 
 void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor_node *end_monitor);

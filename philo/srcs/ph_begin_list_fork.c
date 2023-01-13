@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 23:15:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:50:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void	add_last_fork_node(t_fork_list *list, t_fork_node *node)
 	node->next = list->head;
 }
 
-size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data)
+size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data)
+// size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data)
 {
 	t_fork_node	*node;
 
@@ -45,6 +46,7 @@ size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data)
 	if (node == NULL)
 		return (1);
 	node->data = data;
+	node->ph = ph;
 	if (list->head == NULL)
 		make_first_fork_node(list, node);
 	else

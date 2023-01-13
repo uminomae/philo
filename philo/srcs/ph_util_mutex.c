@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 10:44:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:40:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,21 @@ void	x_unlock_mutex_philo(t_philo_node *node_philo)
 }
 
 
-
-
-
-void	x_lock_mutex(pthread_mutex_t *mutex, t_monitor_node *end_monitor)
-{
-	int	ret;
-
-	ret = pthread_mutex_lock(mutex);
-	if (ret != 0)
-		get_err_flag_end_monitor(end_monitor);
-}
-
-void	x_unlock_mutex(pthread_mutex_t *mutex, t_monitor_node *end_monitor)
-{
-	int	ret;
-
-	ret = pthread_mutex_unlock(mutex);
-	if (ret != 0)
-		get_err_flag_end_monitor(end_monitor);
-}
-
 void	x_lock_mutex_fork(t_fork_node *node_fork)
 {
 	int	ret;
 
 	ret = pthread_mutex_lock(&node_fork->mutex_fork);
 	if (ret != 0)
-		get_err_flag_node_fork(node_fork);
+		get_err_num_fork(node_fork, ERR_PTHREAD_LOCK);
 }
 
 void	x_unlock_mutex_fork(t_fork_node *node_fork)
 {
-	// int	ret;
+	int	ret;
 
-	// ret = pthread_mutex_unlock(&node_fork->mutex_fork);
+	ret = pthread_mutex_unlock(&node_fork->mutex_fork);
 	pthread_mutex_unlock(&node_fork->mutex_fork);
-	// if (ret != 0)
-	// 	get_err_flag_node_fork(node_fork);
+	if (ret != 0)
+		get_err_num_fork(node_fork, ERR_PTHREAD_UNLOCK);
 }

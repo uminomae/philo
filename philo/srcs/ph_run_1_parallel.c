@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:13:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:25:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	join_pthread(t_philo_main *ph)
 			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}
-
 }
 
 void create_thread(t_philo_main *ph, size_t num_people)
