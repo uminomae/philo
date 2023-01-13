@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/12 07:27:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 08:10:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,29 @@ void	init_mutex(t_philo_main *ph)
 	size_t		i;
 	size_t		num_people;
 	t_fork_node	*node_fork;	
+	// t_fork_node	*node_fork;
+	t_philo_node	*node_philo;
 
 	node_fork = ph->fork_list.head;
+	node_philo = ph->philo_list.head;
 	num_people = ph->argv[1];
 	x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_cnt_ate);
 	x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_ate_all);
 	x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_die);
 	x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_time_eat_start);
+	x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_end);
 	i = 0;
 	while (i < num_people)
 	{
 		x_pthread_mutex_init(ph, &node_fork->mutex_fork);
 		node_fork = node_fork->next;
+		i++;
+	}
+	i = 0;
+	while (i < num_people)
+	{
+		x_pthread_mutex_init(ph, &node_philo->mutex_philo);
+		node_philo = node_philo->next;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/12 07:29:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/12 07:49:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_mutex
 	pthread_mutex_t			mutex_ate_all;
 	pthread_mutex_t			mutex_die;
 	pthread_mutex_t			mutex_time_eat_start;
+	pthread_mutex_t			mutex_end;
 	size_t					error_num;
 }	t_mutex;
 

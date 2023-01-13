@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/12 07:27:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 09:41:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,59 @@ bool rutine_judge_end_in_thread(t_monitor_node *end_monitor)
 	return (false);
 }
 
+static void	set_flag_ate(t_philo_node *node_philo)
+{
+	x_lock_mutex_philo(node_philo);
+	node_philo->ate = true;
+	x_unlock_mutex_philo(node_philo);
+	x_lock_mutex_philo(node_philo);
+	node_philo->flag_end = true;
+	x_unlock_mutex_philo(node_philo);
+}
 
 
-void	*run_monitor_in_thread(void *ptr)
+static void	set_flag_ate_in_philo(t_philo_list *list_philo, size_t num_people)
+{
+	size_t			i;
+	t_philo_node	*node_philo;
+
+	node_philo = list_philo->head;
+	i = 0;
+	while (i < num_people)
+	{
+		//getnodeしてそれぞれのmutexを
+		node_philo = get_philo_node(list_philo, i);
+
+		set_flag_ate(node_philo);
+		node_philo = node_philo->next;
+		i++;
+	}
+}
+
+
+//TODO argv[1]をinitでnum_peopleに
+void	*run_rutine_monitor_in_thread(void *ptr)
 {
 	t_monitor_node	*node_monitor;
-	// t_mutex			*mutex_struct;
+	t_philo_main	*ph;
 	bool			ret;
 
 	node_monitor = (t_monitor_node *)ptr;
-	// mutex_struct = node_monitor->mutex_struct;
+	ph = node_monitor->ph;
 	while (1)
 	{
 		//ate_all?
-		// x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-		ret = judge_ate_all(node_monitor->ph, node_monitor->ph->argv[1]);
-		// x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-
+		ret = judge_ate_all(ph, ph->argv[1]);
 		//ate_flag_each_philo
 		if (ret == true)
 		{
-
+			set_flag_ate_in_philo(&ph->philo_list, ph->argv[1]);
 		}
 
 		//died? time to eat
 		//flag_die_each philo
-		if (rutine_judge_end_in_thread(node_monitor))
-			break ;
+		// if (rutine_judge_end_in_thread(node_monitor))
+		// 	break ;
 	}
 	// end_flag_th(end_monitor->ph);
 	return (ptr);
@@ -97,7 +123,7 @@ static void	create_and_run_pthread_monitor(t_monitor_node *node_monitor)
 {
 	int	ret;
 
-	ret = pthread_create(&node_monitor->monitor_th, NULL, run_monitor_in_thread, node_monitor);
+	ret = pthread_create(&node_monitor->monitor_th, NULL, run_rutine_monitor_in_thread, node_monitor);
 	if (ret != 0)
 		get_err_flag_eat_monitor(&node_monitor->eat_monitor);
 }
