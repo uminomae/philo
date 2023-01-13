@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 12:27:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:26:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	create_and_run_pthread_philo(t_philo_node *node_philo)
 {
 	int	ret;
 
+	// ret = pthread_create(&node_philo->philo_th, detachstate, \
+	// 	run_rutine_dining_philo_in_thread, node_philo);
 	ret = pthread_create(&node_philo->philo_th, NULL, \
 		run_rutine_dining_philo_in_thread, node_philo);
 	// printf("put %d\n", ret);

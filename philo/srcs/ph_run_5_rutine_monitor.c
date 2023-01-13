@@ -6,31 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 14:54:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:48:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 
-bool	judge_ate_all(t_philo_main *ph, size_t num_people)
-{
-	x_lock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
-	if (ph->ate_struct.ate_cnt == num_people)
-	{
-		ph->ate_struct.ate_all = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
-		printf("===============ate_all\n");
-		
-		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		//flag end
-		ph->flag_end = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		return (true);
-	}
-	x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
-	return (false);
-}
 
 // static void	set_flag_ate_in_philo(t_philo_list *list_philo, size_t num_people)
 // {
@@ -61,6 +43,29 @@ bool	is_flag_end(t_philo_main *ph)
 		return (true);
 	return (false);
 }
+
+
+bool	judge_ate_all(t_philo_main *ph, size_t num_people)
+{
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
+	if (ph->ate_struct.ate_cnt == num_people)
+	{
+		ph->ate_struct.ate_all = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
+		// printf("===============ate_all\n");
+		
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		//flag end
+		ph->flag_end = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		// printf("===============end flag\n");
+		
+		return (true);
+	}
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
+	return (false);
+}
+
 //TODO argv[1]をinitでnum_peopleに
 void	*run_rutine_monitor_in_thread(void *ptr)
 {
@@ -81,7 +86,7 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 		ret = judge_ate_all(ph, num_people);
 		if (ret == true)
 		{
-			printf("end----------------\n");
+			// printf("end----------------\n");
 			break ;
 		}
 
