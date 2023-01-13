@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 14:02:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:09:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ static void	set_flag_ate_in_philo(t_philo_list *list_philo, size_t num_people)
 		node_philo = get_philo_node(list_philo, i);
 		
 		x_lock_mutex_philo(node_philo);
-		node_philo->ate = true;
+		// node_philo->ate = true;
 		node_philo->flag_end = true;
 		x_unlock_mutex_philo(node_philo);
 
 		node_philo = node_philo->next;
 		i++;
 	}
+	printf("===============flag philo end\n");
 }
 
 bool	is_flag_end(t_philo_main *ph)
