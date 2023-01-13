@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 18:03:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:46:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,55 +42,61 @@ void	count_ate_in_philo(t_philo_node *node_philo)
 	}
 }
 
-void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
+bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
+{
+	bool ret;
+
+	ret = false;
+	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	if (end_struct->flag_end == true)
+		ret = true;
+	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	// x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+	return (ret);
+}
+
+void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
 {
 	bool	end;
-	const long time_eat = node_philo->ph->argv[3];
-	const long time_sleep = node_philo->ph->argv[4];
-	
+	const long time_eat = ph->argv[3];
+	const long time_sleep = ph->argv[4];
+	t_mutex *mutex_struct;
+	t_end_struct *end_struct;
+
+	mutex_struct = &ph->mutex_struct;
+	end_struct = &ph->end_struct;
 	end = false;
 	while (end == false)
 	{
-		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (node_philo->ph->flag_end == true)
-			end = true;
-		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+		end = is_end(end_struct, mutex_struct);
 		
 		run_eating(node_philo, node_fork, node_philo->id, time_eat);
 		
-		if (node_philo->ph->flag_must_eat == true)
+		if (ph->flag_must_eat == true)
 			count_ate_in_philo(node_philo);
 
-		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (node_philo->ph->flag_end == true)
-			end = true;
-		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+		end = is_end(end_struct, mutex_struct);
 
-		x_lock_mutex_philo(node_philo);
+		// x_lock_mutex_philo(node_monitor->node_philo);
 		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-		x_unlock_mutex_philo(node_philo);
 
-		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (node_philo->ph->flag_end == true)
-			end = true;
-		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		
-		x_lock_mutex_philo(node_philo);
+		end = is_end(end_struct, mutex_struct);
+
 		put_state(THINKING, node_philo, 0, node_philo->id);
-		x_unlock_mutex_philo(node_philo);
 	}
 }
 
-void	*run_rutine_dining_in_thread(void *ptr)
+void	*run_rutine_philo(void *ptr)
 {
-	t_philo_node	*node_th;
+	t_philo_node	*node_philo;
 	t_fork_node		*node_fork;
 
-	node_th = (t_philo_node *)ptr;
-	node_fork = get_fork_node(&node_th->ph->fork_list, node_th->id);
-	if (node_th->ph->argv[1] == 1)
-		run_case_1person(node_th);
+	node_philo = (t_philo_node *)ptr;
+	node_fork = get_fork_node(&node_philo->ph->fork_list, node_philo->id);
+	if (node_philo->ph->argv[1] == 1)
+		run_case_1person(node_philo);
 	else
-		run_rutine_philo(node_th, node_fork);
+		run_rutine_philo_dining(node_philo->ph, node_philo, node_fork);
+		// run_rutine_philo_dining(node_philo, node_fork);
 	return (NULL);
 }

@@ -6,11 +6,55 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:25:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:27:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void create_thread(t_philo_main *ph, size_t num_people);
+static void	wait_end_simulation(t_philo_main *ph);
+static void	join_pthread(t_philo_main *ph);
+static void put_died(t_philo_main *ph);
+
+void	run_parallel_process(t_philo_main *ph)
+{
+	size_t	num_people;
+
+	num_people = ph->argv[1];
+	get_start_time(ph);
+	create_thread(ph, num_people);
+	wait_end_simulation(ph);
+	join_pthread(ph);
+	put_died(ph);
+}
+
+static void create_thread(t_philo_main *ph, size_t num_people)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < num_people)
+	{
+		set_and_run_philo(ph, i);
+		set_and_run_monitor(ph, i);
+		i++;
+	}
+}
+
+static void	wait_end_simulation(t_philo_main *ph)
+{
+	bool end;
+
+	end = false;
+	while (end == false)
+	{
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (ph->end_struct.flag_end == true)
+			end = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+	}
+}
 
 static void	join_pthread(t_philo_main *ph)
 {
@@ -32,38 +76,11 @@ static void	join_pthread(t_philo_main *ph)
 	}
 }
 
-void create_thread(t_philo_main *ph, size_t num_people)
+static void put_died(t_philo_main *ph)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < num_people)
-	{
-		set_and_run_philo(ph, i);
-		set_and_run_monitor(ph, i);
-		i++;
-	}
-}
-
-//create thread num_people and monitor
-void	run_parallel_process(t_philo_main *ph)
-{
-	size_t	num_people;
-	bool	end;
-
-	end = false;
-	num_people = ph->argv[1];
-	get_start_time(ph);
-	create_thread(ph, num_people);
-	while (end == false)
-	{
-		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		if (ph->flag_end == true)
-			end = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-	}
-	join_pthread(ph);
-	// printf("after--join--------------\n");
 	if (ph->died_struct.died_flag == true)
-		put_stamp(get_time_milli_sec() - ph->start_time, ph->died_struct.died_id, DIED_STR);
+	{
+		get_time_passed(ph);
+		put_stamp(ph->passed_time, ph->died_struct.died_id, DIED_STR);
+	}
 }

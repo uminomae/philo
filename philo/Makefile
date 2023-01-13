@@ -21,7 +21,7 @@ ph_begin_build.c \
 ph_begin_list_fork.c \
 ph_begin_list_philo.c \
 ph_begin_list_monitor.c \
-ph_error_flag.c \
+ph_error_get_num.c \
 ph_error_check.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
@@ -30,9 +30,7 @@ ph_run_3_set_monitor.c \
 ph_run_4_dining_philo_func.c \
 ph_run_5_rutine_monitor.c \
 ph_run_6_eating.c \
-ph_run_is_ate.c \
 ph_run_is_died.c \
-ph_run_end_flag.c \
 ph_run_util.c \
 ph_finish.c \
 ph_finish_free.c \
@@ -122,7 +120,7 @@ run2:
 
 run3: 
 	make sani_thread
-	./philo 2 401 200 200 
+	./philo 4 410 200 200 
 
 run4: 
 	make sani_add

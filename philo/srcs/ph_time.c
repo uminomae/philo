@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:21:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:51:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	get_start_time(t_philo_main *ph)
 		ph->start_time = ret;
 }
 
-void	get_time_passed(t_philo_main *ph)
+long	get_time_passed(t_philo_main *ph)
 {
 	long	ret;
 
@@ -46,6 +46,7 @@ void	get_time_passed(t_philo_main *ph)
 		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
 	else
 		ph->passed_time = ret - ph->start_time;
+	return (ret);
 }
 
 int	usleep_ms(size_t ms)

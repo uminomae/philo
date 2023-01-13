@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 12:03:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:55:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ size_t	add_philo_list( \
 		return (1);
 	node_philo->id = id;
 	node_philo->ph = ph;
+	node_philo->mutex_struct = &ph->mutex_struct;
 	// node_philo->cnt = 0;
 	// set_status_to_thread_list(ph, node_philo);
 	if (list->head == NULL)
