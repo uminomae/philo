@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/12 07:29:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:33:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 	return (false);
 }
 
-void	count_ate_in_philo(t_philo_node *node_th)
+void	count_ate_in_philo(t_philo_node *node_philo)
 {
 	t_mutex				*mutex_struct;
 
-	mutex_struct = &node_th->ph->mutex_struct;
-	if (is_required_times_ate(node_th, node_th->cnt))
+	mutex_struct = &node_philo->ph->mutex_struct;
+	// printf("--------- cnt philo %zu\n", node_philo->cnt);
+	if (is_required_times_ate(node_philo, node_philo->cnt))
 	{
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
-		node_th->ph->ate_struct.ate_cnt++;
+		node_philo->ph->ate_struct.ate_cnt++;
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:28:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:57:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ static void	add_last_philo_node(t_philo_list *list, t_philo_node *node)
 	node->next = list->head;
 }
 
-static void	set_status_to_thread_list(t_philo_main *ph, t_philo_node *node)
-{
-	size_t	i;
+// static void	set_status_to_thread_list(t_philo_main *ph, t_philo_node *node)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < PUT_TYPE_END)
-	{
-		node->status[i] = &ph->status[i];
-		// printf("%s\n", *node->status[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < PUT_TYPE_END)
+// 	{
+// 		node->status[i] = ph->status[i];
+// 		// printf("%s\n", *node->status[i]);
+// 		i++;
+// 	}
+// }
 
-size_t	add_pthread_list( \
+size_t	add_philo_list( \
 			t_philo_main *ph, t_philo_list *list, t_ptr_list *ptr_list, size_t id)
 {
 	t_philo_node	*node_th;
@@ -60,7 +60,7 @@ size_t	add_pthread_list( \
 		return (1);
 	node_th->id = id;
 	node_th->ph = ph;
-	set_status_to_thread_list(ph, node_th);
+	// set_status_to_thread_list(ph, node_th);
 	if (list->head == NULL)
 		make_first_philo_node(list, node_th);
 	else

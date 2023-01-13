@@ -6,19 +6,11 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 19:06:00 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:18:43 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	put_stamp(long time, size_t id, char *str)
-{
-	int	ret;
-
-	ret = printf("%ld %zu %s\n", time, id, str);
-	return (ret);
-}
 
 long	get_time_milli_sec(void)
 {

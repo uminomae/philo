@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/11 20:15:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:57:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	make_list(t_philo_main *ph)
 	id = 0;
 	while (id < ph->argv[1])
 	{
-		if (add_pthread_list(ph, &ph->philo_list, &ph->alloc_list, id) == 1)
-			get_err_num_ph(ph, ERR_ADD_PTHREAD_LIST);
+		if (add_philo_list(ph, &ph->philo_list, &ph->alloc_list, id) == 1)
+			get_err_num_ph(ph, ERR_add_philo_list);
 		if (add_fork_list(&ph->fork_list, &ph->alloc_list, id) == 1)
 			get_err_num_ph(ph, ERR_ADD_FORK_LIST);
 			// printf("=========a\n");

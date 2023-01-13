@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/12 07:49:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:57:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_philo_node
 	pthread_t				thread;
 	size_t					id;
 	long					time[5];
-	char					**status[5];
+	// char					*status[5];
 	struct s_philo_node		*next;
 	struct s_philo_main		*ph;
 	bool					flag_err;
@@ -176,7 +176,7 @@ typedef struct s_philo_main
 enum e_err_type {
 	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
-	ERR_ADD_PTHREAD_LIST,
+	ERR_add_philo_list,
 	ERR_ADD_FORK_LIST,
 	ERR_ADD_MONITOR_LIST,
 	ERR_TYPE_END,
@@ -212,8 +212,13 @@ long	get_time_milli_sec(void);
 void	get_start_time(t_philo_main *ph);
 int		usleep_ms(size_t ms);
 
-void	*run_dining_philo_in_thread(void *ptr);
-int		put_stamp(long time, size_t id, char *str);
+void	*run_rutine_dining_philo_in_thread(void *ptr);
+t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
+t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
+void	*run_rutine_monitor_in_thread(void *ptr);
+t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id);
+
+int		put_stamp(long time, size_t id, const char *str);
 
 int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
@@ -222,7 +227,6 @@ char	*x_strdup(t_ptr_list *list, char *str);
 void	run_parallel_process(t_philo_main *ph);
 void	set_and_run_philo(t_philo_main *ph, size_t id);
 void	set_and_run_monitor(t_philo_main *ph, size_t id);
-t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 
 
 int		run_eating(t_philo_node *node_th, \
@@ -231,7 +235,7 @@ void	put_state(size_t i, \
 		t_philo_node *node_th, long ms, size_t id);
 
 size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
-size_t	add_pthread_list(t_philo_main *ph, t_philo_list *list, \
+size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
 size_t	add_monitor_list( \
 			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id);
