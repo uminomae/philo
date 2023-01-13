@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 17:53:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:03:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	count_ate_in_philo(t_philo_node *node_philo)
 	{
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 		node_philo->ph->ate_struct.ate_cnt++;
-		// printf("======cnt_mustate_person %zu id:%zu\n", node_philo->ph->ate_struct.ate_cnt, node_philo->ph->id);
 		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 	}
 }
@@ -56,23 +55,25 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 		if (node_philo->ph->flag_end == true)
 			end = true;
 		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+		
 		run_eating(node_philo, node_fork, node_philo->id, time_eat);
+		
 		if (node_philo->ph->flag_must_eat == true)
 			count_ate_in_philo(node_philo);
+
+		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+		if (node_philo->ph->flag_end == true)
+			end = true;
+		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+
 		x_lock_mutex_philo(node_philo);
-
-		// x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		// if (node_philo->ph->flag_end == false)
-		// 	end = true;
-		// x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-
 		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
 		x_unlock_mutex_philo(node_philo);
-		
-		// x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		// if (node_philo->ph->flag_end == false)
-		// 	end = true;
-		// x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+
+		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
+		if (node_philo->ph->flag_end == true)
+			end = true;
+		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
 		
 		x_lock_mutex_philo(node_philo);
 		put_state(THINKING, node_philo, 0, node_philo->id);

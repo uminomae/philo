@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 16:55:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:08:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ bool	is_finished_ate_last_person(t_philo_node *node_th)
 
 	timeval = get_time_milli_sec();
 	if (timeval < 0)
-		node_th->flag_err = true;
+		get_err_num_ph(node_th->ph, ERR_GETTEIME_MS);
+		// node_th->flag_err = true;
 	time_to_eat = node_th->ph->argv[3];
 	time_current = timeval - node_th->start_time;
 	time_ate = node_th->time[EATING] + time_to_eat;
