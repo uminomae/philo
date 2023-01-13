@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 14:41:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:45:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	run_rutine_philo(t_philo_node	*node_philo, t_fork_node *node_fork)
 	while (1)
 	{
 		// judge end flag 
-		x_lock_mutex_philo(node_philo);
-		if (node_philo->flag_end == true)
-		{
-			x_unlock_mutex_philo(node_philo);
-			break ;
-		}
-		x_unlock_mutex_philo(node_philo);
+		// x_lock_mutex_philo(node_philo);
+		// if (node_philo->flag_end == true)
+		// {
+		// 	x_unlock_mutex_philo(node_philo);
+		// 	break ;
+		// }
+		// x_unlock_mutex_philo(node_philo);
 
 		// wait_ate_person(node_philo);
 

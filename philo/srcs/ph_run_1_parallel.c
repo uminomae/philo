@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 14:36:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:45:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	run_parallel_process(t_philo_main *ph)
 		set_and_run_monitor(ph, i);
 		i++;
 	}
-	// while (1)
-	// {
-	// x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		if (ph->flag_end)
+	while (1)
+	{
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (ph->flag_end == true)
 			join_pthread(ph);
-	// }
-	// x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+	}
 	if (ph->died_struct.died_flag == true)
 		put_stamp(get_time_milli_sec() - ph->start_time, ph->died_struct.died_id, DIED_STR);
 }

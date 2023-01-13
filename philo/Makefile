@@ -122,7 +122,7 @@ run2:
 
 run3: 
 	make sani_thread
-	./philo 5 801 202 203 2
+	./philo 2 801 202 203 1
 
 run4: 
 	make sani_add
