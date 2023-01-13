@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 21:37:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:10:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ bool	is_finished_ate_last_person(t_philo_node *node_philo)
 	if (timeval < 0)
 		get_err_num_ph(node_philo->ph, ERR_GETTEIME_MS);
 	time_to_eat = node_philo->ph->argv[3];
-	// time_current = timeval - node_philo->start_time;
 	time_current = timeval;
 	time_ate = node_philo->time[EATING] + time_to_eat;
 	if (time_current > time_ate)
@@ -55,7 +54,6 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people, t_philo_node *node_philo
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 		ph->end_struct.flag_end = true;
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		// printf("===============end flag\n");
 		
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/13 21:53:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 08:03:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,9 @@ typedef struct s_monitor_node
 	pthread_t				monitor_th;
 	pthread_mutex_t			mutex_monitor;
 	struct s_philo_node		*node_philo;
-	// size_t					id;
-	// long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
-	// bool					flag_err;
 	struct s_philo_main		*ph;
-	// long					time[5];
-	// struct s_mutex			*mutex_struct;
-	// struct s_ate_struct		*ate_struct;
-	// struct s_die_struct		*died_struct;
 } 	t_monitor_node;
 
 typedef struct s_monitor_list
@@ -116,9 +109,6 @@ typedef struct s_philo_node
 	long					time[5];
 	struct s_philo_node		*next;
 	struct s_philo_main		*ph;
-	// bool					flag_died;
-	// bool					flag_end;
-	// long					start_time;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
 	size_t					cnt;
@@ -147,7 +137,6 @@ typedef struct s_philo_main
 	bool					flag_err;
 	size_t					error_num;
 	size_t					argv[6];
-	// long					start_time;
 	long					passed_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
@@ -156,7 +145,6 @@ typedef struct s_philo_main
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
-	// bool					flag_end;
 	struct s_mutex			mutex_struct;
 	struct s_ate_struct		ate_struct;
 	struct s_die_struct		died_struct;
@@ -192,15 +180,13 @@ enum e_err_type {
 # define THINKING_STR	"is thinking"
 # define DIED_STR		"is died"
 # define ERR_STR		"error\n"
-// # define NUM_ERR_LOW	11
-
 
 # define LOCK		1
 # define UNLOCK		0
 # define ERROR		1
 # define SUCCESS	0
 
-enum e_put_type {
+enum e_put_state {
 	TAKEN_FORK = 0,
 	EATING,
 	SLEEPING,
@@ -214,20 +200,15 @@ int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
 
 long	get_time_milli_sec(void);
-// void	get_start_time(t_philo_main *ph);
-// long	get_time_passed(t_philo_main *ph);
 int		usleep_ms(size_t ms);
 
 void	*run_rutine_philo(void *ptr);
-// void	run_rutine_philo_dining(t_philo_node	*node_philo, t_fork_node *node_fork);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void	*run_rutine_monitor_in_thread(void *ptr);
 t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id);
-// bool	is_flag_end(t_philo_main *ph);
-
-int		put_stamp(long time, size_t id, const char *str);
+int	put_stamp(long time, size_t id, const char *state);
 
 int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
@@ -240,10 +221,8 @@ void	set_and_run_monitor(t_philo_main *ph, size_t id);
 
 int		run_eating(t_philo_node *node_th, \
 		t_fork_node *node_fork, size_t id, long time_eat);
-void	put_state(size_t i, \
-		t_philo_node *node_th, long ms, size_t id);
+void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);
 
-// size_t	add_fork_list(t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
@@ -276,7 +255,6 @@ void	destroy_mutex(t_philo_main *ph);
 bool	is_flag_died(t_monitor_node *eat_monitor);
 
 bool	check_time_to_die(t_philo_node *node_th, long time_current);
-// bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 void	wait_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 void	count_ate_in_philo(t_philo_node *node_th);

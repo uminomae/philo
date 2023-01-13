@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 22:02:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/13 22:06:32 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 		return (false);
 	return (true);
 }
-
 
 static size_t	check_digit(int argc, char **argv)
 {
