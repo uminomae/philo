@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 22:10:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:10:09 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,12 @@ static void	set_flag_died(t_philo_main *ph, size_t id)
 	mutex_struct = &ph->mutex_struct;
 
 	x_lock_mutex_struct(&mutex_struct->mutex_die ,mutex_struct);
-	ph->died_struct.died_flag = true;
-	ph->died_struct.died_id = id;
+	if (ph->died_struct.died_flag == false)
+	{
+		printf("-----die id%ld\n", id);
+		ph->died_struct.died_flag = true;
+		ph->died_struct.died_id = id;
+	}
 	x_unlock_mutex_struct(&mutex_struct->mutex_die ,mutex_struct);
 
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
@@ -82,8 +86,10 @@ bool	check_time_to_die(t_philo_node *node_philo, long time_current)
 	const long	eating = node_philo->time[EATING];
 	const long	time_to_eat = (long)node_philo->ph->argv[2];
 	
-	if (time_current - eating >= time_to_eat)
+	if (eating > 0 && time_current - eating >= time_to_eat)
 	{
+		printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
+		printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
@@ -97,13 +103,14 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 	t_philo_main	*ph;
 	size_t			num_people;
 	long			time_current;
-	bool			end;
+	// bool			end;
 
-	end = false;
+	// end = false;
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
 	num_people = ph->argv[1];
-	while (end == false)
+	// while (end == false)
+	while (1)
 	{
 		// die time to eat
 		time_current = get_time_milli_sec();
@@ -111,16 +118,22 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 			get_err_num_ph(node_monitor->ph, ERR_GETTEIMEOFDAY);
 			
 		x_lock_mutex_philo(node_monitor->node_philo);
+		// printf("-while-----cur_t %ld,\n", time_current);
 		check_time_to_die(node_monitor->node_philo, time_current);
 		x_unlock_mutex_philo(node_monitor->node_philo);
 
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (ph->end_struct.flag_end)
+			break ;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		
 		// ate_all
 		if (ph->flag_must_eat == true)
 			judge_ate_all(ph, num_people, node_monitor->node_philo);
 		
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		if (ph->end_struct.flag_end == true)
-			end = true;
+		if (ph->end_struct.flag_end)
+			break ;
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 	}
 	return (ptr);

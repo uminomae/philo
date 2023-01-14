@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/14 08:07:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 14:06:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	put_stamp(long time, size_t id, const char *state)
 	ret = printf("%ld %zu %s\n", time, id, state);
 	return (ret);
 }
+
 
 //idx_state:
 // enum e_put_state {
@@ -56,7 +57,8 @@ void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 	
 	if (ms > 0)
 	{
-		if (usleep_ms(ms) < 0)
+		wait_action_usleep_ms(node_philo->time[idx_state], ms);
+		// if (usleep_ms(ms) < 0)
 			get_err_num_philo(node_philo, ERR_USLEEP);
 	}
 // 	printf("-後------------------%ld\n", get_time_milli_sec());

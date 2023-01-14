@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/14 08:03:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:18:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,10 +198,10 @@ enum e_put_state {
 bool	is_valid_values(t_philo_main *ph, int argc, char **argv);
 int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
-
+int		wait_action_usleep_ms(long start, size_t wait_ms);
 long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
-
+bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void	*run_rutine_philo(void *ptr);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);

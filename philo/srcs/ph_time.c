@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 22:10:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:00:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,31 @@ long	get_time_milli_sec(void)
 	return (milli_sec);
 }
 
-int	usleep_ms(size_t ms)
+int	wait_action_usleep_ms(long start, size_t wait_ms)
 {
-	int	ret;
+	int		ret;
+	long	total;
+	long	wait_must;
 
-	ret = usleep(ms * 1000);
+	ret = 0;
+	total = wait_ms + start;
+	while(total >= get_time_milli_sec())
+	{
+		wait_must = total - get_time_milli_sec();
+		if (wait_must > 10)
+		{
+			ret = usleep(1000);
+			if (ret < 0)
+				return(ret);
+		}
+	}
 	return (ret);
 }
+
+// int	usleep_ms(size_t ms)
+// {
+// 	int	ret;
+
+// 	ret = usleep(ms * 1000);
+// 	return (ret);
+// }

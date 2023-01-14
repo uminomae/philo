@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 21:41:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:15:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 
 void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
 {
-	bool	end;
+	// bool	end;
 	const long time_eat = ph->argv[3];
 	const long time_sleep = ph->argv[4];
 	t_mutex *mutex_struct;
@@ -64,18 +64,27 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 
 	mutex_struct = &ph->mutex_struct;
 	end_struct = &ph->end_struct;
-	end = false;
-	while (end == false)
+	// end = false;
+	while (1)
+	// while (end == false)
 	{
+		// end = is_end(end_struct, mutex_struct);
+		if (is_end(end_struct, mutex_struct))
+			break;
 		run_eating(node_philo, node_fork, node_philo->id, time_eat);
+		if (is_end(end_struct, mutex_struct))
+			break;
 		if (ph->flag_must_eat == true)
 			count_ate_in_philo(node_philo);
-		// end = is_end(end_struct, mutex_struct);
 		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-		end = is_end(end_struct, mutex_struct);
+		if (is_end(end_struct, mutex_struct))
+			break;
 		put_state(THINKING, node_philo, 0, node_philo->id);
-		end = is_end(end_struct, mutex_struct);
+		if (is_end(end_struct, mutex_struct))
+			break;
 	}
+	// if (pthread_join(node_philo->philo_th, NULL) != 0)
+	// 	get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 }
 
 void	*run_rutine_philo(void *ptr)
