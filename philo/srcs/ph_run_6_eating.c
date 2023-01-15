@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/14 23:29:43 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 00:12:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,15 @@ static void	lock_mutex_forks(t_philo_node *node_philo, \
 {
 	t_fork_node	*node_next_fork;
 
+	// x_lock_mutex_fork(node_next_fork);
+	x_lock_mutex_fork(node_fork);
 	node_next_fork = node_fork->next;
+	x_unlock_mutex_fork(node_fork);
+	// x_unlock_mutex_fork(node_next_fork);
 	if (case_tail_person(node_philo))
 	{
-		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
-		{
-			x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-			return ;
-		}
-		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-
 		x_lock_mutex_fork(node_next_fork);
 		put_state(TAKEN_FORK, node_philo, 0, id);
-
-		x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
-		{
-			x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-			return ;
-		}
-		x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-
-
 		x_lock_mutex_fork(node_fork);
 		put_state(TAKEN_FORK, node_philo, 0, id);
 	}
@@ -64,30 +50,24 @@ static void	unlock_mutex_forks(t_philo_node *node_philo, \
 {
 	t_fork_node		*node_next_fork;
 
+	// x_lock_mutex_fork(node_fork);
 	node_next_fork = node_fork->next;
+	// x_unlock_mutex_fork(node_fork);
 	if (case_tail_person(node_philo))
 	{
-		x_unlock_mutex_fork(node_next_fork);
 		x_unlock_mutex_fork(node_fork);
+		x_unlock_mutex_fork(node_next_fork);
 	}
 	else
 	{
-		x_unlock_mutex_fork(node_fork);
 		x_unlock_mutex_fork(node_next_fork);
+		x_unlock_mutex_fork(node_fork);
 	}
 }
 
 int	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
-	// x_lock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-	// if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
-	// {
-	// 	x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-	// 	return (SUCCESS);
-	// }
-	// x_unlock_mutex_struct(&node_philo->ph->mutex_struct.mutex_end, &node_philo->ph->mutex_struct);
-	
 	lock_mutex_forks(node_philo, node_fork, id);
 	x_lock_mutex_philo(node_philo);
 	put_state(EATING, node_philo, time_eat, id);

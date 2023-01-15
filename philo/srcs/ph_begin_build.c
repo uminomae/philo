@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/14 23:40:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 00:51:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static void	make_list(t_philo_main *ph)
 			get_err_num_ph(ph, ERR_ADD_PHILO_LIST);
 		if (add_fork_list(ph, &ph->fork_list, &ph->alloc_list, id) == 1)
 			get_err_num_ph(ph, ERR_ADD_FORK_LIST);
-		// if (add_monitor_list(ph, &ph->monitor_list, &ph->alloc_list, id) == 1)
-		// 	get_err_num_ph(ph, ERR_ADD_MONITOR_LIST);
 		id++;
 	}
 }
@@ -44,6 +42,7 @@ int	build_struct_and_list(t_philo_main *ph, int argc)
 		ph->flag_must_eat = true;
 	strdup_status_array(ph);
 	make_list(ph);
+	ph->monitor_node.ph = ph;
 	ph->sleep_seconds = ph->argv[4];
 	if (ph->error_num > NUM_ERR_LOW)
 	{

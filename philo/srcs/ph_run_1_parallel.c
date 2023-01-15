@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/14 23:13:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 10:09:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void create_thread(t_philo_main *ph, size_t num_people);
-static void	wait_end_simulation(t_philo_main *ph);
+// static void	wait_end_simulation(t_philo_main *ph);
 static void	join_pthread(t_philo_main *ph);
 static void put_died(t_philo_main *ph);
 
@@ -23,7 +23,9 @@ void	run_parallel_process(t_philo_main *ph)
 
 	num_people = ph->argv[1];
 	create_thread(ph, num_people);
-	wait_end_simulation(ph);
+	printf("----end cre th\n");
+	// wait_end_simulation(ph);
+	printf("----end sim\n");
 	join_pthread(ph);
 	put_died(ph);
 }
@@ -31,28 +33,20 @@ void	run_parallel_process(t_philo_main *ph)
 static void create_thread(t_philo_main *ph, size_t num_people)
 {
 	size_t	i;
+	int 	ret;
 
 	i = 0;
 	while (i < num_people)
 	{
 		set_and_run_philo(ph, i);
-		set_and_run_monitor(ph, i);
+		// set_and_run_monitor(ph, i);
 		i++;
 	}
-}
-
-static void	wait_end_simulation(t_philo_main *ph)
-{
-	bool end;
-
-	end = false;
-	while (end == false)
-	{
-		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		if (ph->end_struct.flag_end == true)
-			end = true;
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-	}
+	ret = pthread_create(&ph->monitor_node.monitor_th, NULL, \
+							run_rutine_monitor_in_thread, &ph->monitor_node);
+	if (ret != 0)
+		get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+	// printf("----end set cre th\n");
 }
 
 static void	join_pthread(t_philo_main *ph)
@@ -60,16 +54,14 @@ static void	join_pthread(t_philo_main *ph)
 	size_t			i;
 	const size_t	num_people = ph->argv[1];
 	t_philo_node	*node_philo;
-	t_monitor_node	*node_monitor;
 
+	if (pthread_join(ph->monitor_node.monitor_th, NULL) != 0)
+		get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	i = 0;
 	while (i < num_people)
 	{
 		node_philo = get_philo_node(&ph->philo_list, i);
 		if (pthread_join(node_philo->philo_th, NULL) != 0)
-			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
-		node_monitor = get_monitor_node(&ph->monitor_list, i);
-		if (pthread_join(node_monitor->monitor_th, NULL) != 0)
 			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}

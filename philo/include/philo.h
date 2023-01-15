@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/14 23:18:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 10:43:20 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ typedef struct s_monitor_node
 	struct s_philo_main		*ph;
 } 	t_monitor_node;
 
-typedef struct s_monitor_list
-{
-	struct s_monitor_node	*head;
-	struct s_monitor_node	*tail;
-}	t_monitor_list;
+// typedef struct s_monitor_list
+// {
+// 	struct s_monitor_node	*head;
+// 	struct s_monitor_node	*tail;
+// }	t_monitor_list;
 
 typedef struct s_end_struct
 {
@@ -90,6 +90,8 @@ typedef struct s_ate_struct
 {
 	size_t	ate_cnt;
 	bool	ate_all;
+	size_t	id;
+	long	time;
 }	t_ate_struct;
 
 typedef struct s_mutex
@@ -141,7 +143,8 @@ typedef struct s_philo_main
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
-	struct s_monitor_list	monitor_list;
+	// struct s_monitor_list	monitor_list;
+	struct s_monitor_node	monitor_node;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
@@ -202,12 +205,15 @@ int		wait_action_usleep_ms(long start, size_t wait_ms);
 long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
+// bool	is_end(const t_end_struct *end_struct, const t_mutex *mutex_struct, const pthread_mutex_t *mutex_end);
+
+// bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void	*run_rutine_philo(void *ptr);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void	*run_rutine_monitor_in_thread(void *ptr);
-t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id);
+// t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id);
 int	put_stamp(long time, size_t id, const char *state);
 
 int		ft_isdigit(int c);
@@ -226,8 +232,8 @@ void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);
 size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
-size_t	add_monitor_list( \
-			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id);
+// size_t	add_monitor_list( \
+// 			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id);
 
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
@@ -248,7 +254,9 @@ void	x_lock_mutex_fork(t_fork_node *node_fork);
 void	x_unlock_mutex_fork(t_fork_node *node_fork);
 void	x_lock_mutex_philo(t_philo_node *node_th);
 void	x_unlock_mutex_philo(t_philo_node *node_th);
+// void	x_lock_mutex_struct(const pthread_mutex_t *mutex, const t_mutex *mutex_struct);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
+// void	x_unlock_mutex_struct(const pthread_mutex_t *mutex, t_mutex *mutex_struct);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 
 void	destroy_mutex(t_philo_main *ph);
@@ -257,7 +265,7 @@ bool	is_flag_died(t_monitor_node *eat_monitor);
 bool	check_time_to_die(t_philo_node *node_th, long time_current);
 void	wait_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
-void	count_ate_in_philo(t_philo_node *node_th);
-
+// void	count_ate_in_philo(t_philo_node *node_th);
+void	set_flag_died(t_philo_main *ph, size_t id);
 
 #endif

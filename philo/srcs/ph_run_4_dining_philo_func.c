@@ -6,19 +6,17 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/14 23:15:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 10:48:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	run_case_1person(t_philo_node	*node_th)
+static void	run_case_1person(t_philo_node	*node_philo)
 {
-	while (1)
-	{
-		if (check_time_to_die(node_th, get_time_milli_sec()))
-			return (1);
-	}
+	usleep(node_philo->ph->argv[2] * 1000);
+	set_flag_died(node_philo->ph, node_philo->id);
+	return ;
 }
 
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
@@ -65,21 +63,25 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 	mutex_struct = &ph->mutex_struct;
 	end_struct = &ph->end_struct;
 	// end = false;
-	while (1)
 	// while (end == false)
+	while (1)
 	{
 		// end = is_end(end_struct, mutex_struct);
-		if (is_end(end_struct, mutex_struct))
-			break;
-		run_eating(node_philo, node_fork, node_philo->id, time_eat);
-		if (is_end(end_struct, mutex_struct))
-			break;
-		if (ph->flag_must_eat == true)
-			count_ate_in_philo(node_philo);
-		put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-		if (is_end(end_struct, mutex_struct))
-			break;
-		put_state(THINKING, node_philo, 0, node_philo->id);
+		if (!is_end(end_struct, mutex_struct))
+		{
+		// if (is_end(end_struct, mutex_struct))
+			// break;
+			run_eating(node_philo, node_fork, node_philo->id, time_eat);
+			if (ph->flag_must_eat == true)
+				count_ate_in_philo(node_philo);
+		}
+		if (!is_end(end_struct, mutex_struct))
+			// break;
+			put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
+		if (!is_end(end_struct, mutex_struct))
+			// break;
+			put_state(THINKING, node_philo, 0, node_philo->id);
+
 		if (is_end(end_struct, mutex_struct))
 			break;
 	}

@@ -26,7 +26,6 @@ ph_error_check.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
 ph_run_2_set_philo.c \
-ph_run_3_set_monitor.c \
 ph_run_4_dining_philo_func.c \
 ph_run_5_rutine_monitor.c \
 ph_run_6_eating.c \
@@ -119,8 +118,8 @@ run2:
 
 run3: 
 	make sani_thread
-#	./philo 4 410 200 200 >out
-	./philo 200 2000 1000 1000
+	./philo 4 410 200 200
+# ./philo 200 2000 1000 1000
 run4: 
 	make sani_add
 #	make sani_thread
