@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:27:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:20:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,35 @@ void	run_parallel_process(t_philo_main *ph)
 	num_people = ph->argv[1];
 	create_thread(ph, num_people);
 	join_pthread(ph);
-	// puts("----------------died");
 	put_died(ph);
+}
+
+// static void	create_and_run_pthread_philo(t_philo_node *node_philo)
+// {
+// 	int	ret;
+
+// 	ret = pthread_create(&node_philo->philo_th, NULL, \
+// 							run_rutine_philo, node_philo);
+// 	if (ret != 0)
+// 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
+// }
+
+
+void	set_and_run_philo(t_philo_main *ph, size_t id)
+{
+	t_philo_node	*node_philo;
+	int				ret;
+	node_philo = get_philo_node(&ph->philo_list, id);
+	node_philo->id = id;
+	node_philo->flag_must_eat = ph->flag_must_eat;
+	node_philo->times_must_eat = ph->argv[5];
+	if (id % 2 == 1)
+		usleep(1000);
+	// create_and_run_pthread_philo(node_philo);
+	ret = pthread_create(&node_philo->philo_th, NULL, \
+							run_rutine_philo, node_philo);
+	if (ret != 0)
+		get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
 }
 
 static void create_thread(t_philo_main *ph, size_t num_people)

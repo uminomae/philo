@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 13:30:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:08:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,34 @@ void	count_ate_in_philo(t_philo_node *node_philo)
 	}
 }
 
+int	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
+{
+	int		ret;
+	long	total;
+
+	ret = 0;
+	total = wait_ms + start;
+	while(total >= get_time_milli_sec())
+	{
+		if (is_end(&ph->end_struct, &ph->mutex_struct))
+			return (IS_END_FLAG);
+		if (total - get_time_milli_sec() > 10)
+		{
+			ret = usleep(100);
+			if (ret < 0)
+				return(ERR_NEGA_NUM);
+		}
+		// wait_must = total - get_time_milli_sec();
+		// if (wait_must > 10)
+		// {
+		// 	ret = usleep(1000);
+		// 	if (ret < 0)
+		// 		return(false);
+		// }
+	}
+	return (SUCCESS);
+}
+
 //idx_state:
 // enum e_put_state {
 // 	TAKEN_FORK = 0,
@@ -55,7 +83,9 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 {
 	const long	time_current = get_time_milli_sec();
 	const t_philo_main *ph = node_philo->ph;
-	
+	int		ret;
+
+	ret = 0;
 	if (time_current < 0)
 		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 	node_philo->time[idx_state] = time_current;
@@ -65,7 +95,10 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 	if (ms > 0)
 	{
-		if(!wait_action_usleep_ms(node_philo->time[idx_state], ms))
+		ret = wait_action_usleep_ms(node_philo->ph, node_philo->time[idx_state], ms);
+		if (ret == IS_END_FLAG)
+			return (false);
+		if (ret == ERR_NEGA_NUM)
 			get_err_num_philo(node_philo, ERR_USLEEP);
 	}
 	return (true);

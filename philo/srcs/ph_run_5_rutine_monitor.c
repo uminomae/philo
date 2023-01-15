@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 13:45:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:21:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	x_lock_mutex_struct(&mutex_struct->mutex_die ,mutex_struct);
 	if (ph->died_struct.died_flag == false)
 	{
-		// printf("-----die id%ld\n", id);
 		ph->died_struct.died_flag = true;
 		ph->died_struct.died_id = id;
 	}
@@ -39,8 +38,6 @@ bool	check_time_to_die(t_philo_node *node_philo, long time_current)
 	
 	if (eating > 0 && time_current - eating >= time_to_eat)
 	{
-		// printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
-		// printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}

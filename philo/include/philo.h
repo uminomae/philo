@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/15 13:39:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:00:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ enum e_err_type {
 # define UNLOCK		0
 # define ERROR		1
 # define SUCCESS	0
+# define ERR_NEGA_NUM	-1
+# define IS_END_FLAG		1
 
 enum e_put_state {
 	TAKEN_FORK = 0,
@@ -202,7 +204,8 @@ enum e_put_state {
 bool	is_valid_values(t_philo_main *ph, int argc, char **argv);
 int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
-bool	wait_action_usleep_ms(long start, size_t wait_ms);
+int		wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms);
+// bool	wait_action_usleep_ms(long start, size_t wait_ms);
 long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
