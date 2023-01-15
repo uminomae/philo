@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 02:51:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 03:56:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id)
 	node_philo->id = id;
 	node_philo->flag_must_eat = ph->flag_must_eat;
 	node_philo->times_must_eat = ph->argv[5];
+	node_philo->hungry = true;
 	if (id % 2 == 1)
 		usleep(1000);
 	return (node_philo);

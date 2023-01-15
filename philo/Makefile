@@ -123,10 +123,10 @@ run3:
 #	./philo 4 410 200 200
 # ./philo 200 2000 1000 1000
 run4: 
-	make sani_add
-#	make sani_thread
+#	make sani_add
+	make sani_thread
 # ./philo 4 310 200 100
-	./philo 5 800 200 200 7 >out
+	./philo 5 800 200 200 
 
 test: 
 	make re

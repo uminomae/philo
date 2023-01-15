@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 03:24:04 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 04:25:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,40 @@ int	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 			if (ret < 0)
 				return(ERR_NEGA_NUM);
 		}
+	// printf("------wait %ld, %ld\n", wait_ms, total);
 	}
+	// printf("------wait end\n");
+	return (SUCCESS);
+}
+
+void	*run_judge_hungry(void *ptr)
+{
+	t_philo_node	*node_philo;
+	long	not_hungry_time;
+	int		ret;
+	long	total;
+	long	start;
+
+	node_philo = (t_philo_node *)ptr;
+	ret = 0;
+	x_lock_mutex_philo(node_philo);
+	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
+	start = node_philo->time[EATING];
+	x_unlock_mutex_philo(node_philo);
+	total = not_hungry_time + start;
+	// printf("------hungry \n");
+	while(total >= get_time_milli_sec())
+	{
+		if (total - get_time_milli_sec() > 5)
+		{
+			ret = usleep(100);
+		}
+	}
+	x_lock_mutex_philo(node_philo);
+	if (ret < 0)
+		get_err_num_ph(node_philo->ph, ERR_USLEEP);
+	node_philo->hungry = true;
+	x_unlock_mutex_philo(node_philo);
 	return (SUCCESS);
 }
 
@@ -70,10 +103,16 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 	if (put_stamp(node_philo->time[idx_state], id, ph->status[idx_state]) < 0)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 //	
-	// ret = pthread_create(&ph->monitor_node.monitor_th, NULL, \
-	// 			run_rutine_monitor, &ph->monitor_node);
-	// if (ret != 0)
-	// 	get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+	if (idx_state == EATING)
+	{
+		node_philo->hungry = false;
+		ret = pthread_create(&node_philo->philo_monit_th, NULL, \
+				run_judge_hungry, node_philo);
+		if (ret != 0)
+			get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
+		//err　処理
+		ret = pthread_detach(node_philo->philo_monit_th); 
+	}
 //
 	if (ms > 0)
 	{

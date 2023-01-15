@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 03:24:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 03:33:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,28 @@ typedef struct s_mutex
 	size_t					error_num;
 }	t_mutex;
 
+// typedef struct s_philo_monit_node
+// {
+// 	pthread_mutex_t			mutex_philo_monit;
+// 	pthread_t				philo_monit_th;
+// 	size_t					id;
+// 	struct s_philo_monit_node		*next;
+// 	struct s_philo_main		*ph;
+// 	long					eat_start_time;
+// 	bool					hungry;
+// }	t_philo_monit_node;
+
+// typedef struct s_philo_monit_list
+// {
+// 	struct s_philo_monit_node	*head;
+// 	struct s_philo_monit_node	*tail;
+// }	t_philo_monit_list;
+
 typedef struct s_philo_node
 {
 	pthread_mutex_t			mutex_philo;
 	pthread_t				philo_th;
+	pthread_t				philo_monit_th;
 	size_t					id;
 	long					time[5];
 	struct s_philo_node		*next;
@@ -113,7 +131,7 @@ typedef struct s_philo_node
 	bool					flag_wait_ate;
 	size_t					error_num;
 	struct s_mutex			*mutex_struct;
-	// int						hungry;
+	bool						hungry;
 }	t_philo_node;
 
 typedef struct s_philo_list
