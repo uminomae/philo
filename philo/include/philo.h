@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/15 13:14:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:32:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,20 +201,15 @@ enum e_put_state {
 bool	is_valid_values(t_philo_main *ph, int argc, char **argv);
 int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
-// int		wait_action_usleep_ms(long start, size_t wait_ms);
 bool	wait_action_usleep_ms(long start, size_t wait_ms);
 long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
-// bool	is_end(const t_end_struct *end_struct, const t_mutex *mutex_struct, const pthread_mutex_t *mutex_end);
-
-// bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void	*run_rutine_philo(void *ptr);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void	*run_rutine_monitor_in_thread(void *ptr);
-// t_monitor_node	*get_monitor_node(t_monitor_list *list_monitor, size_t id);
 int	put_stamp(long time, size_t id, const char *state);
 
 int		ft_isdigit(int c);
@@ -227,16 +222,11 @@ void	set_and_run_monitor(t_philo_main *ph, size_t id);
 
 
 bool	run_eating(t_philo_node *node_th, t_fork_node *node_fork, size_t id, long time_eat);
-// void	run_eating(t_philo_node *node_th, \
-// 		t_fork_node *node_fork, size_t id, long time_eat);
 bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);
-// void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);
 
 size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data);
 size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		t_ptr_list *ptr_list, size_t id);
-// size_t	add_monitor_list( \
-// 			t_philo_main *ph, t_monitor_list *monitor_list, t_ptr_list *ptr_list, size_t id);
 
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 

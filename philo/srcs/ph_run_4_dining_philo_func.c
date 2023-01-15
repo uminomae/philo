@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 13:15:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:30:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,15 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 	{
 		if (is_end(end_struct, mutex_struct))
 			break ;
-		if (!is_end(end_struct, mutex_struct))
-		{
-			if (!run_eating(node_philo, node_fork, node_philo->id, time_eat))
-				break ;
-			if (ph->flag_must_eat == true)
-				count_ate_in_philo(node_philo);
-		}
-		if (!is_end(end_struct, mutex_struct))
-			put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
-		if (!is_end(end_struct, mutex_struct))
-			put_state(THINKING, node_philo, 0, node_philo->id);
+		if (!run_eating(node_philo, node_fork, node_philo->id, time_eat))
+			break ;
+		if (ph->flag_must_eat == true)
+			count_ate_in_philo(node_philo);
+		if (!put_state(SLEEPING, node_philo, time_sleep, node_philo->id))
+			break;
+		if (!put_state(THINKING, node_philo, 0, node_philo->id))
+			break;
 	}
-	// printf("----%ld id", ph->id);
 	return ;
 }
 
