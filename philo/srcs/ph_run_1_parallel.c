@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:10:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 12:27:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	run_parallel_process(t_philo_main *ph)
 	num_people = ph->argv[1];
 	create_thread(ph, num_people);
 	join_pthread(ph);
-	puts("----------------died");
+	// puts("----------------died");
 	put_died(ph);
 }
 

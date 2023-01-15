@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:19:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 12:40:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ bool	check_time_to_die(t_philo_node *node_philo, long time_current)
 	
 	if (eating > 0 && time_current - eating >= time_to_eat)
 	{
-		printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
-		printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
+		// printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
+		// printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
@@ -54,7 +54,7 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	{
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 		
-		usleep(ph->argv[2] * 1000);
+		usleep(ph->argv[3] * 1000);
 		
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
 		ph->ate_struct.ate_all = true;
@@ -86,7 +86,7 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 	while (1)
 	{
 		if (is_end(&ph->end_struct, &ph->mutex_struct))
-			break;
+			break ;
 		if (ph->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
@@ -109,6 +109,6 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 			i++;
 		}
 	}
-	printf("----%ld id\n", ph->id);
+	// printf("----%ld id\n", ph->id);
 	return (ptr);
 }

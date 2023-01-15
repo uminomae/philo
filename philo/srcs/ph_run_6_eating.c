@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:05:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:22:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 	if (case_tail_person(node_philo))
 	{
 		x_lock_mutex_fork(node_next_fork);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
@@ -57,13 +57,12 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 	else
 	{
 		x_lock_mutex_fork(node_fork);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
 			x_unlock_mutex_fork(node_fork);
 			return (false);
 		}
 	}
-	put_state(TAKEN_FORK, node_philo, 0, id);
 	return (true);
 }
 
@@ -76,7 +75,7 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 	if (case_tail_person(node_philo))
 	{
 		x_lock_mutex_fork(node_fork);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
 			x_unlock_mutex_fork(node_fork);
 			return (false);
@@ -85,13 +84,12 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 	else
 	{
 		x_lock_mutex_fork(node_next_fork);
-		if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
 		}
 	}
-	put_state(TAKEN_FORK, node_philo, 0, id);
 	return (true);
 }
 

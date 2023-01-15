@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:16:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:15:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,35 @@ void	count_ate_in_philo(t_philo_node *node_philo)
 		node_philo->ph->ate_struct.ate_cnt++;
 		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 	}
+}
+
+//idx_state:
+// enum e_put_state {
+// 	TAKEN_FORK = 0,
+// 	EATING,
+// 	SLEEPING,
+// 	THINKING,
+// 	DIED,
+// 	PUT_TYPE_END,
+// };
+bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
+{
+	const long	time_current = get_time_milli_sec();
+	const t_philo_main *ph = node_philo->ph;
+	
+	if (time_current < 0)
+		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
+	node_philo->time[idx_state] = time_current;
+	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		return (false);
+	if (put_stamp(node_philo->time[idx_state], id, ph->status[idx_state]) < 0)
+		get_err_num_philo(node_philo, ERR_PRINTF);
+	if (ms > 0)
+	{
+		if(!wait_action_usleep_ms(node_philo->time[idx_state], ms))
+			get_err_num_philo(node_philo, ERR_USLEEP);
+	}
+	return (true);
 }
 
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
@@ -79,7 +108,7 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 		if (!is_end(end_struct, mutex_struct))
 			put_state(THINKING, node_philo, 0, node_philo->id);
 	}
-	printf("----%ld id", ph->id);
+	// printf("----%ld id", ph->id);
 	return ;
 }
 
