@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_put.c                                       :+:      :+:    :+:   */
+/*   ph_run_6_put.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 14:41:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:26:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,3 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 	}
 	return (true);
 }
-
-// bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
-// {
-// 	bool ret;
-
-// 	ret = false;
-// 	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-// 	if (end_struct->flag_end == true)
-// 		ret = true;
-// 	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-// 	return (ret);
-// }

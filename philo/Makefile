@@ -14,7 +14,6 @@ SRCDIR    = srcs
 # SRCS_LIST		:= $(wiledcard $(SRCDIR)/*.c)
 SRCS_LIST	:= 	\
 ph_main.c \
-ph_time.c \
 ph_begin_is_valid.c \
 ph_begin_build.c \
 ph_begin_list_fork.c \
@@ -28,8 +27,9 @@ ph_run_1_parallel.c \
 ph_run_2_rutine_philo_func.c \
 ph_run_3_rutine_monitor.c \
 ph_run_4_eating.c \
-ph_run_5_put.c \
-ph_run_6_util.c \
+ph_run_5_judge.c \
+ph_run_6_put.c \
+ph_run_7_util.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \
