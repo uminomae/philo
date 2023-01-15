@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 19:55:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 05:03:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	*run_rutine_monitor(void *ptr)
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	size_t			num_people;
-
+	long		time;
+	
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
 	num_people = node_monitor->num_people;
@@ -36,6 +37,9 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
+	usleep(1000);
+	time = get_time_milli_sec();
+	put_stamp(time, ph->died_struct.died_id, DIED_STR);
 	return (ptr);
 }
 

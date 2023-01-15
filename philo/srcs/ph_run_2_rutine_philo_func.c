@@ -6,17 +6,17 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 02:52:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 05:22:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	run_case_1person(t_philo_node	*node_philo);
-static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
-static void	count_ate_in_philo(t_philo_node *node_philo);
 static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
 						t_fork_node *node_fork);
+static void	run_case_1person(t_philo_node	*node_philo);
+static void	count_ate_in_philo(t_philo_node *node_philo);
+static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 
 
 void	*run_rutine_philo(void *ptr)
@@ -36,33 +36,17 @@ void	*run_rutine_philo(void *ptr)
 
 static void	run_case_1person(t_philo_node	*node_philo)
 {
+	// long	time;
+	
 	usleep(node_philo->ph->argv[2] * 1000);
 	x_lock_mutex_philo(node_philo);
 	set_flag_died(node_philo->ph, node_philo->id);
+	// time = get_time_milli_sec();
+	// put_stamp(time, node_philo->ph->died_struct.died_id, DIED_STR);
 	x_unlock_mutex_philo(node_philo);
 	return ;
 }
 
-static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
-{
-	if (node_th->flag_must_eat == true && \
-		node_th->times_must_eat == cnt)
-		return (true);
-	return (false);
-}
-
-static void	count_ate_in_philo(t_philo_node *node_philo)
-{
-	t_mutex				*mutex_struct;
-
-	mutex_struct = &node_philo->ph->mutex_struct;
-	if (is_required_times_ate(node_philo, node_philo->cnt))
-	{
-		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
-		node_philo->ph->ate_struct.ate_cnt++;
-		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
-	}
-}
 
 static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
 {
@@ -88,3 +72,25 @@ static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, t_fork_n
 	}
 	return ;
 }
+
+static void	count_ate_in_philo(t_philo_node *node_philo)
+{
+	t_mutex	*mutex_struct;
+
+	mutex_struct = &node_philo->ph->mutex_struct;
+	if (is_required_times_ate(node_philo, node_philo->cnt))
+	{
+		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+		node_philo->ph->ate_struct.ate_cnt++;
+		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+	}
+}
+
+static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
+{
+	if (node_th->flag_must_eat == true && \
+		node_th->times_must_eat == cnt)
+		return (true);
+	return (false);
+}
+
