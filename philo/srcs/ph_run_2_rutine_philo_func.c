@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 06:58:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 07:30:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ static void	count_ate_in_philo(t_philo_node *node_philo)
 
 static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 {
-	if (node_th->flag_must_eat == true && \
-		node_th->times_must_eat == cnt)
+	if (node_th->times_must_eat == cnt)
 		return (true);
 	return (false);
 }

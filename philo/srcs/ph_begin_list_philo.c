@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 00:38:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 07:30:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ size_t	add_philo_list( \
 		return (1);
 	node_philo->id = id;
 	node_philo->ph = ph;
-	node_philo->mutex_struct = &ph->mutex_struct;
 	if (list->head == NULL)
 		make_first_philo_node(list, node_philo);
 	else
