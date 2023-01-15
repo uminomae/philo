@@ -6,14 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 14:20:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:42:31 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void create_thread(t_philo_main *ph, size_t num_people);
-// static void	wait_end_simulation(t_philo_main *ph);
 static void	join_pthread(t_philo_main *ph);
 static void put_died(t_philo_main *ph);
 
@@ -26,17 +25,6 @@ void	run_parallel_process(t_philo_main *ph)
 	join_pthread(ph);
 	put_died(ph);
 }
-
-// static void	create_and_run_pthread_philo(t_philo_node *node_philo)
-// {
-// 	int	ret;
-
-// 	ret = pthread_create(&node_philo->philo_th, NULL, \
-// 							run_rutine_philo, node_philo);
-// 	if (ret != 0)
-// 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
-// }
-
 
 void	set_and_run_philo(t_philo_main *ph, size_t id)
 {

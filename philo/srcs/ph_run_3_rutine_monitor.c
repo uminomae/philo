@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_5_rutine_monitor.c                          :+:      :+:    :+:   */
+/*   ph_run_3_rutine_monitor.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 14:29:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:09:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
+{
+	bool ret;
+
+	ret = false;
+	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	if (end_struct->flag_end == true)
+		ret = true;
+	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	return (ret);
+}
 
 void	set_flag_died(t_philo_main *ph, size_t id)
 {
@@ -31,18 +44,6 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 }
 
-bool	check_time_to_die(t_philo_node *node_philo, long time_current)
-{
-	const long	eating = node_philo->time[EATING];
-	const long	time_to_eat = (long)node_philo->ph->argv[2];
-	
-	if (eating > 0 && time_current - eating >= time_to_eat)
-	{
-		set_flag_died(node_philo->ph, node_philo->id);
-		return (true);
-	}
-	return (false);
-}
 
 bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
@@ -50,20 +51,61 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	if (ph->ate_struct.ate_cnt == num_people)
 	{
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
-		
 		usleep(ph->argv[3] * 1000);
-		
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
 		ph->ate_struct.ate_all = true;
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
-
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 		ph->end_struct.flag_end = true;
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		
 		return (true);
 	}
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
+	return (false);
+}
+
+// bool	check_ate_time_to_die(t_philo_main *ph, size_t	num_people)
+// {
+// 	const long	time_to_eat = (long)ph->argv[2];
+// 	long		time_current;
+// 	size_t		i;
+// 	t_philo_node	*node_philo;
+
+// 	i = 0;
+// 	while (i < num_people)
+// 	{
+// 		time_current = get_time_milli_sec();
+// 		if (time_current < 0)
+// 			get_err_num_ph(ph, ERR_GETTEIME_MS);
+// 		node_philo = get_philo_node(&node_philo->ph->philo_list, i);
+// 		x_lock_mutex_philo(node_philo);
+// 		// if (check_ate_time_to_die(node_philo, time_current))
+// 		// {
+// 		// 	x_unlock_mutex_philo(node_philo);
+// 		// 	return (false) ;
+// 		// }
+// 		if (node_philo->time[EATING] > 0 && \
+// 			time_current - node_philo->time[EATING] >= time_to_eat)
+// 		{
+// 			set_flag_died(node_philo->ph, node_philo->id);
+// 			return (true);
+// 		}
+// 		x_unlock_mutex_philo(node_philo);
+// 		i++;
+// 	}
+// 	return (false);
+// }
+
+bool	check_ate_time_to_die(t_philo_node *node_philo, long time_current)
+{
+	const long	eating = node_philo->time[EATING];
+	const long	time_to_eat = (long)node_philo->ph->argv[2];
+
+	if (eating > 0 && time_current - eating >= time_to_eat)
+	{
+		set_flag_died(node_philo->ph, node_philo->id);
+		return (true);
+	}
 	return (false);
 }
 
@@ -91,12 +133,14 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 		i = 0;
 		while (i < num_people)
 		{
+		// if (check_ate_time_to_die(ph, num_people))
+		// 	break;
 			time_current = get_time_milli_sec();
 			if (time_current < 0)
 				get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 			node_philo = get_philo_node(&ph->philo_list, i);
 			x_lock_mutex_philo(node_philo);
-			if (check_time_to_die(node_philo, time_current))
+			if (check_ate_time_to_die(node_philo, time_current))
 			{
 				x_unlock_mutex_philo(node_philo);
 				return (ptr) ;

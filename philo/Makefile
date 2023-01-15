@@ -25,10 +25,11 @@ ph_error_get_num.c \
 ph_error_check.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
-ph_run_4_dining_philo_func.c \
-ph_run_5_rutine_monitor.c \
-ph_run_6_eating.c \
-ph_run_util.c \
+ph_run_2_rutine_philo_func.c \
+ph_run_3_rutine_monitor.c \
+ph_run_4_eating.c \
+ph_run_5_put.c \
+ph_run_6_util.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \

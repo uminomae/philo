@@ -6,21 +6,11 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 13:31:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:40:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//time, id, state:
-//Ex.1673650735348 0 is sleeping
-int	put_stamp(long time, size_t id, const char *state)
-{
-	int	ret;
-
-	ret = printf("%ld %zu %s\n", time, id, state);
-	return (ret);
-}
 
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id)
 {
