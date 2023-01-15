@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 15:26:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 02:40:42 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ int	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	total = wait_ms + start;
 	while(total >= get_time_milli_sec())
 	{
-		if (is_end(&ph->end_struct, &ph->mutex_struct))
-			return (IS_END_FLAG);
+		// if (total - get_time_milli_sec() < 10)
+		// {
+			if (is_end(&ph->end_struct, &ph->mutex_struct))
+				return (IS_END_FLAG);
+		// }
 		if (total - get_time_milli_sec() > 5)
 		{
-			ret = usleep(1000);
+			ret = usleep(100);
 			if (ret < 0)
 				return(ERR_NEGA_NUM);
 		}
