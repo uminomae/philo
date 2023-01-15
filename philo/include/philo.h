@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/15 13:32:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:39:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_monitor_node
 	struct s_philo_node		*node_philo;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
+	size_t					num_people;
 	struct s_philo_main		*ph;
 } 	t_monitor_node;
 

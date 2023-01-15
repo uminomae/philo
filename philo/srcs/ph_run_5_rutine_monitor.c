@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:40:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:45:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
+	// num_people = node_monitor->num_people;
 	num_people = ph->argv[1];
 	while (1)
 	{
@@ -109,6 +110,5 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 			i++;
 		}
 	}
-	// printf("----%ld id\n", ph->id);
 	return (ptr);
 }

@@ -127,7 +127,6 @@ run4:
 	./philo 5 800 200 200 7 >out
 
 test: 
-#	make re
 	make re
 	bash test.sh
 
