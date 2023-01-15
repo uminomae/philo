@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 02:53:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 03:24:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,6 @@ typedef struct s_monitor_node
 	struct s_philo_main		*ph;
 } 	t_monitor_node;
 
-// typedef struct s_monitor_list
-// {
-// 	struct s_monitor_node	*head;
-// 	struct s_monitor_node	*tail;
-// }	t_monitor_list;
-
 typedef struct s_end_struct
 {
 	bool	flag_end;
@@ -119,6 +113,7 @@ typedef struct s_philo_node
 	bool					flag_wait_ate;
 	size_t					error_num;
 	struct s_mutex			*mutex_struct;
+	// int						hungry;
 }	t_philo_node;
 
 typedef struct s_philo_list

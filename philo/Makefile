@@ -27,7 +27,7 @@ ph_run_1_parallel.c \
 ph_run_2_rutine_philo_func.c \
 ph_run_3_rutine_monitor.c \
 ph_run_4_eating.c \
-ph_run_5_judge.c \
+ph_run_5_die.c \
 ph_run_6_put.c \
 ph_run_7_util.c \
 ph_finish.c \

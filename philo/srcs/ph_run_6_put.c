@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 02:40:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 03:24:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 		return (false);
 	if (put_stamp(node_philo->time[idx_state], id, ph->status[idx_state]) < 0)
 		get_err_num_philo(node_philo, ERR_PRINTF);
+//	
+	// ret = pthread_create(&ph->monitor_node.monitor_th, NULL, \
+	// 			run_rutine_monitor, &ph->monitor_node);
+	// if (ret != 0)
+	// 	get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+//
 	if (ms > 0)
 	{
 		ret = wait_action_usleep_ms(node_philo->ph, node_philo->time[idx_state], ms);
