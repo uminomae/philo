@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 10:16:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 11:06:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	size_t			num_people;
+	size_t 			i;
+	t_philo_node	*node_philo;
+	long			time_current;
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
@@ -89,6 +92,16 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 		{
 			if (judge_ate_all(ph, num_people))
 				break ;
+		}
+		i = 0;
+		while (i < num_people)
+		{
+			node_philo = get_philo_node(&ph->philo_list, i);
+			time_current = get_time_milli_sec();
+			if (time_current < 0)
+				get_err_num_philo(node_philo, ERR_GETTEIME_MS);
+			check_time_to_die(node_philo, time_current);
+			i++;
 		}
 	}
 	return (ptr);
