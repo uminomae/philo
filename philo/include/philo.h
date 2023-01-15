@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/15 15:10:09 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:14:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,9 +259,11 @@ void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 void	destroy_mutex(t_philo_main *ph);
 bool	is_flag_died(t_monitor_node *eat_monitor);
 
+
 // bool	check_ate_time_to_die(t_philo_main *ph, size_t	num_people);
 // bool	check_ate_time_to_die(t_philo_node *node_philo, size_t i);
-bool	check_ate_time_to_die(t_philo_node *node_th, long time_current);
+bool	check_ate_time_to_die(t_philo_node *node_philo);
+// bool	check_ate_time_to_die(t_philo_node *node_th, long time_current);
 void	wait_ate_person(t_philo_node *node_th);
 bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 // void	count_ate_in_philo(t_philo_node *node_th);

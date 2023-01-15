@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 15:09:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:21:20 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 }
 
-
 bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
@@ -64,42 +63,27 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	return (false);
 }
 
-// bool	check_ate_time_to_die(t_philo_main *ph, size_t	num_people)
+// bool	check_ate_time_to_die(t_philo_node *node_philo, long time_current)
 // {
-// 	const long	time_to_eat = (long)ph->argv[2];
-// 	long		time_current;
-// 	size_t		i;
-// 	t_philo_node	*node_philo;
+// 	const long	eating = node_philo->time[EATING];
+// 	const long	time_to_eat = (long)node_philo->ph->argv[2];
 
-// 	i = 0;
-// 	while (i < num_people)
+// 	if (eating > 0 && time_current - eating >= time_to_eat)
 // 	{
-// 		time_current = get_time_milli_sec();
-// 		if (time_current < 0)
-// 			get_err_num_ph(ph, ERR_GETTEIME_MS);
-// 		node_philo = get_philo_node(&node_philo->ph->philo_list, i);
-// 		x_lock_mutex_philo(node_philo);
-// 		// if (check_ate_time_to_die(node_philo, time_current))
-// 		// {
-// 		// 	x_unlock_mutex_philo(node_philo);
-// 		// 	return (false) ;
-// 		// }
-// 		if (node_philo->time[EATING] > 0 && \
-// 			time_current - node_philo->time[EATING] >= time_to_eat)
-// 		{
-// 			set_flag_died(node_philo->ph, node_philo->id);
-// 			return (true);
-// 		}
-// 		x_unlock_mutex_philo(node_philo);
-// 		i++;
+// 		set_flag_died(node_philo->ph, node_philo->id);
+// 		return (true);
 // 	}
 // 	return (false);
 // }
-
-bool	check_ate_time_to_die(t_philo_node *node_philo, long time_current)
+bool	check_ate_time_to_die(t_philo_node *node_philo)
 {
 	const long	eating = node_philo->time[EATING];
 	const long	time_to_eat = (long)node_philo->ph->argv[2];
+	long		time_current;
+
+	time_current = get_time_milli_sec();
+	if (time_current < 0)
+		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 
 	if (eating > 0 && time_current - eating >= time_to_eat)
 	{
@@ -109,14 +93,34 @@ bool	check_ate_time_to_die(t_philo_node *node_philo, long time_current)
 	return (false);
 }
 
+bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
+{
+	size_t i;
+	t_philo_node	*node_philo;
+	
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo_node(&ph->philo_list, i);
+		x_lock_mutex_philo(node_philo);
+		if (check_ate_time_to_die(node_philo))
+		{
+			x_unlock_mutex_philo(node_philo);
+			return (true) ;
+		}
+		x_unlock_mutex_philo(node_philo);
+		i++;
+	}
+	return (false);
+}
+
 void	*run_rutine_monitor_in_thread(void *ptr)
 {
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	size_t			num_people;
-	size_t 			i;
-	t_philo_node	*node_philo;
-	long			time_current;
+	// size_t 			i;
+	// t_philo_node	*node_philo;
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
@@ -130,24 +134,21 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 			if (judge_ate_all(ph, num_people))
 				break ;
 		}
-		i = 0;
-		while (i < num_people)
-		{
-		// if (check_ate_time_to_die(ph, num_people))
-		// 	break;
-			time_current = get_time_milli_sec();
-			if (time_current < 0)
-				get_err_num_philo(node_philo, ERR_GETTEIME_MS);
-			node_philo = get_philo_node(&ph->philo_list, i);
-			x_lock_mutex_philo(node_philo);
-			if (check_ate_time_to_die(node_philo, time_current))
-			{
-				x_unlock_mutex_philo(node_philo);
-				return (ptr) ;
-			}
-			x_unlock_mutex_philo(node_philo);
-			i++;
-		}
+		if (judge_time_to_die(ph, num_people))
+			break ;
+		// i = 0;
+		// while (i < num_people)
+		// {
+		// 	node_philo = get_philo_node(&ph->philo_list, i);
+		// 	x_lock_mutex_philo(node_philo);
+		// 	if (check_ate_time_to_die(node_philo))
+		// 	{
+		// 		x_unlock_mutex_philo(node_philo);
+		// 		return (ptr) ;
+		// 	}
+		// 	x_unlock_mutex_philo(node_philo);
+		// 	i++;
+		// }
 	}
 	return (ptr);
 }
