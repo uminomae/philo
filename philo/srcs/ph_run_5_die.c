@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 05:21:30 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 05:27:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static bool	check_ate_time_to_die(t_philo_node *node_philo)
 	time_current = get_time_milli_sec();
 	if (time_current < 0)
 		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
-	// printf("---%ld, %ld, %ld, %ld, id %zu\n", time_current, eating, time_current - eating,time_to_die, node_philo->id);
 	if (eating > 0 && time_current - eating >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
@@ -57,7 +56,6 @@ static bool	check_ate_time_to_die(t_philo_node *node_philo)
 void	set_flag_died(t_philo_main *ph, size_t id)
 {
 	t_mutex			*mutex_struct;
-	// long	time;
 	
 	mutex_struct = &ph->mutex_struct;
 	x_lock_mutex_struct(&mutex_struct->mutex_die ,mutex_struct);
@@ -65,9 +63,6 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	{
 		ph->died_struct.died_flag = true;
 		ph->died_struct.died_id = id;
-		// put_died(ph);
-		// time = get_time_milli_sec();
-		// put_stamp(time, ph->died_struct.died_id, DIED_STR);
 	}
 	x_unlock_mutex_struct(&mutex_struct->mutex_die ,mutex_struct);
 

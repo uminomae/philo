@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 05:02:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 06:46:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,10 @@ static bool	join_pthread(t_philo_main *ph);
 
 bool run_parallel_process(t_philo_main *ph)
 {
-	// long	time;
-	
 	if (!create_thread(ph, ph->argv[1]))
 		return (false);
 	if (!join_pthread(ph))
 		return (false);
-	// time = get_time_milli_sec();
-	// put_stamp(time, ph->died_struct.died_id, DIED_STR);
-	// put_died(ph);
 	return (true);
 }
 
@@ -39,8 +34,6 @@ t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id)
 	node_philo->flag_must_eat = ph->flag_must_eat;
 	node_philo->times_must_eat = ph->argv[5];
 	node_philo->hungry = true;
-	if (id % 2 == 1)
-		usleep(1000);
 	return (node_philo);
 }
 

@@ -119,7 +119,7 @@ run2:
 
 run3: 
 	make re
-	./philo 5 800 200 200
+	./philo 5 800 200 200 >out
 #	./philo 4 410 200 200
 # ./philo 200 2000 1000 1000
 run4: 
