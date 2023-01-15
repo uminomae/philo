@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 14:21:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:29:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	return (false);
 }
 
-//TODO argv[1]をinitでnum_peopleに
 void	*run_rutine_monitor_in_thread(void *ptr)
 {
 	t_monitor_node	*node_monitor;
@@ -79,8 +78,7 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
-	// num_people = node_monitor->num_people;
-	num_people = ph->argv[1];
+	num_people = node_monitor->num_people;
 	while (1)
 	{
 		if (is_end(&ph->end_struct, &ph->mutex_struct))
