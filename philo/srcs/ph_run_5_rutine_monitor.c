@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 11:19:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 12:19:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 		
 		usleep(ph->argv[2] * 1000);
-	
+		
+		x_lock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+		ph->ate_struct.ate_all = true;
+		x_unlock_mutex_struct(&ph->mutex_struct.mutex_ate_all, &ph->mutex_struct);
+
 		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
 		ph->end_struct.flag_end = true;
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
@@ -96,10 +100,15 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 				get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 			node_philo = get_philo_node(&ph->philo_list, i);
 			x_lock_mutex_philo(node_philo);
-			check_time_to_die(node_philo, time_current);
+			if (check_time_to_die(node_philo, time_current))
+			{
+				x_unlock_mutex_philo(node_philo);
+				return (ptr) ;
+			}
 			x_unlock_mutex_philo(node_philo);
 			i++;
 		}
 	}
+	printf("----%ld id\n", ph->id);
 	return (ptr);
 }

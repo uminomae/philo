@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 12:00:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 12:16:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 	end_struct = &ph->end_struct;
 	while (1)
 	{
+		if (is_end(end_struct, mutex_struct))
+			break ;
 		if (!is_end(end_struct, mutex_struct))
 		{
 			if (!run_eating(node_philo, node_fork, node_philo->id, time_eat))
@@ -76,9 +78,9 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 			put_state(SLEEPING, node_philo, time_sleep, node_philo->id);
 		if (!is_end(end_struct, mutex_struct))
 			put_state(THINKING, node_philo, 0, node_philo->id);
-		if (is_end(end_struct, mutex_struct))
-			break ;
 	}
+	printf("----%ld id", ph->id);
+	return ;
 }
 
 void	*run_rutine_philo(void *ptr)
@@ -92,5 +94,5 @@ void	*run_rutine_philo(void *ptr)
 		run_case_1person(node_philo);
 	else
 		run_rutine_philo_dining(node_philo->ph, node_philo, node_fork);
-	return (NULL);
+	return (ptr);
 }
