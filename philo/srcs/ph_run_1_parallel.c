@@ -6,23 +6,22 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 02:48:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 02:51:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool create_thread(t_philo_main *ph, size_t num_people);
-// static void create_thread(t_philo_main *ph, size_t num_people);
-static void	join_pthread(t_philo_main *ph);
+static bool	join_pthread(t_philo_main *ph);
 static void put_died(t_philo_main *ph);
 
 bool run_parallel_process(t_philo_main *ph)
 {
-	//if return
 	if (!create_thread(ph, ph->argv[1]))
 		return (false);
-	join_pthread(ph);
+	if (!join_pthread(ph))
+		return (false);
 	put_died(ph);
 	return (true);
 }
@@ -40,7 +39,6 @@ t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id)
 	return (node_philo);
 }
 
-// static void create_thread(t_philo_main *ph, size_t num_people)
 static bool create_thread(t_philo_main *ph, size_t num_people)
 {
 	size_t	i;
@@ -66,7 +64,7 @@ static bool create_thread(t_philo_main *ph, size_t num_people)
 	return (true);
 }
 
-static void	join_pthread(t_philo_main *ph)
+static bool	join_pthread(t_philo_main *ph)
 {
 	size_t			i;
 	const size_t	num_people = ph->argv[1];
@@ -82,6 +80,9 @@ static void	join_pthread(t_philo_main *ph)
 			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}
+	if (ph->error_num > NUM_ERR_LOW)
+		return (false);
+	return (true);
 }
 
 static void put_died(t_philo_main *ph)

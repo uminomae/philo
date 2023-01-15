@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 14:47:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 02:52:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	run_case_1person(t_philo_node	*node_philo);
-bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
-void	count_ate_in_philo(t_philo_node *node_philo);
-void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
+static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
+static void	count_ate_in_philo(t_philo_node *node_philo);
+static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
 						t_fork_node *node_fork);
 
 
@@ -43,7 +43,7 @@ static void	run_case_1person(t_philo_node	*node_philo)
 	return ;
 }
 
-bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
+static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 {
 	if (node_th->flag_must_eat == true && \
 		node_th->times_must_eat == cnt)
@@ -51,7 +51,7 @@ bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
 	return (false);
 }
 
-void	count_ate_in_philo(t_philo_node *node_philo)
+static void	count_ate_in_philo(t_philo_node *node_philo)
 {
 	t_mutex				*mutex_struct;
 
@@ -64,7 +64,7 @@ void	count_ate_in_philo(t_philo_node *node_philo)
 	}
 }
 
-void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
+static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
 {
 	const long time_eat = ph->argv[3];
 	const long time_sleep = ph->argv[4];
