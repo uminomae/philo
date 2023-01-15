@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 00:30:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 12:06:42 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	put_stamp(long time, size_t id, const char *state)
 // 	DIED,
 // 	PUT_TYPE_END,
 // };
-void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
+bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 {
 	const long	time_current = get_time_milli_sec();
 	const t_philo_main *ph = node_philo->ph;
@@ -40,6 +40,8 @@ void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 	if (time_current < 0)
 		get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 	node_philo->time[idx_state] = time_current;
+	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+		return (false);
 	if (put_stamp(node_philo->time[idx_state], id, ph->status[idx_state]) < 0)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 	if (ms > 0)
@@ -47,6 +49,7 @@ void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 		wait_action_usleep_ms(node_philo->time[idx_state], ms);
 			get_err_num_philo(node_philo, ERR_USLEEP);
 	}
+	return (true);
 
 }
 
