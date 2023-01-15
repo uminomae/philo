@@ -25,7 +25,6 @@ ph_error_get_num.c \
 ph_error_check.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
-ph_run_2_set_philo.c \
 ph_run_4_dining_philo_func.c \
 ph_run_5_rutine_monitor.c \
 ph_run_6_eating.c \
