@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 11:12:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 11:51:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 	{
 		if (!is_end(end_struct, mutex_struct))
 		{
-			run_eating(node_philo, node_fork, node_philo->id, time_eat);
+			if (!run_eating(node_philo, node_fork, node_philo->id, time_eat))
+				break ;
 			if (ph->flag_must_eat == true)
 				count_ate_in_philo(node_philo);
 		}
@@ -76,7 +77,7 @@ void	run_rutine_philo_dining(t_philo_main *ph, t_philo_node	*node_philo, t_fork_
 		if (!is_end(end_struct, mutex_struct))
 			put_state(THINKING, node_philo, 0, node_philo->id);
 		if (is_end(end_struct, mutex_struct))
-			break;
+			break ;
 	}
 	// if (pthread_join(node_philo->philo_th, NULL) != 0)
 	// 	get_err_num_ph(ph, ERR_PTHREAD_JOIN);
