@@ -123,7 +123,8 @@ run3:
 run4: 
 	make sani_add
 #	make sani_thread
-	./philo 4 310 200 100
+# ./philo 4 310 200 100
+	./philo 5 800 200 200
 
 test: 
 #	make re

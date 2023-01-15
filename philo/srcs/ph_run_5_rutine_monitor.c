@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 11:06:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 11:19:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ bool	check_time_to_die(t_philo_node *node_philo, long time_current)
 	
 	if (eating > 0 && time_current - eating >= time_to_eat)
 	{
-		// printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
-		// printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
+		printf("--check cur_t %ld,  eat %ld,\n", time_current, eating);
+		printf("--t_to_eat %ld, id%ld\n", time_to_eat, node_philo->id);
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
@@ -81,13 +81,8 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 	num_people = ph->argv[1];
 	while (1)
 	{
-		x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-		if (ph->end_struct.flag_end)
-		{
-			x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
-			break ;
-		}
-		x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		if (is_end(&ph->end_struct, &ph->mutex_struct))
+			break;
 		if (ph->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
@@ -96,11 +91,13 @@ void	*run_rutine_monitor_in_thread(void *ptr)
 		i = 0;
 		while (i < num_people)
 		{
-			node_philo = get_philo_node(&ph->philo_list, i);
 			time_current = get_time_milli_sec();
 			if (time_current < 0)
 				get_err_num_philo(node_philo, ERR_GETTEIME_MS);
+			node_philo = get_philo_node(&ph->philo_list, i);
+			x_lock_mutex_philo(node_philo);
 			check_time_to_die(node_philo, time_current);
+			x_unlock_mutex_philo(node_philo);
 			i++;
 		}
 	}

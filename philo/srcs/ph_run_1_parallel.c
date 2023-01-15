@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 10:09:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 11:07:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	run_parallel_process(t_philo_main *ph)
 
 	num_people = ph->argv[1];
 	create_thread(ph, num_people);
-	printf("----end cre th\n");
+	// printf("----end cre th\n");
 	// wait_end_simulation(ph);
-	printf("----end sim\n");
+	// printf("----end sim\n");
 	join_pthread(ph);
 	put_died(ph);
 }

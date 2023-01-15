@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/15 10:43:20 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/15 11:24:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void	set_and_run_philo(t_philo_main *ph, size_t id);
 void	set_and_run_monitor(t_philo_main *ph, size_t id);
 
 
-int		run_eating(t_philo_node *node_th, \
+void		run_eating(t_philo_node *node_th, \
 		t_fork_node *node_fork, size_t id, long time_eat);
 void	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);
 
