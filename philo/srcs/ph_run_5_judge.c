@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 01:40:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 02:35:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ static bool	check_ate_time_to_die(t_philo_node *node_philo)
 
 	if (!gettimeofday_millisec(node_philo->ph, &time_current))
 		return (false);
+	// printf("%ld, %ld\n", time_current, node_philo->ph->start_time);
+	// printf("%ld, %ld\n", node_philo->time[EATING], time_to_die);
+	if (eating == 0 && time_current - node_philo->ph->start_time >= time_to_die)
+	{
+		set_flag_died(node_philo->ph, node_philo->id);
+		return (true);
+	}
+	// else if (time_current - eating >= time_to_die)
 	if (eating > 0 && time_current - eating >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
