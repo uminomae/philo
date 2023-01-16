@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 21:35:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:59:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,24 @@ t_fork_node	*get_fork_node(t_fork_list *list_fork, size_t c)
 		i++;
 	}
 	return (node_fork);
+}
+
+bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time)
+{
+	struct timeval	tp;
+	long			milli_sec;
+	int				ret;
+
+	ret = gettimeofday(&tp, NULL);
+	if (ret < 0)
+	{
+		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
+		return (false);
+	}
+	milli_sec = tp.tv_sec * 1000;
+	milli_sec += tp.tv_usec / 1000;
+	*cur_time = milli_sec;
+	return (true);
 }
 
 long	get_time_milli_sec(void)

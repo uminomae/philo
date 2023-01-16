@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 21:54:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:01:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ typedef struct s_philo_main
 	long					start_time;
 }	t_philo_main;
 
+//getMSは使用してない？
 enum e_err_type {
 	NUM_ERR_LOW = 10,
 	NUM_ERR_TYPE_START,
@@ -224,6 +225,7 @@ long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void	*run_rutine_philo(void *ptr);
+bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);

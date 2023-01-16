@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 21:55:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:04:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ static bool create_thread(t_philo_main *ph, size_t num_people)
 	size_t	i;
 	t_philo_node	*node_philo;
 
-	ph->start_time = get_time_milli_sec();
-	if (ph->start_time < 0)
-		get_err_num_ph(ph, ERR_GETTEIME_MS);
+	if (!gettimeofday_millisec(ph, &ph->start_time))
+		return (false);
+	// ph->start_time = get_time_milli_sec();
+	// if (ph->start_time < 0)
+	// 	get_err_num_ph(ph, ERR_GETTEIME_MS);
 	i = 0;
 	while (i < num_people)
 	{
