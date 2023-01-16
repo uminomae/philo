@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_5_die.c                                     :+:      :+:    :+:   */
+/*   ph_run_5_judge.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 00:25:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:59:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool wait_required_time(t_philo_main *ph, long total, long current);
-// void		set_flag_died(t_philo_main *ph, size_t id);
 static bool	check_ate_time_to_die(t_philo_node *node_philo);
 
 void	*run_judge_hungry(void *ptr)
@@ -42,7 +40,7 @@ void	*run_judge_hungry(void *ptr)
 	return (ptr);
 }
 
-static bool wait_required_time(t_philo_main *ph, long total, long current)
+bool wait_required_time(t_philo_main *ph, long total, long current)
 {
 	if (total - current > 5)
 	{
