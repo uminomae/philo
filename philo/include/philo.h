@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 04:51:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:54:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ typedef struct s_philo_node
 	bool					flag_wait_ate;
 	size_t					error_num;
 	struct s_mutex			*mutex_struct;
-	bool						hungry;
+	bool					hungry;
+	pthread_t				philo_sleep_th;
+	bool					flag_sleeping;
 }	t_philo_node;
 
 typedef struct s_philo_list
@@ -164,6 +166,7 @@ typedef struct s_philo_main
 	struct s_ate_struct		ate_struct;
 	struct s_die_struct		died_struct;
 	struct s_end_struct		end_struct;
+	long					start_time;
 }	t_philo_main;
 
 enum e_err_type {
@@ -177,6 +180,7 @@ enum e_err_type {
 	ERR_PTHREAD_JOIN,
 	ERR_PTHREAD_CREATE,
 	ERR_PTHREAD_DESTROY,
+	ERR_PTHREAD_DETACH,
 	ERR_GETTEIMEOFDAY,
 	ERR_ARGV_NULL,
 	ERR_ATOI,
@@ -263,6 +267,8 @@ void	x_lock_mutex_philo(t_philo_node *node_th);
 void	x_unlock_mutex_philo(t_philo_node *node_th);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
+bool x_pthread_create(t_philo_main *ph, pthread_t *t, void *(*f)(void *), void *p);
+bool x_pthread_detach(t_philo_main *ph,  pthread_t *thread);
 
 void	destroy_mutex(t_philo_main *ph);
 bool	is_flag_died(t_monitor_node *eat_monitor);
