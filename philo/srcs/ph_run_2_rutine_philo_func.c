@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:38:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:39:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
 						t_fork_node *node_fork);
 static void	run_case_1person(t_philo_node	*node_philo, t_fork_node *node_fork);
 static void	count_ate_in_philo(t_philo_node *node_philo);
-// static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
 
 
 void	*run_rutine_philo(void *ptr)
@@ -76,18 +75,9 @@ static void	count_ate_in_philo(t_philo_node *node_philo)
 
 	mutex_struct = &node_philo->ph->mutex_struct;
 	if (node_philo->times_must_eat == node_philo->cnt)
-	// if (is_required_times_ate(node_philo, node_philo->cnt))
 	{
 		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 		node_philo->ph->ate_struct.ate_cnt++;
 		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
 	}
 }
-
-// static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt)
-// {
-// 	if (node_th->times_must_eat == cnt)
-// 		return (true);
-// 	return (false);
-// }
-

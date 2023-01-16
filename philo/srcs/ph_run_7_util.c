@@ -6,37 +6,11 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:31:46 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:42:43 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-bool x_pthread_create(t_philo_main *ph, pthread_t *t, void *(*f)(void *), void *p)
-{
-	int	ret;
-
-	ret = pthread_create(t, NULL, f, p);
-	if (ret != 0)
-	{
-		get_err_num_ph(ph, ERR_PTHREAD_CREATE);
-		return (false);
-	}
-	return (true);
-}
-
-bool x_pthread_detach(t_philo_main *ph,  pthread_t *thread)
-{
-	int	ret;
-
-	ret = pthread_detach(*thread);
-	if (ret != 0)
-	{
-		get_err_num_ph(ph, ERR_PTHREAD_DETACH);
-		return (false);
-	}
-	return (true);
-}
 
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id)
 {
@@ -86,29 +60,3 @@ bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time)
 	return (true);
 }
 
-// long	get_time_milli_sec(void)
-// {
-// 	struct timeval	tp;
-// 	long			milli_sec;
-// 	int				ret;
-
-// 	ret = gettimeofday(&tp, NULL);
-// 	if (ret < 0)
-// 		return (-1);
-// 	milli_sec = tp.tv_sec * 1000;
-// 	milli_sec += tp.tv_usec / 1000;
-// 	return (milli_sec);
-// }
-
-bool x_usleep_millisec(t_philo_main *ph, long time_ms)
-{
-	long	ret;
-	
-	ret = usleep(time_ms * 1000);
-	if (ret == -1)
-	{
-		get_err_num_ph(ph, ERR_USLEEP);
-		return (false);
-	}
-	return (true);
-}

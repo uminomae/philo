@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 15:32:09 by uminomae         ###   ########.fr       */
+/*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
+/*   Updated: 2023/01/16 23:43:33 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//TODO エラー処理
 
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 {

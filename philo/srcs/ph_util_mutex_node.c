@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/15 15:32:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:40:20 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	x_unlock_mutex_fork(t_fork_node *node_fork)
 	int	ret;
 
 	ret = pthread_mutex_unlock(&node_fork->mutex_fork);
-	// pthread_mutex_unlock(&node_fork->mutex_fork);
 	if (ret != 0)
 		get_err_num_fork(node_fork, ERR_PTHREAD_UNLOCK);
 }

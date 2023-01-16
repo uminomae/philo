@@ -34,7 +34,8 @@ ph_finish_free.c \
 ph_util_libft.c \
 ph_util_atoi.c \
 ph_util_mutex_node.c \
-ph_util_mutex_struct.c
+ph_util_mutex_struct.c \
+ph_util_x_stdlib.c \
 
 SRCS_IN_DIR  = $(addprefix $(SRCDIR)/, $(SRCS_LIST))
 INCDIR		= include/
