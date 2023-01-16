@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:28:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:31:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time)
 	return (true);
 }
 
-long	get_time_milli_sec(void)
-{
-	struct timeval	tp;
-	long			milli_sec;
-	int				ret;
+// long	get_time_milli_sec(void)
+// {
+// 	struct timeval	tp;
+// 	long			milli_sec;
+// 	int				ret;
 
-	ret = gettimeofday(&tp, NULL);
-	if (ret < 0)
-		return (-1);
-	milli_sec = tp.tv_sec * 1000;
-	milli_sec += tp.tv_usec / 1000;
-	return (milli_sec);
-}
+// 	ret = gettimeofday(&tp, NULL);
+// 	if (ret < 0)
+// 		return (-1);
+// 	milli_sec = tp.tv_sec * 1000;
+// 	milli_sec += tp.tv_usec / 1000;
+// 	return (milli_sec);
+// }
 
 bool x_usleep_millisec(t_philo_main *ph, long time_ms)
 {
