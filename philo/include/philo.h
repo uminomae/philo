@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 12:53:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:20:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ enum e_err_type {
 	ERR_PTHREAD_JOIN,
 	ERR_PTHREAD_CREATE,
 	ERR_PTHREAD_DESTROY,
+	ERR_PTHREAD_DETACH,
 	ERR_GETTEIMEOFDAY,
 	ERR_ARGV_NULL,
 	ERR_ATOI,
@@ -265,6 +266,7 @@ void	x_lock_mutex_philo(t_philo_node *node_th);
 void	x_unlock_mutex_philo(t_philo_node *node_th);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct);
+bool x_pthread_create(t_philo_main *ph, pthread_t *t, void *(*f)(void *), void *p);
 
 void	destroy_mutex(t_philo_main *ph);
 bool	is_flag_died(t_monitor_node *eat_monitor);
