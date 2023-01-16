@@ -18,7 +18,6 @@ ph_begin_is_valid.c \
 ph_begin_build.c \
 ph_begin_list_fork.c \
 ph_begin_list_philo.c \
-ph_begin_list_monitor.c \
 ph_begin_init_mutex.c \
 ph_error_get_num.c \
 ph_error_check.c \

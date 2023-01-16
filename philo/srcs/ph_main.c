@@ -6,15 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 02:51:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:37:47 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 // 途中のエラーのfreeとdestroy
-//timestampを戻す
-//printfを別に任せる
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
