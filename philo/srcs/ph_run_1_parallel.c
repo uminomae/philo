@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 07:22:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:13:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id)
 	return (node_philo);
 }
 
+// void (*func_ptr)(void)
+bool x_pthread_create(t_philo_main *ph, pthread_t *t, void *(*f)(void *), void *p)
+{
+	int	ret;
+
+	ret = pthread_create(t, NULL, f, p);
+	if (ret != 0)
+	{
+		get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+		return (false);
+	}
+	return (true);
+}
+
 static bool create_thread(t_philo_main *ph, size_t num_people)
 {
 	size_t	i;
@@ -53,10 +67,11 @@ static bool create_thread(t_philo_main *ph, size_t num_people)
 			get_err_num_ph(node_philo->ph, ERR_PTHREAD_CREATE);
 		i++;
 	}
-	ret = pthread_create(&ph->monitor_node.monitor_th, NULL, \
-				run_rutine_monitor, &ph->monitor_node);
-	if (ret != 0)
-		get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+	x_pthread_create(ph, &ph->monitor_node.monitor_th, run_rutine_monitor, &ph->monitor_node);
+	// ret = pthread_create(&ph->monitor_node.monitor_th, NULL, \
+	// 			run_rutine_monitor, &ph->monitor_node);
+	// if (ret != 0)
+	// 	get_err_num_ph(ph, ERR_PTHREAD_CREATE);
 	if (ph->error_num > NUM_ERR_LOW)
 		return (false);
 	return (true);

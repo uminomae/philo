@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 07:31:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:40:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
-	if (ph->ate_struct.ate_cnt >= num_people)
+	if (ph->ate_struct.ate_cnt == num_people)
 	{
 		x_unlock_mutex_struct(&ph->mutex_struct.mutex_cnt_ate, &ph->mutex_struct);
 		usleep(ph->argv[3] * 1000);
