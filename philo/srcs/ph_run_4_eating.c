@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 07:31:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 12:46:42 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*run_judge_hungry(void *ptr)
 		get_err_num_ph(node_philo->ph, ERR_USLEEP);
 	node_philo->hungry = true;
 	x_unlock_mutex_philo(node_philo);
-	return (SUCCESS);
+	return (ptr);
 }
 
 bool	run_eating(t_philo_node *node_philo, \

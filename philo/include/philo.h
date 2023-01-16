@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 04:51:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 12:53:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ typedef struct s_philo_node
 	bool					flag_wait_ate;
 	size_t					error_num;
 	struct s_mutex			*mutex_struct;
-	bool						hungry;
+	bool					hungry;
+	pthread_t				philo_sleep_th;
+	bool					flag_sleeping;
 }	t_philo_node;
 
 typedef struct s_philo_list
