@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 00:59:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:09:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ bool wait_required_time(t_philo_main *ph, long total, long current)
 {
 	if (total - current > 5)
 	{
+		// if(!x_usleep_millisec(ph, 1000))
 		if(!x_usleep_millisec(ph, (total - current) / 2))
 			return (false);
 	}

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 00:59:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:11:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ static void run_case_normal(t_philo_main *ph, t_philo_node  *node_philo, t_fork_
     {
         while(!is_awake(node_philo))
 		{
+			if (is_end(&ph->end_struct, &ph->mutex_struct))
+				return ;
 			if(!gettimeofday_millisec(node_philo->ph, &current))
 				return ;
 			wait_required_time(node_philo->ph, total, current);
-			if (is_end(&ph->end_struct, &ph->mutex_struct))
-				return ;
 		}
         if (!run_eating(node_philo, node_fork, node_philo->id, time_eat))
             return ;

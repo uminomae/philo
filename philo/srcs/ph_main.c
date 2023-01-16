@@ -6,12 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:37:47 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:28:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// waitで動作の安定確認
+// diedが出ているか
 // 途中のエラーのfreeとdestroy
 int	main(int argc, char **argv)
 {
@@ -25,7 +27,6 @@ int	main(int argc, char **argv)
 	if (build_struct_and_list(&ph, argc) == 1)
 		return (ERROR);
 	init_mutex(&ph);
-	// if (ph.error_num != 0)
 	if (ph.error_num > NUM_ERR_LOW)
 	{
 		end_error(&ph);
