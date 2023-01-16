@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/16 21:35:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:54:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct s_philo_main
 	struct s_ate_struct		ate_struct;
 	struct s_die_struct		died_struct;
 	struct s_end_struct		end_struct;
+	long					start_time;
 }	t_philo_main;
 
 enum e_err_type {

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 21:39:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:00:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
 						t_fork_node *node_fork);
 static void	run_case_1person(t_philo_node	*node_philo, t_fork_node *node_fork);
 static void	count_ate_in_philo(t_philo_node *node_philo);
-// static bool	is_required_times_ate(t_philo_node *node_th, size_t cnt);
-
 
 void	*run_rutine_philo(void *ptr)
 {
@@ -35,6 +33,12 @@ void	*run_rutine_philo(void *ptr)
 
 static void	run_case_1person(t_philo_node	*node_philo, t_fork_node *node_fork)
 {
+	long	eating;
+	const long	time_to_die = (long)node_philo->ph->argv[2];
+	long		time_current;
+
+
+	eating = node_philo->ph->start_time;
 	x_lock_mutex_fork(node_fork);
 	if (!put_state(TAKEN_FORK, node_philo, 0, node_philo->id))
 	{
@@ -42,12 +46,22 @@ static void	run_case_1person(t_philo_node	*node_philo, t_fork_node *node_fork)
 		return ;
 	}
 	x_unlock_mutex_fork(node_fork);
-	usleep(node_philo->ph->argv[2] * 1000);
-	x_lock_mutex_philo(node_philo);
-	set_flag_died(node_philo->ph, node_philo->id);
-	x_unlock_mutex_philo(node_philo);
+	while (1)
+	{	time_current = get_time_milli_sec();
+		if (time_current < 0)
+			get_err_num_philo(node_philo, ERR_GETTEIME_MS);
+		if (time_current - eating >= time_to_die)
+		{
+			x_lock_mutex_philo(node_philo);
+			set_flag_died(node_philo->ph, node_philo->id);
+			x_unlock_mutex_philo(node_philo);
+			break;
+		}
+	}
 	return ;
 }
+
+
 void *put_sleep_think(void *ptr)
 {
 	t_philo_node	*node_philo;
@@ -60,11 +74,11 @@ void *put_sleep_think(void *ptr)
 	x_unlock_mutex_philo(node_philo);
 	if (!put_state(SLEEPING, node_philo, time_sleep, node_philo->id))
 		return (ptr);
+	if (!put_state(THINKING, node_philo, 0, node_philo->id))
+		return (ptr);
 	x_lock_mutex_philo(node_philo);
 	node_philo->flag_sleeping = false;
 	x_unlock_mutex_philo(node_philo);
-	if (!put_state(THINKING, node_philo, 0, node_philo->id))
-		return (ptr);
 	return (ptr);
 }
 
@@ -79,20 +93,6 @@ static bool	is_awake(t_philo_node *node_philo)
 	x_unlock_mutex_philo(node_philo);
 	return (false);
 }
-
-
-// bool x_pthread_detach(t_philo_main *ph,  pthread_t *thread)
-// {
-// 	int	ret;
-
-// 	ret = pthread_detach(*thread);
-// 	if (ret != 0)
-// 	{
-// 		get_err_num_ph(ph, ERR_PTHREAD_DETACH);
-// 		return (false);
-// 	}
-// 	return (true);
-// }
 
 static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, t_fork_node *node_fork)
 {
@@ -125,7 +125,6 @@ static void	count_ate_in_philo(t_philo_node *node_philo)
 
 	mutex_struct = &node_philo->ph->mutex_struct;
 	x_lock_mutex_philo(node_philo);
-	// if (is_required_times_ate(node_philo, node_philo->cnt))
 	if (node_philo->times_must_eat == node_philo->cnt)
 	{
 		x_unlock_mutex_philo(node_philo);
