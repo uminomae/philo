@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:30:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:27:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
-	usleep(1000);
 	if (ph->died_struct.died_flag == true)
 	{
+		usleep(1000);
 		if (!gettimeofday_millisec(ph, &time))
 			return (false);
 		put_stamp(time, ph->died_struct.died_id, DIED_STR);

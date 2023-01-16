@@ -6,14 +6,51 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:30:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:25:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void		set_flag_died(t_philo_main *ph, size_t id);
+static bool wait_required_time(t_philo_main *ph, long total, long current);
+// void		set_flag_died(t_philo_main *ph, size_t id);
 static bool	check_ate_time_to_die(t_philo_node *node_philo);
+
+void	*run_judge_hungry(void *ptr)
+{
+	t_philo_node	*node_philo;
+	long	not_hungry_time;
+	long	total;
+	long	current;
+
+	node_philo = (t_philo_node *)ptr;
+	x_lock_mutex_philo(node_philo);
+	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
+	total = not_hungry_time + node_philo->time[EATING];
+	x_unlock_mutex_philo(node_philo);
+	if(!gettimeofday_millisec(node_philo->ph, &current))
+		return (ptr);
+	while(total > current)
+	{
+		wait_required_time(node_philo->ph, total, current);
+		if(!gettimeofday_millisec(node_philo->ph, &current))
+			return (ptr);
+	}
+	x_lock_mutex_philo(node_philo);
+	node_philo->hungry = true;
+	x_unlock_mutex_philo(node_philo);
+	return (ptr);
+}
+
+static bool wait_required_time(t_philo_main *ph, long total, long current)
+{
+	if (total - current > 5)
+	{
+		if(!x_usleep_millisec(ph, (total - current) / 2))
+			return (false);
+	}
+	return (true);
+}
 
 bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 {
