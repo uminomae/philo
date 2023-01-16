@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/17 01:34:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 02:01:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,5 +285,7 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 bool	judge_time_to_die(t_philo_main *ph, size_t num_people);
 void	*run_judge_hungry(void *ptr);
 bool wait_required_time(t_philo_main *ph, long total, long current);
+void	run_case_1person(t_philo_node *node_philo, t_fork_node *node_fork);
+
 
 #endif
