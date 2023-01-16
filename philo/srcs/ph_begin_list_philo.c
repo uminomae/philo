@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 02:29:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 02:37:07 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 	node_philo->times_must_eat = ph->argv[5];
 	node_philo->hungry = true;
 	node_philo->time[EATING] = 0;
-	
 	if (list->head == NULL)
 		make_first_philo_node(list, node_philo);
 	else

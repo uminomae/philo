@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 02:04:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 02:50:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*run_rutine_philo(void *ptr)
 static void	run_case_normal(t_philo_main *ph, \
 			t_philo_node *node_philo, t_fork_node *node_fork)
 {
-	const long	total = node_philo->time[EATING] + node_philo->ph->argv[4];
+	const long	sleep_time = node_philo->time[EATING] + node_philo->ph->argv[4];
 	long		current;
 
 	if (node_philo->id % 2 == 1)
@@ -48,7 +48,7 @@ static void	run_case_normal(t_philo_main *ph, \
 				return ;
 			if (!gettimeofday_millisec(node_philo->ph, &current))
 				return ;
-			wait_required_time(node_philo->ph, total, current);
+			wait_required_time(node_philo->ph, sleep_time, current);
 		}
 		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
 			return ;
@@ -102,10 +102,10 @@ static void	*put_sleep_think(void *ptr)
 	x_unlock_mutex_philo(node_philo);
 	if (!put_state(SLEEPING, node_philo, time_sleep, node_philo->id))
 		return (ptr);
-	if (!put_state(THINKING, node_philo, 0, node_philo->id))
-		return (ptr);
 	x_lock_mutex_philo(node_philo);
 	node_philo->flag_sleeping = false;
 	x_unlock_mutex_philo(node_philo);
+	if (!put_state(THINKING, node_philo, 0, node_philo->id))
+		return (ptr);
 	return (ptr);
 }
