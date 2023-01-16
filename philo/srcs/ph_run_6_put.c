@@ -6,52 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:30:04 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:34:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//time, id, state:
-//Ex.1673650735348 0 is sleeping
-int	put_stamp(long time, size_t id, const char *state)
-{
-	int	ret;
+// int	put_stamp(long time, size_t id, const char *state);
+static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms);
 
-	ret = printf("%ld %zu %s\n", time, id, state);
-	return (ret);
-}
 
-bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
-{
-	long	total;
-	long	current;
-
-	total = wait_ms + start;
-	if(!gettimeofday_millisec(ph, &current))
-		return (false);
-	while(total > current)
-	{
-		if (total - current > 5)
-		{
-			if(!x_usleep_millisec(ph, (total - current) / 2))
-				return (false);
-		}
-		if(!gettimeofday_millisec(ph, &current))
-			return (false);
-	}
-	return (true);
-}
-
-//idx_state:
-// enum e_put_state {
-// 	TAKEN_FORK = 0,
-// 	EATING,
-// 	SLEEPING,
-// 	THINKING,
-// 	DIED,
-// 	PUT_TYPE_END,
-// };
 bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 {
 	long	time_current;
@@ -73,5 +37,34 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 	}
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
 		return (false);
+	return (true);
+}
+
+int	put_stamp(long time, size_t id, const char *state)
+{
+	int	ret;
+
+	ret = printf("%ld %zu %s\n", time, id, state);
+	return (ret);
+}
+
+static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
+{
+	long	total;
+	long	current;
+
+	total = wait_ms + start;
+	if(!gettimeofday_millisec(ph, &current))
+		return (false);
+	while(total > current)
+	{
+		if (total - current > 5)
+		{
+			if(!x_usleep_millisec(ph, (total - current) / 2))
+				return (false);
+		}
+		if(!gettimeofday_millisec(ph, &current))
+			return (false);
+	}
 	return (true);
 }

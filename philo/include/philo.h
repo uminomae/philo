@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/17 00:55:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:34:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ enum e_put_state {
 bool	is_valid_values(t_philo_main *ph, int argc, char **argv);
 int		build_struct_and_list(t_philo_main *ph, int argc);
 void	init_mutex(t_philo_main *ph);
-bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms);
+// bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms);
 // long	get_time_milli_sec(void);
 int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
@@ -239,7 +239,7 @@ char	*x_strdup(t_ptr_list *list, char *str);
 bool run_parallel_process(t_philo_main *ph);
 void	set_and_run_monitor(t_philo_main *ph, size_t id);
 
-t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id);
+// t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id);
 
 bool	run_eating(t_philo_node *node_th, t_fork_node *node_fork, size_t id, long time_eat);
 bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id);

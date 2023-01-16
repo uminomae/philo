@@ -6,11 +6,31 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 18:34:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:47:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void			make_first_ptr_node(t_ptr_list *list, t_ptr_node *node);
+static void			add_last_ptr_node(t_ptr_list *list, t_ptr_node *node);
+static t_ptr_node	*init_ptr_node(void);
+static void			add_ptr_list(t_ptr_list *ptr_list, void *ptr);
+
+void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
+{
+	void	*ptr;
+
+	(void)ptr_list;
+	ptr = malloc(size);
+	if (ptr == NULL)
+	{
+		get_err_num_ptr(ptr, ERR_MALLOC);
+		return (NULL);
+	}
+	add_ptr_list(ptr_list, ptr);
+	return (ptr);
+}
 
 static void	make_first_ptr_node(t_ptr_list *list, t_ptr_node *node)
 {
@@ -48,19 +68,4 @@ static void	add_ptr_list(t_ptr_list *ptr_list, void *ptr)
 		make_first_ptr_node(ptr_list, node);
 	else
 		add_last_ptr_node(ptr_list, node);
-}
-
-void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
-{
-	void	*ptr;
-
-	(void)ptr_list;
-	ptr = malloc(size);
-	if (ptr == NULL)
-	{
-		get_err_num_ptr(ptr, ERR_MALLOC);
-		return (NULL);
-	}
-	add_ptr_list(ptr_list, ptr);
-	return (ptr);
 }

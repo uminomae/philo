@@ -6,17 +6,18 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/13 21:59:20 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:51:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_fork_node	*init_fork_node(t_ptr_list *ptr_list);
-static void	make_first_fork_node(t_fork_list *list, t_fork_node *node);
-static void	add_last_fork_node(t_fork_list *list, t_fork_node *node);
+static void			make_first_fork_node(t_fork_list *list, t_fork_node *node);
+static void			add_last_fork_node(t_fork_list *list, t_fork_node *node);
 
-size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, t_ptr_list *ptr_list, size_t data)
+size_t	add_fork_list(t_philo_main *ph, t_fork_list *list, \
+					t_ptr_list *ptr_list, size_t data)
 {
 	t_fork_node	*node;
 
@@ -56,5 +57,3 @@ static void	add_last_fork_node(t_fork_list *list, t_fork_node *node)
 	list->tail = node;
 	node->next = list->head;
 }
-
-

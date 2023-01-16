@@ -6,18 +6,19 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 07:30:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:48:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_philo_node	*init_philo_node(t_ptr_list *ptr_list);
-static void	make_first_philo_node(t_philo_list *list, t_philo_node *node);
-static void	add_last_philo_node(t_philo_list *list, t_philo_node *node);
+static void			make_first_philo_node(t_philo_list *list, \
+						t_philo_node *node);
+static void			add_last_philo_node(t_philo_list *list, t_philo_node *node);
 
-size_t	add_philo_list( \
-			t_philo_main *ph, t_philo_list *list, t_ptr_list *ptr_list, size_t id)
+size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
+						t_ptr_list *ptr_list, size_t id)
 {
 	t_philo_node	*node_philo;
 
