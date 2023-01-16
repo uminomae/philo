@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:23:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:30:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,25 @@ int	put_stamp(long time, size_t id, const char *state)
 	return (ret);
 }
 
-int	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
+bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 {
 	long	total;
 	long	current;
-	// int		ret;
 
-	// ret = 0;
 	total = wait_ms + start;
-	// (void)ph;
 	if(!gettimeofday_millisec(ph, &current))
-		return (ERR_NEGA_NUM);
+		return (false);
 	while(total > current)
-	// while(total >= get_time_milli_sec())
 	{
 		if (total - current > 5)
-		// if (total - get_time_milli_sec() > 5)
 		{
 			if(!x_usleep_millisec(ph, (total - current) / 2))
-				return (ERR_NEGA_NUM);
-			
-			// ret = usleep((total - get_time_milli_sec()) / 2);
-			// if (ret < 0)
-			// 	return(ERR_NEGA_NUM);
+				return (false);
 		}
 		if(!gettimeofday_millisec(ph, &current))
-			return (ERR_NEGA_NUM);
+			return (false);
 	}
-	return (SUCCESS);
+	return (true);
 }
 
 //idx_state:
@@ -64,16 +55,10 @@ int	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 {
 	long	time_current;
-	// const long	time_current = get_time_milli_sec();
 	const t_philo_main *ph = node_philo->ph;
-	int		ret;
-
-	ret = 0;
 
 	if(!gettimeofday_millisec(node_philo->ph, &time_current))
 			return (false);
-	// if (time_current < 0)
-	// 	get_err_num_philo(node_philo, ERR_GETTEIME_MS);
 	x_lock_mutex_philo(node_philo);
 	node_philo->time[idx_state] = time_current;
 	x_unlock_mutex_philo(node_philo);
@@ -83,11 +68,7 @@ bool	put_state(size_t idx_state, t_philo_node *node_philo, long ms, size_t id)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 	if (ms > 0)
 	{
-		ret = wait_action_usleep_ms(node_philo->ph, node_philo->time[idx_state], ms);
-		// if (ret == IS_END_FLAG)
-		// 	return (false);
-		if (ret == ERR_NEGA_NUM)
-			// get_err_num_philo(node_philo, ERR_USLEEP);
+		if(!wait_action_usleep_ms(node_philo->ph, node_philo->time[idx_state], ms))
 			return (false);
 	}
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))

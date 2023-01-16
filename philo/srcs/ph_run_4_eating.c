@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:23:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:29:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,17 @@ void	*run_judge_hungry(void *ptr)
 {
 	t_philo_node	*node_philo;
 	long	not_hungry_time;
-	// int		ret;
 	long	total;
-	// long	start;
 	long	current;
 
 	node_philo = (t_philo_node *)ptr;
-	// ret = 0;
 	x_lock_mutex_philo(node_philo);
 	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
-	// start = node_philo->time[EATING];
 	total = not_hungry_time + node_philo->time[EATING];
 	x_unlock_mutex_philo(node_philo);
-	// total = not_hungry_time + start;
-
 	if(!gettimeofday_millisec(node_philo->ph, &current))
 		return (ptr);
 	while(total > current)
-	// while(total > get_time_milli_sec())
 	{
 		if (total - current > 5)
 		{
@@ -50,15 +43,8 @@ void	*run_judge_hungry(void *ptr)
 		}
 		if(!gettimeofday_millisec(node_philo->ph, &current))
 			return (ptr);
-
-		// if (total - get_time_milli_sec() > 5)
-		// {
-		// 	ret = usleep((total - get_time_milli_sec()) /2 );
-		// }
 	}
 	x_lock_mutex_philo(node_philo);
-	// if (ret < 0)
-	// 	get_err_num_ph(node_philo->ph, ERR_USLEEP);
 	node_philo->hungry = true;
 	x_unlock_mutex_philo(node_philo);
 	return (ptr);
@@ -78,9 +64,6 @@ bool	run_eating(t_philo_node *node_philo, \
 			break;
 		}
 		x_unlock_mutex_philo(node_philo);
-		// ret = usleep(100);
-		// if (ret < 0)
-		// 	return(ERR_NEGA_NUM);
 	}
 	if (!lock_fork_mutex(node_philo, node_fork, id))
 		return (false);

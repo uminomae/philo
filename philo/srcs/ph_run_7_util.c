@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:14:54 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:28:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,3 @@ bool x_usleep_millisec(t_philo_main *ph, long time_ms)
 	}
 	return (true);
 }
-// int	usleep_ms(size_t ms)
-// {
-// 	int	ret;
-
-// 	ret = usleep(ms * 1000);
-// 	return (ret);
-// }
