@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 03:05:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:08:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
 	return (ret);
 }
-
-// bool	wait_required_time(t_philo_main *ph, long total, long current)
-// {
-// 	if (total - current > 5)
-// 	{
-// 		if (!x_usleep_millisec(ph, (total - current) / 2))
-// 			return (false);
-// 	}
-// 	return (true);
-// }
 
 bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 {

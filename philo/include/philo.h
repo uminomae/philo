@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 03:05:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:15:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ long	get_time_from_start(t_philo_main *ph);
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void	*run_rutine_monitor(void *ptr);
-int	put_stamp(long time, size_t id, const char *state);
+int	put_stamp(long time, size_t id, char *state);
 
 int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
