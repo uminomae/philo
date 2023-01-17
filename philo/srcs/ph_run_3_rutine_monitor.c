@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 03:11:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:22:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,19 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
-	if (ph->died_struct.died_flag == true)
+		// printf("---- die put ----0\n");
+	// if (!x_usleep_millisec(ph, 1))
+	// 	return (false);
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	if (ph->died_struct.died_flag)
 	{
-		if (x_usleep_millisec(ph, 100))
-			return (false);
+		// printf("---- die put ----1\n");
 		if (!gettimeofday_millisec(ph, &time))
 			return (false);
+		// printf("---- die put ----2\n");
 		put_stamp(time, ph->died_struct.died_id, DIED_STR);
 	}
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	return (ptr);
 }
 

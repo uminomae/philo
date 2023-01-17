@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 03:04:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:16:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 	return (false);
 }
 
+//TODO starttime
 static bool	check_ate_time_to_die(t_philo_node *node_philo)
 {
 	const long	eating = node_philo->time[EATING];
@@ -79,12 +80,14 @@ static bool	check_ate_time_to_die(t_philo_node *node_philo)
 
 	if (!gettimeofday_millisec(node_philo->ph, &time_current))
 		return (false);
+	// printf("%ld, %ld, %ld\n", time_current, node_philo->ph->start_time, time_to_die);
+	// printf("%ld\n", eating);
 	if (eating == 0 && time_current - node_philo->ph->start_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
-	if (eating > 0 && time_current - eating >= time_to_die)
+	if (eating > 0 && (time_current - eating) >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
@@ -96,15 +99,18 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 {
 	t_mutex	*mutex_struct;
 
+		// printf("---- die ----1\n");
 	mutex_struct = &ph->mutex_struct;
 	x_lock_mutex_struct(&mutex_struct->mutex_die, mutex_struct);
 	if (ph->died_struct.died_flag == false)
 	{
+		// printf("---- die ----2\n");
 		ph->died_struct.died_flag = true;
 		ph->died_struct.died_id = id;
 	}
 	x_unlock_mutex_struct(&mutex_struct->mutex_die, mutex_struct);
 	x_lock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
+		// printf("---- die ----3\n");
 	ph->end_struct.flag_end = true;
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
 }

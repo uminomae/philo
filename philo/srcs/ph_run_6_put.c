@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 02:08:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 10:41:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static bool	wait_action_usleep_ms(t_philo_main *ph, \
 				long start, size_t wait_ms);
 
+//TODO ph　修正
 bool	put_state(size_t num_state, t_philo_node *node_philo, \
 				long ms, size_t id)
 {
@@ -26,8 +27,10 @@ bool	put_state(size_t num_state, t_philo_node *node_philo, \
 	x_lock_mutex_philo(node_philo);
 	node_philo->time[num_state] = time_current;
 	x_unlock_mutex_philo(node_philo);
+	// printf("---- state ----1\n");
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
 		return (false);
+	// printf("---- state ----2\n");
 	if (put_stamp(node_philo->time[num_state], id, ph->status[num_state]) < 0)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 	if (ms > 0)
