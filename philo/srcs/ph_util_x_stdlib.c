@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:13:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 04:22:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@ bool	x_usleep_millisec(t_philo_main *ph, long time_ms)
 	long	ret;
 
 	ret = usleep(time_ms * 1000);
-	if (ret == -1)
-	{
-		get_err_num_ph(ph, ERR_USLEEP);
-		return (false);
-	}
-	return (true);
-}
-
-bool	x_usleep(t_philo_main *ph, long time_ms)
-{
-	long	ret;
-
-	ret = usleep(time_ms);
 	if (ret == -1)
 	{
 		get_err_num_ph(ph, ERR_USLEEP);

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 03:38:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 04:22:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,6 @@ bool			x_pthread_create(t_philo_main *ph, pthread_t *t, \
 					void *(*f)(void *), void *p);
 bool			x_pthread_detach(t_philo_main *ph, pthread_t *thread);
 bool			x_usleep_millisec(t_philo_main *ph, long time_ms);
-bool			x_usleep(t_philo_main *ph, long time_ms);
 void			destroy_mutex(t_philo_main *ph);
 bool			is_flag_died(t_monitor_node *eat_monitor);
 void			wait_ate_person(t_philo_node *node_th);
