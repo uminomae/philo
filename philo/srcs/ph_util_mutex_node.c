@@ -6,13 +6,11 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/16 23:40:20 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:22:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//TODO エラー処理
 
 void	x_lock_mutex_philo(t_philo_node *node_philo)
 {
@@ -46,7 +44,11 @@ void	x_lock_mutex_fork(t_fork_node *node_fork)
 
 	ret = pthread_mutex_lock(&node_fork->mutex_fork);
 	if (ret != 0)
+	{
+		x_lock_mutex_fork(node_fork);
 		get_err_num_fork(node_fork, ERR_PTHREAD_LOCK);
+		x_unlock_mutex_fork(node_fork);
+	}
 }
 
 void	x_unlock_mutex_fork(t_fork_node *node_fork)
@@ -55,5 +57,9 @@ void	x_unlock_mutex_fork(t_fork_node *node_fork)
 
 	ret = pthread_mutex_unlock(&node_fork->mutex_fork);
 	if (ret != 0)
+	{
+		x_lock_mutex_fork(node_fork);
 		get_err_num_fork(node_fork, ERR_PTHREAD_UNLOCK);
+		x_unlock_mutex_fork(node_fork);
+	}
 }

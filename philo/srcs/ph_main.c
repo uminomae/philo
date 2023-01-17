@@ -6,17 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 19:21:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:26:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// waitで動作の安定確認
-// diedが出ているか
-// 途中のエラーのfreeとdestroy
-//アラートflag判定してからtaken fork開始。
-// 構造体にふたつのフォークのprtを。flagで。nodeでなくforkに持たせる。
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
@@ -43,11 +38,10 @@ int	main(int argc, char **argv)
 	end_philo(&ph);
 	return (SUCCESS);
 }
+
 // system("leaks -q philo");
-// NG philo/に入れる
-// 関数を使う順番に並べ替える
-// 日本語のコメントはやめる
-// num_peopleとnum_forkは厳密には分けた方が誤解が少ない。意味は通じるけども。
-// taken a forkなので、それぞれ取った時に出力。
-// timeのズレは無しでピッタリにする。
-// NG case 4 410 200 200 死なないようにする。
+
+// ./philo 4 310 200 100
+// ./philo 5 800 200 200
+// ./philo 5 800 200 200 7
+// ./philo 4 410 200 200

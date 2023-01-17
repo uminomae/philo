@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 23:14:55 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/08 18:07:30 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:18:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
@@ -24,7 +24,7 @@ static size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-static void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t				i;
 	unsigned char		*ucp_dst;
