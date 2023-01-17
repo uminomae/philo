@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:33:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:20:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ bool	wait_required_time(t_philo_main *ph, long total, long current)
 	return (true);
 }
 
+//if cur - eating > eating + sleeping +11 
+//hungry
+//node_philo->node_fork , node_pnilo->next->node_fork
+
+//if hungry continue
+
+//puteating hungry fase
 bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 {
 	size_t			i;
