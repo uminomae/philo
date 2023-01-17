@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:39:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:38:42 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,3 @@ long	get_time_from_start(t_philo_main *ph)
 	ret = ret - ph->start_time;;
 	return (ret);
 }
-
-// bool	gettimeofday_microsec(t_philo_main *ph, long *cur_time)
-// {
-// 	struct timeval	tp;
-// 	long			micro_sec;
-// 	int				ret;
-
-// 	ret = gettimeofday(&tp, NULL);
-// 	if (ret < 0)
-// 	{
-// 		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
-// 		return (false);
-// 	}
-// 	micro_sec = tp.tv_sec * 1000 * 1000;
-// 	micro_sec += tp.tv_usec;
-// 	*cur_time = micro_sec;
-// 	return (true);
-// }
