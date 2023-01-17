@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/17 21:31:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 00:54:09 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_fork_node
 	struct s_philo_main	*ph;
 	size_t				error_num;
 	struct s_fork_node	*next;
-	bool				alart_flag;
+	// bool				alart_flag;
 }	t_fork_node;
 
 typedef struct s_fork_list
@@ -123,6 +123,7 @@ typedef struct s_philo_node
 	size_t					id;
 	long					time[5];
 	struct s_philo_node		*next;
+	struct s_philo_node		*prev;
 	struct s_philo_main		*ph;
 	bool					flag_must_eat;
 	size_t					times_must_eat;
@@ -131,7 +132,7 @@ typedef struct s_philo_node
 	bool					flag_wait_ate;
 	size_t					error_num;
 	struct s_mutex			*mutex_struct;
-	// bool					hungry;
+	bool					hungry;
 	pthread_t				philo_sleep_th;
 	pthread_t				philo_eat_th;
 	// bool					flag_sleeping;
@@ -209,6 +210,10 @@ enum e_err_type {
 # define SUCCESS		0
 # define ERR_NEGA_NUM	-1
 # define IS_END_FLAG	1
+# define HUNGRY			1
+# define OK				0
+# define LIMIT_HUNGRY	11
+
 
 enum e_put_state {
 	TAKEN_FORK = 0,
@@ -290,6 +295,6 @@ bool	judge_time_to_die(t_philo_main *ph, size_t num_people);
 void	*run_judge_hungry(void *ptr);
 bool wait_required_time(t_philo_main *ph, long total, long current);
 void	run_case_1person(t_philo_node *node_philo, t_fork_node *node_fork);
-
+bool	check_hungry(t_philo_main *ph, size_t num_people);
 
 #endif

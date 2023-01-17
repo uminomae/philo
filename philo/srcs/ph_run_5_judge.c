@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 22:20:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:01:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,50 @@ bool	wait_required_time(t_philo_main *ph, long total, long current)
 	return (true);
 }
 
-//if cur - eating > eating + sleeping +11 
-//hungry
-//node_philo->node_fork , node_pnilo->next->node_fork
+int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
+{
+	long	cur_time;
 
-//if hungry continue
+	cur_time = get_time_from_start(ph);
+	if (cur_time == ERR_NEGA_NUM)
+		return (ERR_NEGA_NUM);
+	if (node_philo->time[EATING] == 0)
+	{
+		if (cur_time > (long)ph->argv[3] + (long)ph->argv[3] + LIMIT_HUNGRY)
+			return (HUNGRY);
+	}
+	else if (cur_time > node_philo->time[EATING] + (long)ph->argv[3] + (long)ph->argv[3] + LIMIT_HUNGRY)
+		return (HUNGRY);
+	return (OK);
+}
 
-//puteating hungry fase
+bool	check_hungry(t_philo_main *ph, size_t num_people)
+{
+	size_t			i;
+	t_philo_node	*node_philo;
+	bool			ret;
+
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo_node(&ph->philo_list, i);
+		x_lock_mutex_philo(node_philo);
+		ret = check_time_ate(ph, node_philo);
+		if (ret == HUNGRY)
+		{
+			//teilの場合を。
+			// printf("----------------hung %ld\n", i);
+			node_philo->hungry = true;
+		}
+		else
+			node_philo->hungry = false;
+		x_unlock_mutex_philo(node_philo);
+		i++;
+	}
+	return (true);
+}
+
+
 bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 {
 	size_t			i;
