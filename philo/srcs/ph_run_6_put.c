@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 19:43:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:39:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, \
 bool	put_state(size_t num_state, t_philo_node *node_philo, \
 				long ms, size_t id)
 {
-	long				time_current;
+	long				cur_time;
 	const t_philo_main	*ph = node_philo->ph;
 
-	if (!gettimeofday_millisec(node_philo->ph, &time_current))
+	// if (!gettimeofday_millisec(node_philo->ph, &cur_time))
+	// 	return (false);
+	cur_time = get_time_from_start(node_philo->ph);
+	if (cur_time == ERR_NEGA_NUM)
 		return (false);
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
 		return (false);
 
 	x_lock_mutex_philo(node_philo);
-	node_philo->time[num_state] = time_current;
+	node_philo->time[num_state] = cur_time;
 	if (put_stamp(node_philo->time[num_state], id, ph->status[num_state]) < 0)
 		get_err_num_philo(node_philo, ERR_PRINTF);
 	x_unlock_mutex_philo(node_philo);
@@ -54,19 +57,25 @@ int	put_stamp(long time, size_t id, const char *state)
 static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 {
 	long	total;
-	long	current;
+	long	cur_time;
 
 	total = wait_ms + start;
-	if (!gettimeofday_millisec(ph, &current))
+	// if (!gettimeofday_millisec(ph, &cur_time))
+	// 	return (false);
+	cur_time = get_time_from_start(ph);
+	if (cur_time == ERR_NEGA_NUM)
 		return (false);
-	while (total > current)
+	while (total > cur_time)
 	{
-		if (total - current > 5)
+		if (total - cur_time > 5)
 		{
-			if (!x_usleep_millisec(ph, (total - current) / 2))
+			if (!x_usleep_millisec(ph, (total - cur_time) / 2))
 				return (false);
 		}
-		if (!gettimeofday_millisec(ph, &current))
+		// if (!gettimeofday_millisec(ph, &cur_time))
+		// 	return (false);
+		cur_time = get_time_from_start(ph);
+		if (cur_time == ERR_NEGA_NUM)
 			return (false);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/17 20:14:04 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:36:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,7 @@ int		usleep_ms(size_t ms);
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void	*run_rutine_philo(void *ptr);
 bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time);
+long	get_time_from_start(t_philo_main *ph);
 
 t_fork_node	*get_fork_node(t_fork_list *list, size_t c);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);

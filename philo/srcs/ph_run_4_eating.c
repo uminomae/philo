@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:07:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:23:53 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 		t_fork_node *node_fork, size_t id);
 
-static bool	case_tail_person(t_philo_node *node_th)
+static bool	case_tail_person(t_philo_node *node_philo)
 {
-	// if (node_th->ph->philo_list.head == node_th->ph->philo_list.tail)
+	// if (node_philo->ph->philo_list.head == node_philo->ph->philo_list.tail)
 	// 	return (false);
-	if (node_th == node_th->ph->philo_list.tail)
+	if (node_philo == node_philo->ph->philo_list.tail)
 		return (true);
 	return (false);
 }
@@ -89,10 +89,10 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 	x_unlock_mutex_fork(node_fork);
 	if (case_tail_person(node_philo))
 	{
+			printf("---- lock1 ----tail\n");
 		x_lock_mutex_fork(node_next_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			printf("---- lock1 ----tail\n");
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
 		}
@@ -117,20 +117,20 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 	node_next_fork = node_fork->next;
 	if (case_tail_person(node_philo))
 	{
+			printf("---- lock2 ----tail %zu\n", id);
 		x_lock_mutex_fork(node_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			printf("---- lock2 ----tail\n");
 			x_unlock_mutex_fork(node_fork);
 			return (false);
 		}
 	}
 	else
 	{
+			// printf("---- lock2 -\n");
 		x_lock_mutex_fork(node_next_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			printf("---- lock2 -\n");
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
 		}

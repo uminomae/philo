@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 11:22:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:38:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	*run_rutine_monitor(void *ptr)
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	size_t			num_people;
-	long			time;
+	long			cur_time;
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
 	num_people = node_monitor->num_people;
+	cur_time = 0;
 	while (!is_end(&ph->end_struct, &ph->mutex_struct))
 	{
 		if (ph->flag_must_eat == true)
@@ -37,16 +38,18 @@ void	*run_rutine_monitor(void *ptr)
 			break ;
 	}
 		// printf("---- die put ----0\n");
-	// if (!x_usleep_millisec(ph, 1))
-	// 	return (false);
+	if (!x_usleep(ph, 100))
+		return (false);
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	if (ph->died_struct.died_flag)
 	{
-		// printf("---- die put ----1\n");
-		if (!gettimeofday_millisec(ph, &time))
+		// if (!gettimeofday_millisec(ph, &time))
+		cur_time = get_time_from_start(ph);
+		if (cur_time == ERR_NEGA_NUM)
 			return (false);
-		// printf("---- die put ----2\n");
-		put_stamp(time, ph->died_struct.died_id, DIED_STR);
+		// if (get_time_from_start(ph) == ERR_NEGA_NUM)
+		// 	return (false);
+		put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
 	}
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	return (ptr);

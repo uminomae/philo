@@ -6,39 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 11:16:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:33:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	check_ate_time_to_die(t_philo_node *node_philo);
-
-// void	*run_judge_hungry(void *ptr)
-// {
-// 	t_philo_node	*node_philo;
-// 	long			not_hungry_time;
-// 	long			total;
-// 	long			current;
-
-// 	node_philo = (t_philo_node *)ptr;
-// 	x_lock_mutex_philo(node_philo);
-// 	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
-// 	total = not_hungry_time + node_philo->time[EATING];
-// 	x_unlock_mutex_philo(node_philo);
-// 	if (!gettimeofday_millisec(node_philo->ph, &current))
-// 		return (ptr);
-// 	while (total > current)
-// 	{
-// 		wait_required_time(node_philo->ph, total, current);
-// 		if (!gettimeofday_millisec(node_philo->ph, &current))
-// 			return (ptr);
-// 	}
-// 	x_lock_mutex_philo(node_philo);
-// 	node_philo->hungry = true;
-// 	x_unlock_mutex_philo(node_philo);
-// 	return (ptr);
-// }
 
 bool	wait_required_time(t_philo_main *ph, long total, long current)
 {
@@ -72,22 +46,25 @@ bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 }
 
 //TODO starttime
+//TODO err
 static bool	check_ate_time_to_die(t_philo_node *node_philo)
 {
 	const long	eating = node_philo->time[EATING];
 	const long	time_to_die = (long)node_philo->ph->argv[2];
-	long		time_current;
+	long		cur_time;
 
-	if (!gettimeofday_millisec(node_philo->ph, &time_current))
+	// if (!gettimeofday_millisec(node_philo->ph, &cur_time))
+	cur_time = get_time_from_start(node_philo->ph);
+	if (cur_time == ERR_NEGA_NUM)
 		return (false);
-	// printf("%ld, %ld, %ld\n", time_current, node_philo->ph->start_time, time_to_die);
+	// printf("%ld, %ld, %ld\n", cur_time, node_philo->ph->start_time, time_to_die);
 	// printf("%ld\n", eating);
-	if (eating == 0 && time_current - node_philo->ph->start_time >= time_to_die)
+	if (eating == 0 && cur_time - node_philo->ph->start_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
-	if (eating > 0 && (time_current - eating) >= time_to_die)
+	if (eating > 0 && (cur_time - eating) >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
