@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 02:44:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 03:04:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 static bool	check_ate_time_to_die(t_philo_node *node_philo);
 
-void	*run_judge_hungry(void *ptr)
-{
-	t_philo_node	*node_philo;
-	long			not_hungry_time;
-	long			total;
-	long			current;
+// void	*run_judge_hungry(void *ptr)
+// {
+// 	t_philo_node	*node_philo;
+// 	long			not_hungry_time;
+// 	long			total;
+// 	long			current;
 
-	node_philo = (t_philo_node *)ptr;
-	x_lock_mutex_philo(node_philo);
-	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
-	total = not_hungry_time + node_philo->time[EATING];
-	x_unlock_mutex_philo(node_philo);
-	if (!gettimeofday_millisec(node_philo->ph, &current))
-		return (ptr);
-	while (total > current)
-	{
-		wait_required_time(node_philo->ph, total, current);
-		if (!gettimeofday_millisec(node_philo->ph, &current))
-			return (ptr);
-	}
-	x_lock_mutex_philo(node_philo);
-	node_philo->hungry = true;
-	x_unlock_mutex_philo(node_philo);
-	return (ptr);
-}
+// 	node_philo = (t_philo_node *)ptr;
+// 	x_lock_mutex_philo(node_philo);
+// 	not_hungry_time = node_philo->ph->argv[3] + node_philo->ph->argv[4];
+// 	total = not_hungry_time + node_philo->time[EATING];
+// 	x_unlock_mutex_philo(node_philo);
+// 	if (!gettimeofday_millisec(node_philo->ph, &current))
+// 		return (ptr);
+// 	while (total > current)
+// 	{
+// 		wait_required_time(node_philo->ph, total, current);
+// 		if (!gettimeofday_millisec(node_philo->ph, &current))
+// 			return (ptr);
+// 	}
+// 	x_lock_mutex_philo(node_philo);
+// 	node_philo->hungry = true;
+// 	x_unlock_mutex_philo(node_philo);
+// 	return (ptr);
+// }
 
 bool	wait_required_time(t_philo_main *ph, long total, long current)
 {
