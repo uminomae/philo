@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 21:41:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:48:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@ void	*run_rutine_philo(void *ptr)
 	return (ptr);
 }
 
-// static void	*put_eat(void *ptr)
-// {
-// 	t_philo_node	*node_philo;
-// 	long			time_eat;
+static void	*put_eat(void *ptr)
+{
+	t_philo_node	*node_philo;
 
-// 	node_philo = (t_philo_node *)ptr;
-// 	time_eat = node_philo->ph->argv[3];
-// 	if (!run_eating(node_philo, node_philo->node_fork, node_philo->id, time_eat))
-// 		return (NULL);
-// 	return (ptr);
-// }
+	node_philo = (t_philo_node *)ptr;
+	if (!run_eating(node_philo, node_philo->node_fork, node_philo->id, node_philo->ph->argv[3]))
+		return (NULL);
+	return (ptr);
+}
 
 // usleep
 static void	run_case_normal(t_philo_main *ph, \
@@ -55,17 +53,17 @@ static void	run_case_normal(t_philo_main *ph, \
 	}
 	while (1)
 	{
-		// if (!x_pthread_create(ph, &node_philo->philo_eat_th, \
-		// 				put_eat, node_philo))
-		// 	return ;
-		// if (pthread_join(node_philo->philo_eat_th, NULL) != 0)
-		// {
-		// 	get_err_num_ph(ph, ERR_PTHREAD_JOIN);
-		// 	return ;
-		// }
-
-		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
+		if (!x_pthread_create(ph, &node_philo->philo_eat_th, \
+						put_eat, node_philo))
 			return ;
+		if (pthread_join(node_philo->philo_eat_th, NULL) != 0)
+		{
+			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
+			return ;
+		}
+
+		// if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
+		// 	return ;
 			
 		// if (!x_pthread_create(ph, &node_philo->philo_sleep_th, \
 		// 				put_sleep_think, node_philo))
@@ -85,3 +83,16 @@ static void	run_case_normal(t_philo_main *ph, \
 }
 
 
+// static void	*put_sleep_think(void *ptr)
+// {
+// 	t_philo_node	*node_philo;
+// 	long			time_sleep;
+
+// 	node_philo = (t_philo_node *)ptr;
+// 	time_sleep = node_philo->ph->argv[4];
+// 	if (!put_state(SLEEPING, node_philo, time_sleep, node_philo->id))
+// 		return (NULL);
+// 	// if (!put_state(THINKING, node_philo, 0, node_philo->id))
+// 	// 	return (NULL);
+// 	return (ptr);
+// }
