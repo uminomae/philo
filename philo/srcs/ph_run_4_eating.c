@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 09:47:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:21:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 
 static bool	case_tail_person(t_philo_node *node_th)
 {
-	if (node_th->ph->philo_list.head == node_th->ph->philo_list.tail)
-		return (false);
+	// if (node_th->ph->philo_list.head == node_th->ph->philo_list.tail)
+	// 	return (false);
 	if (node_th == node_th->ph->philo_list.tail)
 		return (true);
 	return (false);
@@ -33,6 +33,7 @@ static bool	case_tail_person(t_philo_node *node_th)
 bool	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
 {
+
 	// while (!is_hungry(node_philo))
 	// 	;
 	if (!lock_fork_mutex(node_philo, node_fork, id))
@@ -49,6 +50,7 @@ bool	run_eating(t_philo_node *node_philo, \
 	node_philo->cnt++;
 	// node_philo->hungry = false;
 	x_unlock_mutex_philo(node_philo);
+			// printf("---- eating 4\n");
 	// x_pthread_create(node_philo->ph, &node_philo->philo_monit_th, \
 	// 					run_judge_hungry, node_philo);
 	// if (!x_pthread_detach(node_philo->ph, &node_philo->philo_monit_th))
@@ -130,6 +132,7 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 {
 	t_fork_node	*node_next_fork;
 
+	// printf("---- lock1 ----start\n");
 	x_lock_mutex_fork(node_fork);
 	node_next_fork = node_fork->next;
 	x_unlock_mutex_fork(node_fork);
@@ -144,7 +147,9 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 	}
 	else
 	{
+	// printf("---- lock1 ----1\n");
 		x_lock_mutex_fork(node_fork);
+	// printf("---- lock1 ----2\n");
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
 			x_unlock_mutex_fork(node_fork);

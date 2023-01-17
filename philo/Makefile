@@ -116,11 +116,12 @@ run:
 run2: 
 	make re
 #	make sani_thread
-	./philo 5 800 200 200 7
+	./philo 5 800 200 200 7 >out
 
 run3: 
 	make re
-	./philo 5 800 200 200 >out
+#	./philo 5 800 200 200 | grep eating >out 
+	./philo 5 800 200 200 
 #	./philo 4 410 200 200
 # ./philo 200 2000 1000 1000
 run4: 

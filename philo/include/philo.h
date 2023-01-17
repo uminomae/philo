@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/17 02:01:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:43:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_fork_node
 	struct s_philo_main	*ph;
 	size_t				error_num;
 	struct s_fork_node	*next;
+	bool				alart_flag;
 }	t_fork_node;
 
 typedef struct s_fork_list
@@ -55,7 +56,6 @@ typedef struct s_fork_list
 	struct s_fork_node	*head;
 	struct s_fork_node	*tail;
 }	t_fork_list;
-
 
 typedef struct s_monitor_node
 {

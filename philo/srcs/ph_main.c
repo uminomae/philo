@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 01:28:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:21:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 // waitで動作の安定確認
 // diedが出ているか
 // 途中のエラーのfreeとdestroy
+//アラートflag判定してからtaken fork開始。
+// 構造体にふたつのフォークのprtを。flagで。nodeでなくforkに持たせる。
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
