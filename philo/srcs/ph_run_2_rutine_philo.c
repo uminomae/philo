@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 02:07:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:12:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,18 @@ bool	is_hungly(t_philo_node *node_philo)
 static void	run_case_normal(t_philo_main *ph, \
 			t_philo_node *node_philo, t_fork_node *node_fork)
 {
-	// t_philo_node	*node_next_philo;
-	// t_philo_node	*node_prev_philo;
-	
 	(void)node_fork;
-	if (node_philo->id % 2 == 1)
-	{
-		if (!x_usleep(ph, 100))
-			return ;
-	}
-	// x_lock_mutex_philo(node_philo);
-	// node_next_philo = node_philo->next;
-	// node_prev_philo = node_philo->prev;
-	// x_unlock_mutex_philo(node_philo);
+	// if (node_philo->id % 2 == 1)
+	// {
+	// 	if (!x_usleep(ph, 100))
+	// 		return ;
+	// }
 	while (1)
 	{
 		if (is_end(&ph->end_struct, &ph->mutex_struct))
 			return ;
 		if (is_hungly(node_philo))
 			continue ;
-		// x_lock_mutex_philo(node_next_philo);
-		// if (node_next_philo->hungry == true)
-		// {
-		// 	x_unlock_mutex_philo(node_next_philo);
-		// 	continue ;
-		// }
-		// x_unlock_mutex_philo(node_next_philo);
-
-		// x_lock_mutex_philo(node_prev_philo);
-		// if (node_prev_philo->hungry == true)
-		// {
-		// 	x_unlock_mutex_philo(node_prev_philo);
-		// 	// printf("-----prev------%ld-----\n", node_prev_philo->id);
-		// 	continue ;
-		// }
-		// x_unlock_mutex_philo(node_prev_philo);
-		
 		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
 			return ;
 		if (!put_state(SLEEPING, node_philo, ph->argv[4], node_philo->id))
