@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 02:22:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:06:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,3 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 	}
 	return (true);
 }
-
-// static bool	case_tail_person(t_philo_node *node_philo)
-// {
-// 	// if (node_philo->ph->philo_list.head == node_philo->ph->philo_list.tail)
-// 	// 	return (false);
-// 	if (node_philo == node_philo->ph->philo_list.tail)
-// 		return (true);
-// 	return (false);
-// }

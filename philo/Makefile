@@ -29,7 +29,6 @@ ph_run_4_eating.c \
 ph_run_5_judge.c \
 ph_run_6_put.c \
 ph_run_7_util.c \
-ph_run_8_case1.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \

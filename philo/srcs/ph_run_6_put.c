@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:39:04 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:07:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	long	cur_time;
 
 	total = wait_ms + start;
-	// if (!gettimeofday_millisec(ph, &cur_time))
-	// 	return (false);
 	cur_time = get_time_from_start(ph);
 	if (cur_time == ERR_NEGA_NUM)
 		return (false);
@@ -72,8 +70,6 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 			if (!x_usleep_millisec(ph, (total - cur_time) / 2))
 				return (false);
 		}
-		// if (!gettimeofday_millisec(ph, &cur_time))
-		// 	return (false);
 		cur_time = get_time_from_start(ph);
 		if (cur_time == ERR_NEGA_NUM)
 			return (false);

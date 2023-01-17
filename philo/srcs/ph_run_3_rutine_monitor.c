@@ -6,32 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 02:23:09 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:04:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
-bool	judge_ate_all(t_philo_main *ph, size_t num_people);
-
-	// if (!x_usleep(ph, 100))
-	// 	return (false);
-static bool	put_died(t_philo_main *ph)
-{
-	long	cur_time;
-
-	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
-	if (ph->died_struct.died_flag)
-	{
-		cur_time = get_time_from_start(ph);
-		if (cur_time == ERR_NEGA_NUM)
-			return (false);
-		put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
-	}
-	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
-	return (true);
-}
+static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
+static bool	check_hungry(t_philo_main *ph, size_t num_people);
+static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
+static bool	put_died(t_philo_main *ph);
 
 void	*run_rutine_monitor(void *ptr)
 {
@@ -58,19 +42,7 @@ void	*run_rutine_monitor(void *ptr)
 	return (ptr);
 }
 
-bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
-{
-	bool	ret;
-
-	ret = false;
-	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-	if (end_struct->flag_end == true)
-		ret = true;
-	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-	return (ret);
-}
-
-bool	judge_ate_all(t_philo_main *ph, size_t num_people)
+static bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
 	t_mutex	*mutex_struct;
 
@@ -90,4 +62,60 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	}
 	x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
 	return (false);
+}
+
+static bool	check_hungry(t_philo_main *ph, size_t num_people)
+{
+	size_t			i;
+	t_philo_node	*node_philo;
+	bool			ret;
+
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo_node(&ph->philo_list, i);
+		x_lock_mutex_philo(node_philo);
+		ret = check_time_ate(ph, node_philo);
+		if (ret == HUNGRY)
+			node_philo->hungry = true;
+		else
+			node_philo->hungry = false;
+		x_unlock_mutex_philo(node_philo);
+		i++;
+	}
+	return (true);
+}
+
+static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
+{
+	long	cur_time;
+
+	cur_time = get_time_from_start(ph);
+	if (cur_time == ERR_NEGA_NUM)
+		return (ERR_NEGA_NUM);
+	if (node_philo->time[EATING] == 0)
+	{
+		if (cur_time > (long)ph->argv[3] * 2 + LIMIT_HUNGRY)
+			return (HUNGRY);
+	}
+	else if (cur_time > \
+			node_philo->time[EATING] + (long)ph->argv[3] * 2 + LIMIT_HUNGRY)
+		return (HUNGRY);
+	return (OK);
+}
+
+static bool	put_died(t_philo_main *ph)
+{
+	long	cur_time;
+
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	if (ph->died_struct.died_flag)
+	{
+		cur_time = get_time_from_start(ph);
+		if (cur_time == ERR_NEGA_NUM)
+			return (false);
+		put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
+	}
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	return (true);
 }
