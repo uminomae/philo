@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:38:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:22:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,14 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
-		// printf("---- die put ----0\n");
 	if (!x_usleep(ph, 100))
 		return (false);
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	if (ph->died_struct.died_flag)
 	{
-		// if (!gettimeofday_millisec(ph, &time))
 		cur_time = get_time_from_start(ph);
 		if (cur_time == ERR_NEGA_NUM)
 			return (false);
-		// if (get_time_from_start(ph) == ERR_NEGA_NUM)
-		// 	return (false);
 		put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
 	}
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
@@ -73,7 +69,7 @@ bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 
 	mutex_struct = &ph->mutex_struct;
 	x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
-	if (ph->ate_struct.ate_cnt == num_people)
+	if (ph->ate_struct.ate_cnt >= num_people && ph->ate_struct.ate_all == false)
 	{
 		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
 		usleep(ph->argv[3] * 1000);

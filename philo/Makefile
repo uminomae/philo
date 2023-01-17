@@ -117,6 +117,7 @@ run2:
 	make re
 #	make sani_thread
 	./philo 5 800 200 200 7 >out
+#	./philo 5 800 200 200 7 | grep died >out 
 
 run3: 
 	make re
