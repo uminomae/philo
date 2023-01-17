@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 01:07:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:20:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 
+	// if (!x_usleep(ph, 100))
+	// 	return (false);
 static bool	put_died(t_philo_main *ph)
 {
 	long	cur_time;
 
-	if (!x_usleep(ph, 100))
-		return (false);
 	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	if (ph->died_struct.died_flag)
 	{
@@ -33,18 +33,15 @@ static bool	put_died(t_philo_main *ph)
 	return (true);
 }
 
-// need usleep(1000)? died put 
 void	*run_rutine_monitor(void *ptr)
 {
 	t_monitor_node	*node_monitor;
 	t_philo_main	*ph;
 	size_t			num_people;
-	// long			cur_time;
 
 	node_monitor = (t_monitor_node *)ptr;
 	ph = node_monitor->ph;
 	num_people = node_monitor->num_people;
-	// cur_time = 0;
 	while (!is_end(&ph->end_struct, &ph->mutex_struct))
 	{
 		if (ph->flag_must_eat == true)
@@ -56,20 +53,8 @@ void	*run_rutine_monitor(void *ptr)
 			break ;
 		check_hungry(ph, num_people);
 	}
-	// printf("aaaaaa\n");
 	if(!put_died(ph))
 		return (NULL);
-	// if (!x_usleep(ph, 100))
-	// 	return (false);
-	// x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
-	// if (ph->died_struct.died_flag)
-	// {
-	// 	cur_time = get_time_from_start(ph);
-	// 	if (cur_time == ERR_NEGA_NUM)
-	// 		return (false);
-	// 	put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
-	// }
-	// x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	return (ptr);
 }
 

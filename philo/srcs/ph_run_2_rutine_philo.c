@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 02:12:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 02:17:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,10 @@ bool	is_hungly(t_philo_node *node_philo)
 	x_unlock_mutex_philo(node_prev_philo);
 	return (false);
 }
-// usleep
-//　偶数と奇数で分ける
+
 static void	run_case_normal(t_philo_main *ph, \
 			t_philo_node *node_philo, t_fork_node *node_fork)
 {
-	(void)node_fork;
-	// if (node_philo->id % 2 == 1)
-	// {
-	// 	if (!x_usleep(ph, 100))
-	// 		return ;
-	// }
 	while (1)
 	{
 		if (is_end(&ph->end_struct, &ph->mutex_struct))
@@ -83,6 +76,12 @@ static void	run_case_normal(t_philo_main *ph, \
 }
 
 
+	// if (node_philo->id % 2 == 1)
+	// {
+	// 	if (!x_usleep(ph, 100))
+	// 		return ;
+	// }
+	
 // static void	*put_sleep_think(void *ptr)
 // {
 // 	t_philo_node	*node_philo;
