@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:40:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:57:53 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,22 @@ static void	get_error_num_ptr(t_philo_main *ph);
 static void	get_error_num_list_fork(t_philo_main *ph);
 static void	get_error_num_list_philo(t_philo_main *ph);
 
-bool	is_error(t_philo_main *ph)
+void	get_err_num(t_philo_main *ph)
 {
+	x_lock_mutex_ph(&ph->mutex_ph, ph);
 	ph->error_num = ph->mutex_struct.error_num;
+	x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	get_error_num_ptr(ph);
 	get_error_num_list_fork(ph);
 	get_error_num_list_philo(ph);
+}
+
+bool	is_error(t_philo_main *ph)
+{
+	// ph->error_num = ph->mutex_struct.error_num;
+	// get_error_num_ptr(ph);
+	// get_error_num_list_fork(ph);
+	// get_error_num_list_philo(ph);
 	if (ph->error_num > NUM_ERR_LOW)
 		return (true);
 	return (false);
@@ -38,7 +48,9 @@ static void	get_error_num_ptr(t_philo_main *ph)
 	{
 		if (node_ptr->error_num > NUM_ERR_LOW)
 		{
+			x_lock_mutex_ph(&ph->mutex_ph, ph);
 			ph->error_num = node_ptr->error_num;
+			x_unlock_mutex_ph(&ph->mutex_ph, ph);
 			return ;
 		}
 		node_ptr = node_ptr->next;
@@ -58,7 +70,9 @@ static void	get_error_num_list_fork(t_philo_main *ph)
 	{
 		if (node_fork->error_num > NUM_ERR_LOW)
 		{
+			x_lock_mutex_ph(&ph->mutex_ph, ph);
 			ph->error_num = node_fork->error_num;
+			x_unlock_mutex_ph(&ph->mutex_ph, ph);
 			return ;
 		}
 		node_fork = node_fork->next;

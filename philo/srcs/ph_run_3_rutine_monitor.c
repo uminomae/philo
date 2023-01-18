@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:49:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:00:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	*run_rutine_monitor(void *ptr)
 			return (NULL);
 		}	
 	}
+	get_err_num(ph);
 	if (!put_died(ph))
 		return (NULL);
 	return (ptr);
