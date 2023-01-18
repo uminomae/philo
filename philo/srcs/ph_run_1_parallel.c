@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:57:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:53:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ bool	run_parallel_process(t_philo_main *ph)
 	if (!create_thread(ph, ph->argv[1]))
 		return (false);
 	if (!join_pthread(ph))
+		return (false);
+	if (is_error(ph))
 		return (false);
 	return (true);
 }

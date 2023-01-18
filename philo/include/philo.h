@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 17:25:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:36:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void			*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void			end_error(t_philo_main *ph);
 void			end_philo(t_philo_main *ph);
 void			free_all(t_philo_main *ph);
-void			get_err_num(t_mutex *mutex_struct, size_t err_num);
+void			get_err_num_mutex(t_mutex *mutex_struct, size_t err_num);
 void			get_err_num_ph(t_philo_main *ph, size_t err_num);
 void			get_err_num_fork(t_fork_node *node_fork, size_t err_num);
 void			get_err_num_philo(t_philo_node *node_philo, size_t err_num);

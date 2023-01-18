@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 13:57:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:36:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	get_err_num(t_mutex *mutex_struct, size_t err_num)
+void	get_err_num_mutex(t_mutex *mutex_struct, size_t err_num)
 {
 	mutex_struct->error_num = err_num;
 }

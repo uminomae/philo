@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:26:35 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:55:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,20 @@ int	main(int argc, char **argv)
 
 	if (!is_valid_values(&ph, argc, argv))
 	{
-		// printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-		printf("%s", ERR_STR);
+		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
+		// printf("%s", ERR_STR);
 		return (ERROR);
 	}
 	if (!build_struct_and_list(&ph, argc))
 	{
 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-		printf("%s", ERR_STR);
+		// printf("%s", ERR_STR);
 		free_all(&ph);
 		return (ERROR);
 	}
 	if (!run_parallel_process(&ph))
 	{
 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-		end_error(&ph);
-		return (ERROR);
-	}
-	if (is_error(&ph))
-	{
 		end_error(&ph);
 		return (ERROR);
 	}

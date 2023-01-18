@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 03:22:33 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:36:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 	if (pthread_mutex_lock(mutex) != 0)
 	{
 		x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-		get_err_num(mutex_struct, ERR_PTHREAD_LOCK);
+		get_err_num_mutex(mutex_struct, ERR_PTHREAD_LOCK);
 		x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
 	}
 }
@@ -27,7 +27,7 @@ void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 	if (pthread_mutex_unlock(mutex) != 0)
 	{
 		x_lock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
-		get_err_num(mutex_struct, ERR_PTHREAD_UNLOCK);
+		get_err_num_mutex(mutex_struct, ERR_PTHREAD_UNLOCK);
 		x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, mutex_struct);
 	}
 }

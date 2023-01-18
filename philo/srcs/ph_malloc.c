@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:23:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:55:41 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void			make_first_ptr_node(t_ptr_list *list, t_ptr_node *node);
 static void			add_last_ptr_node(t_ptr_list *list, t_ptr_node *node);
 static t_ptr_node	*init_ptr_node(void);
-static void			add_ptr_list(t_ptr_list *ptr_list, void *ptr);
+static void			*add_ptr_list(t_ptr_list *ptr_list, void *ptr);
 
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
 {
 	void	*ptr;
+	void	*ret;
 
-	// (void)ptr_list;
 	ptr = malloc(size);
+	// ptr = NULL;
 	if (ptr == NULL)
-	{
-		get_err_num_ptr(ptr, ERR_MALLOC);
 		return (NULL);
-	}
-	add_ptr_list(ptr_list, ptr);
+	ret = add_ptr_list(ptr_list, ptr);
+	if (ret == NULL)
+		return (NULL);
 	return (ptr);
 }
 
@@ -49,6 +49,7 @@ static t_ptr_node	*init_ptr_node(void)
 	t_ptr_node	*node;
 
 	node = (t_ptr_node *)malloc(sizeof(t_ptr_node));
+	// node = NULL;
 	if (node == NULL)
 		return (NULL);
 	node->ptr = NULL;
@@ -56,16 +57,18 @@ static t_ptr_node	*init_ptr_node(void)
 	return (node);
 }
 
-static void	add_ptr_list(t_ptr_list *ptr_list, void *ptr)
+static void	*add_ptr_list(t_ptr_list *ptr_list, void *ptr)
 {
 	t_ptr_node	*node;
 
 	node = init_ptr_node();
+	node = NULL;
 	if (node == NULL)
-		return ;
+		return (NULL);
 	node->ptr = ptr;
 	if (ptr_list->head == NULL)
 		make_first_ptr_node(ptr_list, node);
 	else
 		add_last_ptr_node(ptr_list, node);
+	return (node);
 }
