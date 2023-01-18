@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 21:03:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:25:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_philo_list
 // [5][number_of_times_each_philosopher_must_eat]: 
 typedef struct s_philo_main
 {
+	pthread_mutex_t			mutex_ph;
 	long					sleep_seconds;
 	bool					flag_must_eat;
 	size_t					error_num;

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:29:56 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:25:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ bool	init_mutex(t_philo_main *ph)
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_ate_all);
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_die);
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_end);
+	ret &= x_pthread_mutex_init(ph, &ph->mutex_ph);
 	node_fork = ph->fork_list.head;
 	node_philo = ph->philo_list.head;
 	num_people = ph->argv[1];
