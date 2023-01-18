@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 00:00:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:26:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	*run_rutine_monitor(void *ptr)
 		if (!check_hungry(ph, num_people))
 		{
 			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
-			return (NULL);
+			break ;
+			// return (NULL);
 		}	
 	}
 	get_err_num(ph);
