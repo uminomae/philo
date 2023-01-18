@@ -6,19 +6,29 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:14:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:48:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	count_ate_in_philo(t_philo_node *node_philo);
-static void	unlock_both_mutex_forks( \
-		t_fork_node *node_fork, t_fork_node *node_next_fork);
+// static void	unlock_both_mutex_forks( \
+// 		t_fork_node *node_fork, t_fork_node *node_next_fork);
 static bool	lock_fork_mutex(t_philo_node *node_philo, \
 		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id);
 static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id);
+
+
+static void	unlock_next_fork(t_philo_node *node_philo, \
+		t_fork_node *node_fork, t_fork_node *node_next_fork)
+{
+	if (node_philo->id % 2 == 0)
+		x_unlock_mutex_fork(node_next_fork);
+	else
+		x_unlock_mutex_fork(node_fork);
+}
 
 bool	run_eating(t_philo_node *node_philo, \
 	t_fork_node *node_fork, size_t id, long time_eat)
@@ -34,18 +44,24 @@ bool	run_eating(t_philo_node *node_philo, \
 	//TODO
 	if (!lock_next_fork_mutex(node_philo, node_fork, node_next_fork, id))
 	{
-		if (node_philo->id % 2 == 0)
-			x_unlock_mutex_fork(node_next_fork);
-		else
-			x_unlock_mutex_fork(node_fork);
+		// get_err_num_fork(node_fork, ERR_PUT_STATE);
+		unlock_next_fork(node_philo, node_fork, node_next_fork);
+		// if (node_philo->id % 2 == 0)
+		// 	x_unlock_mutex_fork(node_next_fork);
+		// else
+		// 	x_unlock_mutex_fork(node_fork);
 		return (false);
 	}
 	if (!put_state(EATING, node_philo, time_eat, id))
 	{
-		unlock_both_mutex_forks(node_fork, node_next_fork);
+		x_unlock_mutex_fork(node_fork);
+		x_unlock_mutex_fork(node_next_fork);
+		// unlock_both_mutex_forks(node_fork, node_next_fork);
 		return (false);
 	}
-	unlock_both_mutex_forks(node_fork, node_next_fork);
+	x_unlock_mutex_fork(node_fork);
+	x_unlock_mutex_fork(node_next_fork);
+	// unlock_both_mutex_forks(node_fork, node_next_fork);
 	x_lock_mutex_philo(node_philo);
 	node_philo->cnt++;
 	x_unlock_mutex_philo(node_philo);
@@ -70,12 +86,12 @@ static void	count_ate_in_philo(t_philo_node *node_philo)
 	x_unlock_mutex_philo(node_philo);
 }
 
-static void	unlock_both_mutex_forks( \
-		t_fork_node *node_fork, t_fork_node *node_next_fork)
-{
-	x_unlock_mutex_fork(node_fork);
-	x_unlock_mutex_fork(node_next_fork);
-}
+// static void	unlock_both_mutex_forks( \
+// 		t_fork_node *node_fork, t_fork_node *node_next_fork)
+// {
+// 	x_unlock_mutex_fork(node_fork);
+// 	x_unlock_mutex_fork(node_next_fork);
+// }
 
 static bool	lock_fork_mutex(t_philo_node *node_philo, \
 		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id)
