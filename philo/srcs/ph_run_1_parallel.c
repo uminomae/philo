@@ -6,12 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:01:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:15:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static bool	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex);
 static bool	create_thread(t_philo_main *ph, size_t num_people);
 static bool	join_pthread(t_philo_main *ph);
 
@@ -28,6 +29,47 @@ bool	run_parallel_process(t_philo_main *ph)
 	return (true);
 }
 
+bool	init_mutex(t_philo_main *ph)
+{
+	size_t			i;
+	size_t			num_people;
+	t_fork_node		*node_fork;	
+	t_philo_node	*node_philo;
+	size_t 			ret;
+
+	ret = true;
+	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_cnt_ate);
+	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_ate_all);
+	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_die);
+	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_end);
+	node_fork = ph->fork_list.head;
+	node_philo = ph->philo_list.head;
+	num_people = ph->argv[1];
+	i = 0;
+	while (i < num_people)
+	{
+		ret &= x_pthread_mutex_init(ph, &node_fork->mutex_fork);
+		node_fork = node_fork->next;
+		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_philo);
+		node_philo = node_philo->next;
+		i++;
+	}
+	return (ret);
+}
+
+static bool	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex)
+{
+	int	ret;
+
+	ret = pthread_mutex_init(mutex, NULL);
+	// ret = 1;
+	if (ret != 0)
+	{
+		get_err_num_ph(ph, ERR_PTHREAD_MUTEX_INIT);
+		return (false);
+	}
+	return (true);
+}
 
 static bool	create_thread(t_philo_main *ph, size_t num_people)
 {
@@ -46,6 +88,7 @@ static bool	create_thread(t_philo_main *ph, size_t num_people)
 	}
 	x_pthread_create(ph, &ph->monitor_node.monitor_th, \
 				run_rutine_monitor, &ph->monitor_node);
+	// ph->error_num = NUM_ERR_LOW + 1;
 	if (ph->error_num > NUM_ERR_LOW)
 		return (false);
 	return (true);
