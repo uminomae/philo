@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:03:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:26:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main(int argc, char **argv)
 	if (!run_parallel_process(&ph))
 	{
 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
+		end_error(&ph);
+		return (ERROR);
+	}
+	if (is_error(&ph))
+	{
 		end_error(&ph);
 		return (ERROR);
 	}

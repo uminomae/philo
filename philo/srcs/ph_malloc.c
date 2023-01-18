@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 01:47:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:23:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size)
 {
 	void	*ptr;
 
-	(void)ptr_list;
+	// (void)ptr_list;
 	ptr = malloc(size);
 	if (ptr == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:16:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:26:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ bool	destroy_mutex(t_philo_main *ph)
 	return (ret);
 }
 
+	// ret = 1;
 static bool	x_pthread_mutex_destroy(t_philo_main *ph, pthread_mutex_t *mutex)
 {
 	int	ret;
 
 	ret = pthread_mutex_destroy(mutex);
-	// ret = 1;
 	if (ret != 0)
 	{
 		get_err_num_ph(ph, ERR_PTHREAD_DESTROY);
@@ -64,7 +64,6 @@ void	end_philo(t_philo_main *ph)
 
 void	end_error(t_philo_main *ph)
 {
-	collect_error_num(ph);
 	printf("%s", ERR_STR);
 	destroy_mutex(ph);
 	free_all(ph);
