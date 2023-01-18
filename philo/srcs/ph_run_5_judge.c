@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 19:03:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:31:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	check_time_to_die(t_philo_node *node_philo)
 
 	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (false);
-	// return (false);
+	// return (false); //TODO
 	if (eating == 0 && elapsed_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);

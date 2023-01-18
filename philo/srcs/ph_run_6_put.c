@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:55:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:28:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	put_stamp(long time, size_t id, char *state)
 	int	ret;
 
 	ret = printf("%ld %zu %s\n", time, id, state);
-	// ret = -1;
+	// ret = -1;//TODO
 	return (ret);
 }
 
@@ -60,7 +60,7 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	total = wait_ms + start;
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (false);
-	// return (false);
+	// return (false); TODO
 	while (total > elapsed_time)
 	{
 		if (total - elapsed_time > 5)
