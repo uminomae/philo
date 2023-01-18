@@ -140,7 +140,7 @@ test:
 	make sani_thread
 	./philo 4 310 200 100
 2:
-	make sani_thread
+	make re
 	./philo 5 800 200 200 7
 3:
 	make sani_thread

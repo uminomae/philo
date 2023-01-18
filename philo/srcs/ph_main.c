@@ -6,13 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:10:30 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:22:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//bitフラグでerrを重ねる
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
@@ -34,7 +33,6 @@ int	main(int argc, char **argv)
 		return (ERROR);
 	}
 	end_philo(&ph);
-	// system("leaks -q philo");
 	return (SUCCESS);
 }
 
