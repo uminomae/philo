@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:39:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:49:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 static bool	check_hungry(t_philo_main *ph, size_t num_people);
 static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
 static bool	put_died(t_philo_main *ph);
-
-void	set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
-{
-	x_lock_mutex_struct(mutex_end, mutex_struct);
-	ph->end_struct.flag_end =true;
-	x_unlock_mutex_struct(mutex_end, mutex_struct);
-}
 
 void	*run_rutine_monitor(void *ptr)
 {
