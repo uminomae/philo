@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 21:35:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:36:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ typedef struct s_philo_main
 
 enum e_err_type {
 	NUM_ERR_LOW = 10,
-	NUM_ERR_TYPE_START,
 	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
 	ERR_ADD_PHILO_LIST,
@@ -274,5 +273,8 @@ void			run_case_1person(t_philo_node *node_philo, \
 					t_fork_node *node_fork);
 t_fork_node		*get_fork_node(t_fork_list *list_fork, size_t id);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
+void			set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, \
+					t_mutex *mutex_struct);
+void			collect_error_number(t_philo_main *ph);
 
 #endif

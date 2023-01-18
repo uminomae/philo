@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:39:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:18:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 static bool	check_hungry(t_philo_main *ph, size_t num_people);
 static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
 static bool	put_died(t_philo_main *ph);
-
-void	set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
-{
-	x_lock_mutex_struct(mutex_end, mutex_struct);
-	ph->end_struct.flag_end =true;
-	x_unlock_mutex_struct(mutex_end, mutex_struct);
-}
 
 void	*run_rutine_monitor(void *ptr)
 {
@@ -35,18 +28,16 @@ void	*run_rutine_monitor(void *ptr)
 	num_people = node_monitor->num_people;
 	while (!is_end(&ph->end_struct, &ph->mutex_struct))
 	{
-		if (ph->flag_must_eat == true)
-		{
-			if (judge_ate_all(ph, num_people))
-				break ;
-		}
+		if (judge_ate_all(ph, num_people))
+			break ;
 		if (judge_time_to_die(ph, num_people))
 			break ;
 		if (!check_hungry(ph, num_people))
-		{
 			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
-			return (NULL);
-		}	
+		// x_lock_mutex_ph(&ph->mutex_ph, ph);
+		// if (ph->error_num > NUM_ERR_LOW)
+		// 	set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
+		// x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	}
 	if (!put_died(ph))
 		return (NULL);
@@ -57,6 +48,8 @@ static bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 {
 	t_mutex	*mutex_struct;
 
+	if (ph->flag_must_eat == false)
+		return (false);
 	mutex_struct = &ph->mutex_struct;
 	x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
 	if (ph->ate_struct.ate_cnt >= num_people && ph->ate_struct.ate_all == false)

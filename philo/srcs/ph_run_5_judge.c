@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:18:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:09:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,20 @@ bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 
 static bool	check_time_to_die(t_philo_node *node_philo)
 {
-	const long	eating = node_philo->time[EATING];
-	const long	time_to_die = (long)node_philo->ph->argv[2];
+	long	eating;
+	long	time_to_die;
+	// const long	eating = node_philo->time[EATING];
+	// const long	time_to_die = (long)node_philo->ph->argv[2];
 	long		elapsed_time;
 
+	eating = node_philo->time[EATING];
+	time_to_die = (long)node_philo->ph->argv[2];
 	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (false);
-	// return (false); //TODO
+	// x_lock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
+	// get_err_num_ph(node_philo->ph, ERR_GETTEIMEOFDAY);
+	// x_unlock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
+	// return (false);
 	if (eating == 0 && elapsed_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
@@ -86,9 +93,10 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
 }
 
-// void	set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
-// {
-// 	x_lock_mutex_struct(mutex_end, mutex_struct);
-// 	ph->end_struct.flag_end =true;
-// 	x_unlock_mutex_struct(mutex_end, mutex_struct);
-// }
+void	set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, \
+			t_mutex *mutex_struct)
+{
+	x_lock_mutex_struct(mutex_end, mutex_struct);
+	ph->end_struct.flag_end = true;
+	x_unlock_mutex_struct(mutex_end, mutex_struct);
+}
