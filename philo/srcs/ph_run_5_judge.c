@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:32:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:47:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,16 @@ static bool	check_time_to_die(t_philo_node *node_philo)
 {
 	const long	eating = node_philo->time[EATING];
 	const long	time_to_die = (long)node_philo->ph->argv[2];
-	long		cur_time;
+	long		elapsed_time;
 
-	if(!get_time_from_start(node_philo->ph, &cur_time))
+	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	// cur_time = get_time_from_start(node_philo->ph);
-	// if (cur_time == ERR_NEGA_NUM)
-	// 	return (false);
-	if (eating == 0 && cur_time >= time_to_die)
+	if (eating == 0 && elapsed_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);
 	}
-	if (eating > 0 && (cur_time - eating) >= time_to_die)
+	if (eating > 0 && (elapsed_time - eating) >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
 		return (true);

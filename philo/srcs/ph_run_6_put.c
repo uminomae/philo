@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:32:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:47:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,14 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, \
 bool	put_state(size_t num_state, t_philo_node *node_philo, \
 				long ms, size_t id)
 {
-	long	cur_time;
+	long	elapsed_time;
 
-	if(!get_time_from_start(node_philo->ph, &cur_time))
+	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (false);
-	// cur_time = get_time_from_start(node_philo->ph);
-	// if (cur_time == ERR_NEGA_NUM)
-	// 	return (false);
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
 		return (false);
 	x_lock_mutex_philo(node_philo);
-	node_philo->time[num_state] = cur_time;
+	node_philo->time[num_state] = elapsed_time;
 	if (put_stamp(node_philo->time[num_state], id, \
 					node_philo->ph->status[num_state]) < 0)
 	{
@@ -57,26 +54,20 @@ int	put_stamp(long time, size_t id, char *state)
 static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 {
 	long	total;
-	long	cur_time;
+	long	elapsed_time;
 
 	total = wait_ms + start;
-	if(!get_time_from_start(ph, &cur_time))
+	if (!get_time_from_start(ph, &elapsed_time))
 		return (false);
-	// cur_time = get_time_from_start(ph);
-	// if (cur_time == ERR_NEGA_NUM)
-	// 	return (false);
-	while (total > cur_time)
+	while (total > elapsed_time)
 	{
-		if (total - cur_time > 5)
+		if (total - elapsed_time > 5)
 		{
-			if (!x_usleep_millisec(ph, (total - cur_time) / 2))
+			if (!x_usleep_millisec(ph, (total - elapsed_time) / 2))
 				return (false);
 		}
-		if(!get_time_from_start(ph, &cur_time))
+		if (!get_time_from_start(ph, &elapsed_time))
 			return (ERR_NEGA_NUM);
-		// cur_time = get_time_from_start(ph);
-		// if (cur_time == ERR_NEGA_NUM)
-		// 	return (false);
 	}
 	return (true);
 }
