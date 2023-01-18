@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:10:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:32:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ bool	put_state(size_t num_state, t_philo_node *node_philo, \
 {
 	long	cur_time;
 
-	cur_time = get_time_from_start(node_philo->ph);
-	if (cur_time == ERR_NEGA_NUM)
+	if(!get_time_from_start(node_philo->ph, &cur_time))
 		return (false);
+	// cur_time = get_time_from_start(node_philo->ph);
+	// if (cur_time == ERR_NEGA_NUM)
+	// 	return (false);
 	if (is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
 		return (false);
 	x_lock_mutex_philo(node_philo);
@@ -58,9 +60,11 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	long	cur_time;
 
 	total = wait_ms + start;
-	cur_time = get_time_from_start(ph);
-	if (cur_time == ERR_NEGA_NUM)
+	if(!get_time_from_start(ph, &cur_time))
 		return (false);
+	// cur_time = get_time_from_start(ph);
+	// if (cur_time == ERR_NEGA_NUM)
+	// 	return (false);
 	while (total > cur_time)
 	{
 		if (total - cur_time > 5)
@@ -68,9 +72,11 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 			if (!x_usleep_millisec(ph, (total - cur_time) / 2))
 				return (false);
 		}
-		cur_time = get_time_from_start(ph);
-		if (cur_time == ERR_NEGA_NUM)
-			return (false);
+		if(!get_time_from_start(ph, &cur_time))
+			return (ERR_NEGA_NUM);
+		// cur_time = get_time_from_start(ph);
+		// if (cur_time == ERR_NEGA_NUM)
+		// 	return (false);
 	}
 	return (true);
 }
