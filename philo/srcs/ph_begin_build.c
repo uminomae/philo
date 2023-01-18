@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 13:27:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:07:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ bool	build_struct_and_list(t_philo_main *ph, int argc)
 	ph->monitor_node.ph = ph;
 	ph->monitor_node.num_people = ph->argv[1];
 	ph->sleep_seconds = ph->argv[4];
-	// if (ph->error_num > NUM_ERR_LOW)
-	// 	return (false);
-	// printf("---------a\n");
 	return (true);
 }
 
@@ -70,10 +67,7 @@ static bool	make_list(t_philo_main *ph)
 		}
 		// if (add_fork_list(ph, &ph->fork_list, &ph->alloc_list, id))
 		if (!add_fork_list(ph, &ph->fork_list, &ph->alloc_list, id))
-		{
-			get_err_num_ph(ph, ERR_ADD_FORK_LIST);
 			return (false);
-		}
 		id++;
 	}
 	return (true);

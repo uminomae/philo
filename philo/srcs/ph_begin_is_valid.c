@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 14:03:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:11:32 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	is_digit_argv(int argc, char **argv);
-static bool		argv_to_int(t_philo_main *ph, int argc, char **argv);
+static bool	argv_to_int(t_philo_main *ph, int argc, char **argv);
 
 bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 {

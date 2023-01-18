@@ -150,6 +150,10 @@ run5:
 	make sani_add
 	./philo 200 2000 1000 1000
 
+error:
+	make sani_thread
+	./philo 5 800 200 200 >> err
+
 .PHONY: all clean fclean re bonus sani run sani2
 
 #=============================
