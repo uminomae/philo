@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:56:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:08:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	put_stamp(long time, size_t id, char *state)
 	int	ret;
 
 	ret = printf("%ld %zu %s\n", time, id, state);
-	// ret = -1;//TODO
+	// ret = -1;
 	return (ret);
 }
 

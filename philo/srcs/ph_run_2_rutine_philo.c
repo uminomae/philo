@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:42:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:02:43 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	run_case_normal(t_philo_main *ph, \
 		if (!put_state(THINKING, node_philo, 0, node_philo->id))
 			break ;
 	}
+	get_err_num(ph);
 	return ;
 }
 

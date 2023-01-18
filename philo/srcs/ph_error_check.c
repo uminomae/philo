@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:57:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:08:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,17 @@ static void	get_error_num_ptr(t_philo_main *ph)
 
 	node_ptr = ph->alloc_list.head;
 	i = 0;
-	while (i < ph->id)
+	while (i < ph->argv[1])
 	{
+		x_lock_mutex_ph(&ph->mutex_ph, ph);
 		if (node_ptr->error_num > NUM_ERR_LOW)
 		{
-			x_lock_mutex_ph(&ph->mutex_ph, ph);
+			// x_lock_mutex_ph(&ph->mutex_ph, ph);
 			ph->error_num = node_ptr->error_num;
 			x_unlock_mutex_ph(&ph->mutex_ph, ph);
 			return ;
 		}
+		x_unlock_mutex_ph(&ph->mutex_ph, ph);
 		node_ptr = node_ptr->next;
 		i++;
 	}
@@ -66,15 +68,18 @@ static void	get_error_num_list_fork(t_philo_main *ph)
 
 	node_fork = ph->fork_list.head;
 	i = 0;
-	while (i < ph->id)
+	while (i < ph->argv[1])
 	{
+		x_lock_mutex_fork(node_fork);
 		if (node_fork->error_num > NUM_ERR_LOW)
 		{
 			x_lock_mutex_ph(&ph->mutex_ph, ph);
 			ph->error_num = node_fork->error_num;
 			x_unlock_mutex_ph(&ph->mutex_ph, ph);
+			x_unlock_mutex_fork(node_fork);
 			return ;
 		}
+		x_unlock_mutex_fork(node_fork);
 		node_fork = node_fork->next;
 		i++;
 	}
@@ -88,15 +93,19 @@ static void	get_error_num_list_philo(t_philo_main *ph)
 
 	node_philo = ph->philo_list.head;
 	i = 0;
-	while (i < ph->id)
+	while (i < ph->argv[1])
 	{
+		// printf("----get %ld", node_philo->error_num);
+		x_lock_mutex_philo(node_philo);
 		if (node_philo->error_num > NUM_ERR_LOW)
 		{
 			x_lock_mutex_ph(&ph->mutex_ph, ph);
 			ph->error_num = node_philo->error_num;
 			x_unlock_mutex_ph(&ph->mutex_ph, ph);
+			x_unlock_mutex_philo(node_philo);
 			return ;
 		}
+		x_unlock_mutex_philo(node_philo);
 		node_philo = node_philo->next;
 		i++;
 	}
