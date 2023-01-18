@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:25:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:05:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static bool	is_digit_argv(int argc, char **argv)
 		j = 0;
 		while (argv[i][j] != '\0')
 		{
-			// argv[i][j] = 0;
 			if (ft_isdigit(argv[i][j]) == 0)
 				return (false);
 			j++;
@@ -64,14 +63,12 @@ static bool	argv_to_int(t_philo_main *ph, int argc, char **argv)
 	i = 0;
 	while (i < argc)
 	{
-		// argv[i] = NULL;
 		if (argv[i] == NULL)
 		{
 			get_err_num_ph(ph, ERR_ARGV_NULL);
 			return (false);
 		}
 		ret = ph_atoi(argv[i]);
-		// ret = -1;
 		if (ret < 0)
 		{		
 			get_err_num_ph(ph, ERR_ATOI);

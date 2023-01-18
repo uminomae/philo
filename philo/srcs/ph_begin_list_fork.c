@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:30:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:05:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ bool	add_fork_list(t_philo_main *ph, t_fork_list *list, \
 	t_fork_node	*node;
 
 	node = init_fork_node(ptr_list);
-	// node = NULL;
 	if (node == NULL)
 	{
 		get_err_num_ph(ph, ERR_ADD_FORK_LIST);
@@ -43,7 +42,6 @@ static t_fork_node	*init_fork_node(t_ptr_list *ptr_list)
 
 	node = (t_fork_node *)malloc_and_add_ptr_list(ptr_list, \
 				sizeof(t_fork_node));
-	// node = NULL;
 	if (node == NULL)
 		return (NULL);
 	memset(node, 0, sizeof(t_fork_node));

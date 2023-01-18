@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/19 01:58:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:03:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ typedef struct s_philo_main
 
 enum e_err_type {
 	NUM_ERR_LOW = 10,
-	// NUM_ERR_TYPE_START,
 	ERR_PTHREAD_UNLOCK,
 	ERR_PTHREAD_LOCK,
 	ERR_ADD_PHILO_LIST,
@@ -173,7 +172,6 @@ enum e_err_type {
 	ERR_USLEEP,
 	ERR_MALLOC,
 	ERR_PTHREAD_MUTEX_INIT,
-	// ERR_MUTEX_LOCK,
 	ERR_STRDUP,
 	ERR_IS_DIGIT,
 	ERR_CHECK_HUNGRY,

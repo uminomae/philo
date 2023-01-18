@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:24:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:08:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time)
 	int				ret;
 
 	ret = gettimeofday(&tp, NULL);
-	// ret = -1;
 	if (ret < 0)
 	{
 		get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
@@ -63,7 +62,7 @@ bool	gettimeofday_millisec(t_philo_main *ph, long *cur_time)
 
 bool	get_time_from_start(t_philo_main *ph, long *current_time)
 {
-	long			ret;
+	long	ret;
 
 	if (!gettimeofday_millisec(ph, &ret))
 	{

@@ -18,8 +18,7 @@ ph_begin_is_valid.c \
 ph_begin_build.c \
 ph_begin_list_fork.c \
 ph_begin_list_philo.c \
-ph_error_get_num.c \
-ph_error_check.c \
+ph_error.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
 ph_run_2_rutine_philo.c \

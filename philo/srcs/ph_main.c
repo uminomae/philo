@@ -6,13 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 01:49:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:10:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// NULL err値入れる
 //bitフラグでerrを重ねる
 int	main(int argc, char **argv)
 {
@@ -20,20 +19,17 @@ int	main(int argc, char **argv)
 
 	if (!is_valid_values(&ph, argc, argv))
 	{
-		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-		// printf("%s", ERR_STR);
+		printf("%s", ERR_STR);
 		return (ERROR);
 	}
 	if (!build_struct_and_list(&ph, argc))
 	{
-		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-		// printf("%s", ERR_STR);
+		printf("%s", ERR_STR);
 		free_all(&ph);
 		return (ERROR);
 	}
 	if (!run_parallel_process(&ph))
 	{
-		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
 		end_error(&ph);
 		return (ERROR);
 	}
@@ -54,44 +50,3 @@ int	main(int argc, char **argv)
 
 //[debug]
 // printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-
-// int	main(int argc, char **argv)
-// {
-// 	t_philo_main	ph;
-
-// 	if (!is_valid_values(&ph, argc, argv))
-// 	{
-// 		// printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-// 		printf("%s", ERR_STR);
-// 		return (ERROR);
-// 	}
-// 	if (!build_struct_and_list(&ph, argc))
-// 	{
-// 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-// 		printf("%s", ERR_STR);
-// 		free_all(&ph);
-// 		return (ERROR);
-// 	}
-// 	// if (!init_mutex(&ph))
-// 	// {
-// 	// 	// printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-// 	// 	end_error(&ph);
-// 	// 	return (ERROR);
-// 	// }
-// 	if (!run_parallel_process(&ph))
-// 	{
-// 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-// 		end_error(&ph);
-// 		return (ERROR);
-// 	}
-// 	// run_parallel_process(&ph);
-// 	// if (is_error(&ph) == true)
-// 	// {
-// 	// 		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
-// 	// 	end_error(&ph);
-// 	// 	return (ERROR);
-// 	// }
-// 	end_philo(&ph);
-// 	system("leaks -q philo");
-// 	return (SUCCESS);
-// }

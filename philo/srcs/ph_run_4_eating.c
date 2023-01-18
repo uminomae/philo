@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 00:20:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:08:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 		x_lock_mutex_fork(node_next_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			// get_err_num_fork(node_fork, ERR_PUT_STATE);
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
 		}
@@ -73,7 +72,6 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 		x_lock_mutex_fork(node_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			// get_err_num_fork(node_fork, ERR_PUT_STATE);
 			x_unlock_mutex_fork(node_fork);
 			return (false);
 		}
@@ -89,7 +87,6 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 		x_lock_mutex_fork(node_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			// get_err_num_fork(node_fork, ERR_PUT_STATE);
 			x_unlock_mutex_fork(node_fork);
 			return (false);
 		}
@@ -99,7 +96,6 @@ static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
 		x_lock_mutex_fork(node_next_fork);
 		if (!put_state(TAKEN_FORK, node_philo, 0, id))
 		{
-			// get_err_num_fork(node_fork, ERR_PUT_STATE);
 			x_unlock_mutex_fork(node_next_fork);
 			return (false);
 		}

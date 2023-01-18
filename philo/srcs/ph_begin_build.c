@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:28:55 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:05:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static bool	strdup_status_array(t_philo_main *ph)
 	ph->status[2] = x_strdup(&ph->alloc_list, SLEEPING_STR);
 	ph->status[3] = x_strdup(&ph->alloc_list, THINKING_STR);
 	ph->status[4] = x_strdup(&ph->alloc_list, DIED_STR);
-	// ph->status[4] = NULL;
 	i = 0;
 	while (i < NUM_OF_TYPES)
 	{
