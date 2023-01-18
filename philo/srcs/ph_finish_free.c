@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 15:11:49 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:10:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:10:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ bool	free_alloc_ptr(t_philo_main *ph)
 		node = node->next;
 	}
 	return (true);
-
 }
 
 bool	free_alloc_list_node(t_philo_main *ph)

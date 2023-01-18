@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:40:07 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:09:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	destroy_mutex(t_philo_main *ph)
 	size_t			num_people;
 	t_fork_node		*node_fork;	
 	t_philo_node	*node_philo;
-	size_t 			ret;
+	size_t			ret;
 
 	ret = true;
 	ret &= x_pthread_mutex_destroy(ph, &ph->mutex_struct.mutex_cnt_ate);
