@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:18:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:56:56 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	add_fork_list(t_philo_main *ph, t_fork_list *list, \
 	// node = NULL;
 	if (node == NULL)
 	{
-		get_err_num_ph(ph, ERR_MALLOC);
+		get_err_num_ph(ph, ERR_ADD_FORK_LIST);
 		return (false);
 	}
 	node->data = data;

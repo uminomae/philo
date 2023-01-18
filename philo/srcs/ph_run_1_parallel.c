@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/17 20:34:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:57:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static bool	join_pthread(t_philo_main *ph);
 
 bool	run_parallel_process(t_philo_main *ph)
 {
+	if (!init_mutex(ph))
+		return (false);
 	if (!create_thread(ph, ph->argv[1]))
 		return (false);
 	if (!join_pthread(ph))

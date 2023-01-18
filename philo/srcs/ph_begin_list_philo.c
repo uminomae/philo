@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 13:08:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:02:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ bool	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 	t_philo_node	*node_philo;
 
 	node_philo = init_philo_node(ptr_list);
+	// node = NULL;
 	if (node_philo == NULL)
+	{
+		get_err_num_ph(ph, ERR_ADD_PHILO_LIST);
 		return (false);
+	}
 	node_philo->id = id;
 	node_philo->ph = ph;
 	node_philo->flag_must_eat = ph->flag_must_eat;
@@ -43,6 +47,7 @@ static t_philo_node	*init_philo_node(t_ptr_list *ptr_list)
 
 	node = (t_philo_node *)malloc_and_add_ptr_list(ptr_list, \
 				sizeof(t_philo_node));
+	// node = NULL;
 	if (node == NULL)
 		return (NULL);
 	memset(node, 0, sizeof(t_philo_node));
