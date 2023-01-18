@@ -132,10 +132,23 @@ run4:
 run5: 
 	make re
 	./philo 4 410 200 200
+	./philo 5 800 200 200 7
 
-test: 
-	make re
-	bash test.sh
+1: 
+	make sani_thread
+	./philo 4 310 200 100
+2:
+	make sani_thread
+	./philo 5 800 200 200 7
+3:
+	make sani_thread
+	./philo 5 800 200 200 
+4:
+	make sani_thread
+	./philo 4 410 200 200
+5:
+	make sani_add
+	./philo 200 2000 1000 1000
 
 .PHONY: all clean fclean re bonus sani run sani2
 

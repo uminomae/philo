@@ -6,12 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 03:26:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:53:11 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+
+// NULL err値入れる
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
@@ -21,8 +23,11 @@ int	main(int argc, char **argv)
 		printf("%s", ERR_STR);
 		return (ERROR);
 	}
-	if (build_struct_and_list(&ph, argc) == 1)
+	if (!build_struct_and_list(&ph, argc))
+	{
+		printf("%s", ERR_STR);
 		return (ERROR);
+	}
 	init_mutex(&ph);
 	if (ph.error_num > NUM_ERR_LOW)
 	{

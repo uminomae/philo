@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 02:25:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:08:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void			make_first_philo_node(t_philo_list *list, \
 						t_philo_node *node);
 static void			add_last_philo_node(t_philo_list *list, t_philo_node *node);
 
-size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
+bool	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 						t_ptr_list *ptr_list, size_t id)
 {
 	t_philo_node	*node_philo;
 
 	node_philo = init_philo_node(ptr_list);
 	if (node_philo == NULL)
-		return (1);
+		return (false);
 	node_philo->id = id;
 	node_philo->ph = ph;
 	node_philo->flag_must_eat = ph->flag_must_eat;
@@ -34,7 +34,7 @@ size_t	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 		make_first_philo_node(list, node_philo);
 	else
 		add_last_philo_node(list, node_philo);
-	return (0);
+	return (true);
 }
 
 static t_philo_node	*init_philo_node(t_ptr_list *ptr_list)

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 04:22:15 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:09:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ enum e_err_type {
 	ERR_USLEEP,
 	ERR_MALLOC,
 	ERR_PTHREAD_MUTEX_INIT,
+	ERR_STRDUP,
 	ERR_TYPE_END,
 };
 
@@ -192,6 +193,7 @@ enum e_err_type {
 # define HUNGRY			1
 # define OK				0
 # define LIMIT_HUNGRY	11
+# define NUM_OF_TYPES	5
 
 enum e_put_state {
 	TAKEN_FORK = 0,
@@ -203,7 +205,7 @@ enum e_put_state {
 };
 
 bool			is_valid_values(t_philo_main *ph, int argc, char **argv);
-int				build_struct_and_list(t_philo_main *ph, int argc);
+bool			build_struct_and_list(t_philo_main *ph, int argc);
 void			init_mutex(t_philo_main *ph);
 int				usleep_ms(size_t ms);
 bool			is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
@@ -221,9 +223,9 @@ bool			run_eating(t_philo_node *node_th, t_fork_node *node_fork, \
 					size_t id, long time_eat);
 bool			put_state(size_t idx_state, t_philo_node *node_philo, \
 					long ms, size_t id);
-size_t			add_fork_list(t_philo_main *ph, t_fork_list *list, \
+bool			add_fork_list(t_philo_main *ph, t_fork_list *list, \
 					t_ptr_list *ptr_list, size_t data);
-size_t			add_philo_list(t_philo_main *ph, t_philo_list *list, \
+bool			add_philo_list(t_philo_main *ph, t_philo_list *list, \
 					t_ptr_list *ptr_list, size_t id);
 void			*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void			end_error(t_philo_main *ph);
