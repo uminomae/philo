@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:18:36 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:45:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,20 @@ bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
 
 static bool	check_time_to_die(t_philo_node *node_philo)
 {
-	const long	eating = node_philo->time[EATING];
-	const long	time_to_die = (long)node_philo->ph->argv[2];
+	long	eating;
+	long	time_to_die;
+	// const long	eating = node_philo->time[EATING];
+	// const long	time_to_die = (long)node_philo->ph->argv[2];
 	long		elapsed_time;
 
+	eating = node_philo->time[EATING];
+	time_to_die = (long)node_philo->ph->argv[2];
+	// if (!get_time_from_start(node_philo->ph, &elapsed_time));
 	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (false);
+	// x_lock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
+	// get_err_num_ph(node_philo->ph, ERR_GETTEIMEOFDAY);
+	// x_unlock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
 	// return (false); //TODO
 	if (eating == 0 && elapsed_time >= time_to_die)
 	{

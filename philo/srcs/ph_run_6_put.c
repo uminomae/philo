@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:28:45 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:46:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	total = wait_ms + start;
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (false);
+	// x_lock_mutex_ph(&ph->mutex_ph, ph);
+	// get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
+	// x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	// return (false); TODO
 	while (total > elapsed_time)
 	{
