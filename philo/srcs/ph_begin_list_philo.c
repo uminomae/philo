@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:02:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:08:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	add_philo_list(t_philo_main *ph, t_philo_list *list, \
 	t_philo_node	*node_philo;
 
 	node_philo = init_philo_node(ptr_list);
-	// node = NULL;
+	// node_philo = NULL;
 	if (node_philo == NULL)
 	{
 		get_err_num_ph(ph, ERR_ADD_PHILO_LIST);

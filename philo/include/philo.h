@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 18:27:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:51:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ bool			is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void			*run_rutine_philo(void *ptr);
 bool			gettimeofday_millisec(t_philo_main *ph, long *cur_time);
 bool			get_time_from_start(t_philo_main *ph, long *current_time);
-// long			get_time_from_start(t_philo_main *ph);
 void			*run_rutine_monitor(void *ptr);
 int				put_stamp(long time, size_t id, char *state);
 int				ft_isdigit(int c);

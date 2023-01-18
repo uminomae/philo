@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:07:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:07:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,8 @@ static bool	make_list(t_philo_main *ph)
 	id = 0;
 	while (id < ph->argv[1])
 	{
-		// if (add_philo_list(ph, &ph->philo_list, &ph->alloc_list, id))
 		if (!add_philo_list(ph, &ph->philo_list, &ph->alloc_list, id))
-		{
-			get_err_num_ph(ph, ERR_ADD_PHILO_LIST);
 			return (false);
-		}
-		// if (add_fork_list(ph, &ph->fork_list, &ph->alloc_list, id))
 		if (!add_fork_list(ph, &ph->fork_list, &ph->alloc_list, id))
 			return (false);
 		id++;
