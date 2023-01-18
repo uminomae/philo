@@ -6,11 +6,31 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:36:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:37:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_philo_main *ph)
+{
+	if (pthread_mutex_lock(mutex_ph) != 0)
+	{
+		x_lock_mutex_ph(mutex_ph, ph);
+		get_err_num_ph(ph, ERR_PTHREAD_LOCK);
+		x_unlock_mutex_ph(mutex_ph, ph);
+	}
+}
+
+void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_philo_main *ph)
+{
+	if (pthread_mutex_unlock(mutex_ph) != 0)
+	{
+		x_lock_mutex_ph(mutex_ph, ph);
+		get_err_num_ph(ph, ERR_PTHREAD_UNLOCK);
+		x_unlock_mutex_ph(mutex_ph, ph);
+	}
+}
 
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mutex_struct)
 {
