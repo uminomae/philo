@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:55:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:53:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 		return (ERROR);
 	}
 	end_philo(&ph);
-	system("leaks -q philo");
+	// system("leaks -q philo");
 	return (SUCCESS);
 }
 

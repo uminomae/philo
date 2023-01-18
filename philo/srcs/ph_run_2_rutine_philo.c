@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:20:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:07:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ static void	run_case_normal(t_philo_main *ph, \
 		if (is_hungly(node_philo))
 			continue ;
 		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
-			return ;
+			break ;
 		if (!put_state(SLEEPING, node_philo, ph->argv[4], node_philo->id))
-			return ;
+			break ;
 		if (!put_state(THINKING, node_philo, 0, node_philo->id))
-			return ;
+			break ;
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:31:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:18:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,10 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	ph->end_struct.flag_end = true;
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
 }
+
+// void	set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
+// {
+// 	x_lock_mutex_struct(mutex_end, mutex_struct);
+// 	ph->end_struct.flag_end =true;
+// 	x_unlock_mutex_struct(mutex_end, mutex_struct);
+// }
