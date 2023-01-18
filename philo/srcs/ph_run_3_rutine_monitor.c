@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 00:26:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:51:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 		if (!check_hungry(ph, num_people))
-		{
 			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
-			break ;
-			// return (NULL);
-		}	
+		if (is_error(ph))
+			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
 	}
-	get_err_num(ph);
 	if (!put_died(ph))
 		return (NULL);
 	return (ptr);
@@ -102,10 +99,6 @@ static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
 
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	// x_lock_mutex_ph(&ph->mutex_ph, ph);
-	// get_err_num_ph(ph, ERR_GETTEIMEOFDAY);
-	// x_unlock_mutex_ph(&ph->mutex_ph, ph);
-	// return (ERR_NEGA_NUM);
 	hungry_time = (long)ph->argv[3] * 2 + LIMIT_HUNGRY;
 	if (node_philo->time[EATING] == 0)
 	{

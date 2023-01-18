@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/19 00:15:16 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:48:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ enum e_err_type {
 	ERR_IS_DIGIT,
 	ERR_CHECK_HUNGRY,
 	ERR_PUT_STATE,
+	ERR_WAIT_ACTION,
 	ERR_TYPE_END,
 };
 

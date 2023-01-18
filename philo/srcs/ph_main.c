@@ -6,13 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:53:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:49:22 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 // NULL err値入れる
+//bitフラグでerrを重ねる
 int	main(int argc, char **argv)
 {
 	t_philo_main	ph;

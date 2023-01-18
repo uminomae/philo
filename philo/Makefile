@@ -146,7 +146,7 @@ run5:
 	./philo 4 410 200 200
 5:
 	make sani_add
-	./philo 200 2000 1000 1000
+	./philo 200 2000 1000 1000  >out 
 
 error:
 	make sani_thread

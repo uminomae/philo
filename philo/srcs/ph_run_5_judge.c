@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 23:53:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:43:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ static bool	check_time_to_die(t_philo_node *node_philo)
 	time_to_die = (long)node_philo->ph->argv[2];
 	if (!get_time_from_start(node_philo->ph, &elapsed_time))
 		return (false);
-	// x_lock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
-	// get_err_num_ph(node_philo->ph, ERR_GETTEIMEOFDAY);
-	// x_unlock_mutex_ph(&node_philo->ph->mutex_ph, node_philo->ph);
-	// return (false); //TODO
 	if (eating == 0 && elapsed_time >= time_to_die)
 	{
 		set_flag_died(node_philo->ph, node_philo->id);
@@ -94,6 +90,7 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 void	set_flag_end(t_philo_main *ph, \
 			pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
 {
+	// get_err_num(ph);
 	x_lock_mutex_struct(mutex_end, mutex_struct);
 	ph->end_struct.flag_end = true;
 	x_unlock_mutex_struct(mutex_end, mutex_struct);
