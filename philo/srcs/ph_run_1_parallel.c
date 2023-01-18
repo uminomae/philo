@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:53:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:01:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ bool	run_parallel_process(t_philo_main *ph)
 	return (true);
 }
 
-static t_philo_node	*set_and_run_philo(t_philo_main *ph, size_t id)
-{
-	t_philo_node	*node_philo;
-
-	node_philo = get_philo_node(&ph->philo_list, id);
-	return (node_philo);
-}
 
 static bool	create_thread(t_philo_main *ph, size_t num_people)
 {
@@ -46,7 +39,7 @@ static bool	create_thread(t_philo_main *ph, size_t num_people)
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = set_and_run_philo(ph, i);
+		node_philo = get_philo_node(&ph->philo_list, i);
 		x_pthread_create(ph, &node_philo->philo_th, \
 					run_rutine_philo, node_philo);
 		i++;

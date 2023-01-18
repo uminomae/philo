@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 17:55:41 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:56:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	*add_ptr_list(t_ptr_list *ptr_list, void *ptr)
 	t_ptr_node	*node;
 
 	node = init_ptr_node();
-	node = NULL;
+	// node = NULL;
 	if (node == NULL)
 		return (NULL);
 	node->ptr = ptr;

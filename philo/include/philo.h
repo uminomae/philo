@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 17:36:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:58:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ enum e_err_type {
 # define IS_END_FLAG	1
 # define HUNGRY			1
 # define OK				0
-# define LIMIT_HUNGRY	11
+# define LIMIT_HUNGRY	50
 # define NUM_OF_TYPES	5
 
 enum e_put_state {

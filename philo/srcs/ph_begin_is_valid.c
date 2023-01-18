@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:11:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:03:33 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 		get_err_num_ph(ph, ERR_IS_DIGIT);
 		return (false);
 	}
-	memset(ph, 0, sizeof(t_philo_main));
+	if (!memset(ph, 0, sizeof(t_philo_main)))
+		return (false);
 	if (!argv_to_int(ph, argc, argv))
 		return (false);
 	if (ph->argv[1] == 0)
