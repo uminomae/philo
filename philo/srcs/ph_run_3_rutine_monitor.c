@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 20:30:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 20:49:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@ void	*run_rutine_monitor(void *ptr)
 		}
 		if (judge_time_to_die(ph, num_people))
 			break ;
-		check_hungry(ph, num_people);
+		if (!check_hungry(ph, num_people))
+		{
+			get_err_num_ph(ph, ERR_CHECK_HUNGRY);
+			x_lock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			ph->end_struct.flag_end =true;
+			x_unlock_mutex_struct(&ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			return (NULL);
+		}	
 	}
 	if (!put_died(ph))
 		return (NULL);
@@ -69,7 +76,7 @@ static bool	check_hungry(t_philo_main *ph, size_t num_people)
 {
 	size_t			i;
 	t_philo_node	*node_philo;
-	bool			ret;
+	int				ret;
 
 	i = 0;
 	while (i < num_people)
@@ -79,6 +86,8 @@ static bool	check_hungry(t_philo_main *ph, size_t num_people)
 		ret = check_time_ate(ph, node_philo);
 		if (ret == HUNGRY)
 			node_philo->hungry = true;
+		else if (ret == ERR_NEGA_NUM)
+			return (false);
 		else
 			node_philo->hungry = false;
 		x_unlock_mutex_philo(node_philo);
@@ -94,7 +103,8 @@ static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
 
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	// return (ERR_NEGA_NUM);//TODO
+	// return (ERR_NEGA_NUM);
+	//TODO
 	hungry_time = (long)ph->argv[3] * 2 + LIMIT_HUNGRY;
 	if (node_philo->time[EATING] == 0)
 	{

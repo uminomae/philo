@@ -130,8 +130,7 @@ run4:
 #	./philo 5 800 200 200 
 run5: 
 	make re
-	./philo 4 410 200 200
-	./philo 5 800 200 200 7
+	./philo 5 800 200 200 1
 
 1: 
 	make sani_thread
