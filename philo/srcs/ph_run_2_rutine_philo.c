@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:36:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:39:42 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	run_case_1person(t_philo_node *node_philo, t_fork_node *node_fork)
 static void	run_case_normal(t_philo_main *ph, \
 			t_philo_node *node_philo, t_fork_node *node_fork)
 {
+	if (node_philo->id % 2 == 1)
+	{
+		if (!x_usleep_millisec(ph, 1))
+			return ;
+	}
 	while (!is_end(&ph->end_struct, &ph->mutex_struct))
 	{
 		if (is_hungly(node_philo))
