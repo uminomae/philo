@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:11:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:28:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	main(int argc, char **argv)
 		// printf("%s", ERR_STR);
 		return (ERROR);
 	}
-	init_mutex(&ph);
-	if (ph.error_num > NUM_ERR_LOW)
+	if (!init_mutex(&ph))
 	{
+		printf("%sERROR NUM=%zu\n", ERR_STR, ph.error_num);
 		end_error(&ph);
 		return (ERROR);
 	}

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/18 13:57:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:33:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,16 @@ enum e_put_state {
 };
 
 bool			is_valid_values(t_philo_main *ph, int argc, char **argv);
+bool			init_mutex(t_philo_main *ph);
 bool			build_struct_and_list(t_philo_main *ph, int argc);
-void			init_mutex(t_philo_main *ph);
+
+bool			add_fork_list(t_philo_main *ph, t_fork_list *list, \
+					t_ptr_list *ptr_list, size_t data);
+bool			add_philo_list(t_philo_main *ph, t_philo_list *list, \
+					t_ptr_list *ptr_list, size_t id);
+
+bool			destroy_mutex(t_philo_main *ph);
+
 int				usleep_ms(size_t ms);
 bool			is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void			*run_rutine_philo(void *ptr);
@@ -224,10 +232,6 @@ bool			run_eating(t_philo_node *node_th, t_fork_node *node_fork, \
 					size_t id, long time_eat);
 bool			put_state(size_t idx_state, t_philo_node *node_philo, \
 					long ms, size_t id);
-bool			add_fork_list(t_philo_main *ph, t_fork_list *list, \
-					t_ptr_list *ptr_list, size_t data);
-bool			add_philo_list(t_philo_main *ph, t_philo_list *list, \
-					t_ptr_list *ptr_list, size_t id);
 void			*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void			end_error(t_philo_main *ph);
 void			end_philo(t_philo_main *ph);
@@ -254,7 +258,6 @@ bool			x_pthread_create(t_philo_main *ph, pthread_t *t, \
 					void *(*f)(void *), void *p);
 bool			x_pthread_detach(t_philo_main *ph, pthread_t *thread);
 bool			x_usleep_millisec(t_philo_main *ph, long time_ms);
-void			destroy_mutex(t_philo_main *ph);
 bool			is_flag_died(t_monitor_node *eat_monitor);
 void			wait_ate_person(t_philo_node *node_th);
 void			set_flag_died(t_philo_main *ph, size_t id);
