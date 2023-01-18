@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 12:53:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:56:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	main(int argc, char **argv)
 {
 	t_philo_main	ph;
 
-	if (is_valid_values(&ph, argc, argv) == false)
+	if (!is_valid_values(&ph, argc, argv))
 	{
-		printf("%s", ERR_STR);
+		// printf("%s %d\n", ERR_STR, ph.error_num);
+		printf("%s %zu\n", ERR_STR, ph.error_num);
+		// printf("%s", ERR_STR);
 		return (ERROR);
 	}
 	if (!build_struct_and_list(&ph, argc))
