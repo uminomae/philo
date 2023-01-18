@@ -151,7 +151,7 @@ run5:
 
 error:
 	make sani_thread
-	./philo 5 800 200 200 >> err
+	./philo 5 800 200 200 >> err1
 
 .PHONY: all clean fclean re bonus sani run sani2
 

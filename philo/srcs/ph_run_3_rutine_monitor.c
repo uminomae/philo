@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 18:32:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:39:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,6 @@ static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
 
 	if(!get_time_from_start(ph, &cur_time))
 		return (ERR_NEGA_NUM);
-	// cur_time = get_time_from_start(ph);
-	// // cur_time = -1;
-	// if (cur_time == ERR_NEGA_NUM)
-	// 	return (ERR_NEGA_NUM);
 	if (node_philo->time[EATING] == 0)
 	{
 		if (cur_time > (long)ph->argv[3] * 2 + LIMIT_HUNGRY)
@@ -117,9 +113,6 @@ static bool	put_died(t_philo_main *ph)
 	{
 		if(!get_time_from_start(ph, &cur_time))
 			return (false);
-		// cur_time = get_time_from_start(ph);
-		// if (cur_time == ERR_NEGA_NUM)
-		// 	return (false);
 		put_stamp(cur_time, ph->died_struct.died_id, DIED_STR);
 	}
 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
