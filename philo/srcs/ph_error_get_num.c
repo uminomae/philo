@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 01:05:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:00:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ void	get_err_num_philo(t_philo_node *node_philo, size_t err_num)
 	node_philo->error_num = err_num;
 	// x_unlock_mutex_philo(node_philo);
 }
-

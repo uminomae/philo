@@ -132,6 +132,11 @@ run5:
 	make re
 	./philo 5 800 200 200 1
 
+test: 
+	make re
+#	make sani_thread
+	bash test.sh
+
 1: 
 	make sani_thread
 	./philo 4 310 200 100

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/19 01:48:22 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:58:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,8 @@ void			run_case_1person(t_philo_node *node_philo, \
 					t_fork_node *node_fork);
 t_fork_node		*get_fork_node(t_fork_list *list_fork, size_t id);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
-void			set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, t_mutex *mutex_struct);
+void			set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, \
+					t_mutex *mutex_struct);
 void			get_err_num(t_philo_main *ph);
 
 #endif
