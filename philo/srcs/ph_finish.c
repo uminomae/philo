@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 16:56:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:16:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	end_philo(t_philo_main *ph)
 
 void	end_error(t_philo_main *ph)
 {
+	collect_error_num(ph);
 	printf("%s", ERR_STR);
 	destroy_mutex(ph);
 	free_all(ph);

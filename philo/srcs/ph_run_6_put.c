@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 03:16:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:10:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ bool	put_state(size_t num_state, t_philo_node *node_philo, \
 	node_philo->time[num_state] = cur_time;
 	if (put_stamp(node_philo->time[num_state], id, \
 					node_philo->ph->status[num_state]) < 0)
+	{
 		get_err_num_philo(node_philo, ERR_PRINTF);
+	}
 	x_unlock_mutex_philo(node_philo);
 	if (ms > 0)
 	{
