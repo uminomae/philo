@@ -150,7 +150,8 @@ test:
 	./philo 4 410 200 200
 5:
 	make re
-	./philo 200 2000 1000 1000  >out 
+#	./philo 200 2000 1000 1000  >out 
+	./philo 200 2000 1000 1000
 
 error:
 	make sani_thread

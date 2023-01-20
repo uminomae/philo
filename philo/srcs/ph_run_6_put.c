@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:14:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:31:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,28 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 bool	put_died(t_philo_main *ph)
 {
 	long	elapsed_time;
+	t_mutex	*mtx_st;
 
-	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	mtx_st = &ph->mutex_struct;
+	x_lock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 	if (ph->ate_struct.ate_cnt == true)
+	{
+		x_unlock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 		return (true);
+	}
 	if (ph->died_struct.died_flag)
 	{
 		if (!get_time_from_start(ph, &elapsed_time))
 		{
-			x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+			x_unlock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 			return (false);
 		}
 		if (!put_stamp(elapsed_time, ph->died_struct.died_id, DIED_STR))
 		{
-			x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+			x_unlock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 			return (false);
 		}
 	}
-	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	x_unlock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 	return (true);
 }

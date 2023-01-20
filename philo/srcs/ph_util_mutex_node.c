@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:24:15 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:25:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ void	x_lock_mutex_philo(t_philo_node *node_philo)
 
 	ret = pthread_mutex_lock(&node_philo->mutex_philo);
 	if (ret != 0)
-	{
-		// x_lock_mutex_philo(node_philo);
 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_LOCK);
-		// x_unlock_mutex_philo(node_philo);
-	}
 }
 
 void	x_unlock_mutex_philo(t_philo_node *node_philo)
@@ -31,11 +27,7 @@ void	x_unlock_mutex_philo(t_philo_node *node_philo)
 
 	ret = pthread_mutex_unlock(&node_philo->mutex_philo);
 	if (ret != 0)
-	{
-		// x_lock_mutex_philo(node_philo);
 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_UNLOCK);
-		// x_unlock_mutex_philo(node_philo);
-	}
 }
 
 void	x_lock_mutex_fork(t_fork_node *node_fork)
