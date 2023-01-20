@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/19 02:03:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:45:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,5 +275,5 @@ t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
 void			set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, \
 					t_mutex *mutex_struct);
 void			get_err_num(t_philo_main *ph);
-
+bool			put_died(t_philo_main *ph);
 #endif

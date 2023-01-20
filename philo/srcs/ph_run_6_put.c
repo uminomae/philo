@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:33:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:45:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,21 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 		if (!get_time_from_start(ph, &elapsed_time))
 			return (false);
 	}
+	return (true);
+}
+
+bool	put_died(t_philo_main *ph)
+{
+	long	elapsed_time;
+
+	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
+	if (ph->died_struct.died_flag)
+	{
+		if (!get_time_from_start(ph, &elapsed_time))
+			return (false);
+		if (!put_stamp(elapsed_time, ph->died_struct.died_id, DIED_STR))
+			return (false);
+	}
+	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
 	return (true);
 }
