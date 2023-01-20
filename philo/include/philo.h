@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:37:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ typedef struct s_ptr_list
 	struct s_ptr_node	*tail;
 }	t_ptr_list;
 
-typedef struct s_fork_node
+typedef struct s_fork
 {
 	size_t				data;
 	pthread_mutex_t		mutex_fork;
 	bool				flag_err;
 	struct s_ph	*ph;
 	size_t				error_num;
-	struct s_fork_node	*next;
-}	t_fork_node;
+	struct s_fork	*next;
+}	t_fork;
 
 typedef struct s_fork_list
 {
-	struct s_fork_node	*head;
-	struct s_fork_node	*tail;
+	struct s_fork	*head;
+	struct s_fork	*tail;
 }	t_fork_list;
 
 typedef struct s_monitor_node
@@ -117,7 +117,7 @@ typedef struct s_philo
 	bool					hungry;
 	pthread_t				philo_sleep_th;
 	pthread_t				philo_eat_th;
-	struct s_fork_node		*node_fork;
+	struct s_fork		*node_fork;
 }	t_philo;
 
 typedef struct s_philo_list
@@ -231,7 +231,7 @@ int				ph_atoi(const char *str);
 char			*x_strdup(t_ptr_list *list, char *str);
 bool			run_parallel_process(t_ph *ph);
 void			set_and_run_monitor(t_ph *ph, size_t id);
-bool			run_eating(t_philo *node_th, t_fork_node *node_fork, \
+bool			run_eating(t_philo *node_th, t_fork *node_fork, \
 					size_t id, long time_eat);
 bool			put_state(size_t idx_state, t_philo *node_philo, \
 					long ms, size_t id);
@@ -241,7 +241,7 @@ void			end_philo(t_ph *ph);
 bool			free_all(t_ph *ph);
 void			get_err_num_mutex(t_mutex *mutex_struct, size_t err_num);
 void			get_err_num_ph(t_ph *ph, size_t err_num);
-void			get_err_num_fork(t_fork_node *node_fork, size_t err_num);
+void			get_err_num_fork(t_fork *node_fork, size_t err_num);
 void			get_err_num_philo(t_philo *node_philo, size_t err_num);
 bool			is_error(t_ph *ph);
 
@@ -251,8 +251,8 @@ void			x_lock_mutex(pthread_mutex_t *mutex_eat, \
 					t_monitor_node *end_monitor);
 void			x_unlock_mutex(pthread_mutex_t *mutex_eat, \
 					t_monitor_node *end_monitor);
-void			x_lock_mutex_fork(t_fork_node *node_fork);
-void			x_unlock_mutex_fork(t_fork_node *node_fork);
+void			x_lock_mutex_fork(t_fork *node_fork);
+void			x_unlock_mutex_fork(t_fork *node_fork);
 void			x_lock_mutex_philo(t_philo *node_th);
 void			x_unlock_mutex_philo(t_philo *node_th);
 void			x_lock_mutex_struct(pthread_mutex_t *mutex, \
@@ -269,8 +269,8 @@ void			set_flag_died(t_ph *ph, size_t id);
 bool			judge_time_to_die(t_ph *ph, size_t num_people);
 void			*run_judge_hungry(void *ptr);
 void			run_case_1person(t_philo *node_philo, \
-					t_fork_node *node_fork);
-t_fork_node		*get_fork_node(t_fork_list *list_fork, size_t id);
+					t_fork *node_fork);
+t_fork		*get_fork(t_fork_list *list_fork, size_t id);
 t_philo	*get_philo(t_philo_list *list_philo, size_t id);
 void			set_flag_end(t_ph *ph, pthread_mutex_t *mutex_end, \
 					t_mutex *mutex_struct);

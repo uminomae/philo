@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ t_philo	*get_philo(t_philo_list *list_philo, size_t id)
 	return (node_philo);
 }
 
-t_fork_node	*get_fork_node(t_fork_list *list_fork, size_t id)
+t_fork	*get_fork(t_fork_list *list_fork, size_t id)
 {
 	size_t		i;
-	t_fork_node	*node_fork;
+	t_fork	*node_fork;
 
 	node_fork = list_fork->head;
 	i = 0;

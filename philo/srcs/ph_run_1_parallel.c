@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	init_mutex(t_ph *ph)
 {
 	size_t			i;
 	size_t			num_people;
-	t_fork_node		*node_fork;	
+	t_fork		*node_fork;	
 	t_philo	*node_philo;
 	size_t			ret;
 

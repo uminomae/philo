@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	x_unlock_mutex_philo(t_philo *node_philo)
 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_UNLOCK);
 }
 
-void	x_lock_mutex_fork(t_fork_node *node_fork)
+void	x_lock_mutex_fork(t_fork *node_fork)
 {
 	int	ret;
 
@@ -39,7 +39,7 @@ void	x_lock_mutex_fork(t_fork_node *node_fork)
 		get_err_num_fork(node_fork, ERR_PTHREAD_LOCK);
 }
 
-void	x_unlock_mutex_fork(t_fork_node *node_fork)
+void	x_unlock_mutex_fork(t_fork *node_fork)
 {
 	int	ret;
 
