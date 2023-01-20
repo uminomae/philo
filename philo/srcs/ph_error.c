@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:21:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:23:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	get_err_num_mutex(t_mutex *mutex_struct, size_t err_num)
 	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
 	mutex_struct->error_num = err_num;
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
-
 }
 
 void	get_err_num_ph(t_philo_main *ph, size_t err_num)
