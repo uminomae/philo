@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:38:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:40:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	check_time_ate(t_ph *ph, t_philo *node_philo);
 void	*run_rutine_monitor(void *ptr)
 {
 	t_monitor	*node_monitor;
-	t_ph	*ph;
-	size_t			num_people;
+	t_ph		*ph;
+	size_t		num_people;
 
 	node_monitor = (t_monitor *)ptr;
 	ph = node_monitor->ph;
@@ -67,9 +67,9 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people)
 
 static bool	check_hungry(t_ph *ph, size_t num_people)
 {
-	size_t			i;
+	size_t	i;
 	t_philo	*node_philo;
-	int				ret;
+	int		ret;
 
 	i = 0;
 	while (i < num_people)

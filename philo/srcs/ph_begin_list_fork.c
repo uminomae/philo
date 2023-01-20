@@ -6,15 +6,15 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:42:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_fork	*init_fork(t_ptr_list *ptr_list);
-static void			make_first_fork(t_fork_list *list, t_fork *node);
-static void			add_last_fork(t_fork_list *list, t_fork *node);
+static void		make_first_fork(t_fork_list *list, t_fork *node);
+static void		add_last_fork(t_fork_list *list, t_fork *node);
 
 bool	add_fork_list(t_ph *ph, t_fork_list *list, \
 					t_ptr_list *ptr_list, size_t data)

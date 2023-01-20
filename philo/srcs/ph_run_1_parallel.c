@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:42:30 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ bool	run_parallel_process(t_ph *ph)
 
 bool	init_mutex(t_ph *ph)
 {
-	size_t			i;
-	size_t			num_people;
+	size_t		i;
+	size_t		num_people;
 	t_fork		*node_fork;	
-	t_philo	*node_philo;
-	size_t			ret;
+	t_philo		*node_philo;
+	size_t		ret;
 
 	ret = true;
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_struct.mutex_cnt_ate);
@@ -75,7 +75,7 @@ static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex)
 
 static bool	create_thread(t_ph *ph, size_t num_people)
 {
-	size_t			i;
+	size_t	i;
 	t_philo	*node_philo;
 
 	if (!gettimeofday_millisec(ph, &ph->start_time))
@@ -104,7 +104,7 @@ static bool	join_pthread(t_ph *ph)
 {
 	size_t			i;
 	const size_t	num_people = ph->argv[1];
-	t_philo	*node_philo;
+	t_philo			*node_philo;
 
 	if (pthread_join(ph->monitor_node.monitor_th, NULL) != 0)
 		get_err_num_ph(ph, ERR_PTHREAD_JOIN);

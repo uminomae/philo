@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:43:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	is_hungly(t_philo *node_philo);
 void	*run_rutine_philo(void *ptr)
 {
 	t_philo	*node_philo;
-	t_fork		*node_fork;
+	t_fork	*node_fork;
 
 	node_philo = (t_philo *)ptr;
 	node_fork = get_fork(&node_philo->ph->fork_list, node_philo->id);

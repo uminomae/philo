@@ -6,16 +6,15 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:41:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_philo	*init_philo(t_ptr_list *ptr_list);
-static void			make_first_philo(t_philo_list *list, \
-						t_philo *node);
-static void			add_last_philo(t_philo_list *list, t_philo *node);
+static void		make_first_philo(t_philo_list *list, t_philo *node);
+static void		add_last_philo(t_philo_list *list, t_philo *node);
 
 bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 						t_ptr_list *ptr_list, size_t id)
