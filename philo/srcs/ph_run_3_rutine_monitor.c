@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:38:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	check_time_ate(t_ph *ph, t_philo *node_philo);
 
 void	*run_rutine_monitor(void *ptr)
 {
-	t_monitor_node	*node_monitor;
+	t_monitor	*node_monitor;
 	t_ph	*ph;
 	size_t			num_people;
 
-	node_monitor = (t_monitor_node *)ptr;
+	node_monitor = (t_monitor *)ptr;
 	ph = node_monitor->ph;
 	num_people = node_monitor->num_people;
 	while (!is_end(&ph->end_struct, &ph->mutex_struct))

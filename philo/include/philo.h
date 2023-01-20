@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/20 11:37:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:38:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ typedef struct s_fork_list
 	struct s_fork	*tail;
 }	t_fork_list;
 
-typedef struct s_monitor_node
+typedef struct s_monitor
 {
-	struct s_monitor_node	*next;
+	struct s_monitor	*next;
 	pthread_t				monitor_th;
 	pthread_mutex_t			mutex_monitor;
 	struct s_philo		*node_philo;
@@ -66,7 +66,7 @@ typedef struct s_monitor_node
 	size_t					times_must_eat;
 	size_t					num_people;
 	struct s_ph		*ph;
-}	t_monitor_node;
+}	t_monitor;
 
 typedef struct s_end_struct
 {
@@ -143,7 +143,7 @@ typedef struct s_ph
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
-	struct s_monitor_node	monitor_node;
+	struct s_monitor	monitor_node;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
@@ -248,9 +248,9 @@ bool			is_error(t_ph *ph);
 void			x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void			x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void			x_lock_mutex(pthread_mutex_t *mutex_eat, \
-					t_monitor_node *end_monitor);
+					t_monitor *end_monitor);
 void			x_unlock_mutex(pthread_mutex_t *mutex_eat, \
-					t_monitor_node *end_monitor);
+					t_monitor *end_monitor);
 void			x_lock_mutex_fork(t_fork *node_fork);
 void			x_unlock_mutex_fork(t_fork *node_fork);
 void			x_lock_mutex_philo(t_philo *node_th);
@@ -263,7 +263,7 @@ bool			x_pthread_create(t_ph *ph, pthread_t *t, \
 					void *(*f)(void *), void *p);
 bool			x_pthread_detach(t_ph *ph, pthread_t *thread);
 bool			x_usleep_millisec(t_ph *ph, long time_ms);
-bool			is_flag_died(t_monitor_node *eat_monitor);
+bool			is_flag_died(t_monitor *eat_monitor);
 void			wait_ate_person(t_philo *node_th);
 void			set_flag_died(t_ph *ph, size_t id);
 bool			judge_time_to_die(t_ph *ph, size_t num_people);
