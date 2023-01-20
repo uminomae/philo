@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/20 10:45:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_philo_main
 	struct s_die_struct		died_struct;
 	struct s_end_struct		end_struct;
 	long					start_time;
-}	t_philo_main;
+}	t_ph;
 
 enum e_err_type {
 	NUM_ERR_LOW = 10,
@@ -208,45 +208,45 @@ enum e_put_state {
 	PUT_TYPE_END,
 };
 
-bool			is_valid_values(t_philo_main *ph, int argc, char **argv);
-bool			init_mutex(t_philo_main *ph);
-bool			build_struct_and_list(t_philo_main *ph, int argc);
+bool			is_valid_values(t_ph *ph, int argc, char **argv);
+bool			init_mutex(t_ph *ph);
+bool			build_struct_and_list(t_ph *ph, int argc);
 
-bool			add_fork_list(t_philo_main *ph, t_fork_list *list, \
+bool			add_fork_list(t_ph *ph, t_fork_list *list, \
 					t_ptr_list *ptr_list, size_t data);
-bool			add_philo_list(t_philo_main *ph, t_philo_list *list, \
+bool			add_philo_list(t_ph *ph, t_philo_list *list, \
 					t_ptr_list *ptr_list, size_t id);
 
-bool			destroy_mutex(t_philo_main *ph);
+bool			destroy_mutex(t_ph *ph);
 
 int				usleep_ms(size_t ms);
 bool			is_end(t_end_struct *end_struct, t_mutex *mutex_struct);
 void			*run_rutine_philo(void *ptr);
-bool			gettimeofday_millisec(t_philo_main *ph, long *cur_time);
-bool			get_time_from_start(t_philo_main *ph, long *current_time);
+bool			gettimeofday_millisec(t_ph *ph, long *cur_time);
+bool			get_time_from_start(t_ph *ph, long *current_time);
 void			*run_rutine_monitor(void *ptr);
 int				put_stamp(long time, size_t id, char *state);
 int				ft_isdigit(int c);
 int				ph_atoi(const char *str);
 char			*x_strdup(t_ptr_list *list, char *str);
-bool			run_parallel_process(t_philo_main *ph);
-void			set_and_run_monitor(t_philo_main *ph, size_t id);
+bool			run_parallel_process(t_ph *ph);
+void			set_and_run_monitor(t_ph *ph, size_t id);
 bool			run_eating(t_philo_node *node_th, t_fork_node *node_fork, \
 					size_t id, long time_eat);
 bool			put_state(size_t idx_state, t_philo_node *node_philo, \
 					long ms, size_t id);
 void			*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
-void			end_error(t_philo_main *ph);
-void			end_philo(t_philo_main *ph);
-bool			free_all(t_philo_main *ph);
+void			end_error(t_ph *ph);
+void			end_philo(t_ph *ph);
+bool			free_all(t_ph *ph);
 void			get_err_num_mutex(t_mutex *mutex_struct, size_t err_num);
-void			get_err_num_ph(t_philo_main *ph, size_t err_num);
+void			get_err_num_ph(t_ph *ph, size_t err_num);
 void			get_err_num_fork(t_fork_node *node_fork, size_t err_num);
 void			get_err_num_philo(t_philo_node *node_philo, size_t err_num);
-bool			is_error(t_philo_main *ph);
+bool			is_error(t_ph *ph);
 
-void			x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_philo_main *ph);
-void			x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_philo_main *ph);
+void			x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
+void			x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void			x_lock_mutex(pthread_mutex_t *mutex_eat, \
 					t_monitor_node *end_monitor);
 void			x_unlock_mutex(pthread_mutex_t *mutex_eat, \
@@ -259,21 +259,21 @@ void			x_lock_mutex_struct(pthread_mutex_t *mutex, \
 					t_mutex *mutex_struct);
 void			x_unlock_mutex_struct(pthread_mutex_t *mutex, \
 					t_mutex *mutex_struct);
-bool			x_pthread_create(t_philo_main *ph, pthread_t *t, \
+bool			x_pthread_create(t_ph *ph, pthread_t *t, \
 					void *(*f)(void *), void *p);
-bool			x_pthread_detach(t_philo_main *ph, pthread_t *thread);
-bool			x_usleep_millisec(t_philo_main *ph, long time_ms);
+bool			x_pthread_detach(t_ph *ph, pthread_t *thread);
+bool			x_usleep_millisec(t_ph *ph, long time_ms);
 bool			is_flag_died(t_monitor_node *eat_monitor);
 void			wait_ate_person(t_philo_node *node_th);
-void			set_flag_died(t_philo_main *ph, size_t id);
-bool			judge_time_to_die(t_philo_main *ph, size_t num_people);
+void			set_flag_died(t_ph *ph, size_t id);
+bool			judge_time_to_die(t_ph *ph, size_t num_people);
 void			*run_judge_hungry(void *ptr);
 void			run_case_1person(t_philo_node *node_philo, \
 					t_fork_node *node_fork);
 t_fork_node		*get_fork_node(t_fork_list *list_fork, size_t id);
 t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id);
-void			set_flag_end(t_philo_main *ph, pthread_mutex_t *mutex_end, \
+void			set_flag_end(t_ph *ph, pthread_mutex_t *mutex_end, \
 					t_mutex *mutex_struct);
-void			get_err_num(t_philo_main *ph);
-bool			put_died(t_philo_main *ph);
+void			get_err_num(t_ph *ph);
+bool			put_died(t_ph *ph);
 #endif

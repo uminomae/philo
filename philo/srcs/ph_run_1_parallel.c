@@ -6,17 +6,17 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 10:44:11 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex);
-static bool	create_thread(t_philo_main *ph, size_t num_people);
-static bool	join_pthread(t_philo_main *ph);
+static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex);
+static bool	create_thread(t_ph *ph, size_t num_people);
+static bool	join_pthread(t_ph *ph);
 
-bool	run_parallel_process(t_philo_main *ph)
+bool	run_parallel_process(t_ph *ph)
 {
 	if (!init_mutex(ph))
 		return (false);
@@ -31,7 +31,7 @@ bool	run_parallel_process(t_philo_main *ph)
 	return (true);
 }
 
-bool	init_mutex(t_philo_main *ph)
+bool	init_mutex(t_ph *ph)
 {
 	size_t			i;
 	size_t			num_people;
@@ -60,7 +60,7 @@ bool	init_mutex(t_philo_main *ph)
 	return (ret);
 }
 
-static bool	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex)
+static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex)
 {
 	int	ret;
 
@@ -73,7 +73,7 @@ static bool	x_pthread_mutex_init(t_philo_main *ph, pthread_mutex_t *mutex)
 	return (true);
 }
 
-static bool	create_thread(t_philo_main *ph, size_t num_people)
+static bool	create_thread(t_ph *ph, size_t num_people)
 {
 	size_t			i;
 	t_philo_node	*node_philo;
@@ -100,7 +100,7 @@ static bool	create_thread(t_philo_main *ph, size_t num_people)
 	return (true);
 }
 
-static bool	join_pthread(t_philo_main *ph)
+static bool	join_pthread(t_ph *ph)
 {
 	size_t			i;
 	const size_t	num_people = ph->argv[1];

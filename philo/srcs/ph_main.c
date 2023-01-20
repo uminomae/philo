@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 17:16:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //judge ate allのunlock。　x_lock で検索してその後のifをチェックする。
 int	main(int argc, char **argv)
 {
-	t_philo_main	ph;
+	t_ph	ph;
 
 	if (!is_valid_values(&ph, argc, argv))
 	{

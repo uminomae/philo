@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 04:29:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void		run_case_1person(t_philo_node *node_philo, t_fork_node *node_fork);
-static void	run_case_normal(t_philo_main *ph, t_philo_node	*node_philo, \
+static void	run_case_normal(t_ph *ph, t_philo_node	*node_philo, \
 						t_fork_node *node_fork);
 static void	count_ate_in_philo(t_philo_node *node_philo);
 static bool	is_hungly(t_philo_node *node_philo);
@@ -47,7 +47,7 @@ void	run_case_1person(t_philo_node *node_philo, t_fork_node *node_fork)
 	return ;
 }
 
-static void	run_case_normal(t_philo_main *ph, \
+static void	run_case_normal(t_ph *ph, \
 			t_philo_node *node_philo, t_fork_node *node_fork)
 {
 	if (node_philo->id % 2 == 1)

@@ -6,15 +6,15 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 21:25:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	x_pthread_mutex_destroy(t_philo_main *ph, pthread_mutex_t *mutex);
+static bool	x_pthread_mutex_destroy(t_ph *ph, pthread_mutex_t *mutex);
 
-bool	destroy_mutex(t_philo_main *ph)
+bool	destroy_mutex(t_ph *ph)
 {
 	size_t			i;
 	size_t			num_people;
@@ -43,7 +43,7 @@ bool	destroy_mutex(t_philo_main *ph)
 	return (ret);
 }
 
-static bool	x_pthread_mutex_destroy(t_philo_main *ph, pthread_mutex_t *mutex)
+static bool	x_pthread_mutex_destroy(t_ph *ph, pthread_mutex_t *mutex)
 {
 	int	ret;
 
@@ -56,13 +56,13 @@ static bool	x_pthread_mutex_destroy(t_philo_main *ph, pthread_mutex_t *mutex)
 	return (true);
 }
 
-void	end_philo(t_philo_main *ph)
+void	end_philo(t_ph *ph)
 {
 	destroy_mutex(ph);
 	free_all(ph);
 }
 
-void	end_error(t_philo_main *ph)
+void	end_error(t_ph *ph)
 {
 	printf("%s", ERR_STR);
 	destroy_mutex(ph);

@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:05:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	strdup_status_array(t_philo_main *ph);
-static bool	make_list(t_philo_main *ph);
+static bool	strdup_status_array(t_ph *ph);
+static bool	make_list(t_ph *ph);
 
-bool	build_struct_and_list(t_philo_main *ph, int argc)
+bool	build_struct_and_list(t_ph *ph, int argc)
 {
 	if (argc == 6)
 		ph->flag_must_eat = true;
@@ -29,7 +29,7 @@ bool	build_struct_and_list(t_philo_main *ph, int argc)
 	return (true);
 }
 
-static bool	strdup_status_array(t_philo_main *ph)
+static bool	strdup_status_array(t_ph *ph)
 {
 	size_t	i;
 
@@ -51,7 +51,7 @@ static bool	strdup_status_array(t_philo_main *ph)
 	return (true);
 }
 
-static bool	make_list(t_philo_main *ph)
+static bool	make_list(t_ph *ph)
 {
 	size_t	id;
 

@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 04:22:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	x_usleep_millisec(t_philo_main *ph, long time_ms)
+bool	x_usleep_millisec(t_ph *ph, long time_ms)
 {
 	long	ret;
 
@@ -25,7 +25,7 @@ bool	x_usleep_millisec(t_philo_main *ph, long time_ms)
 	return (true);
 }
 
-bool	x_pthread_create(t_philo_main *ph, pthread_t *t, \
+bool	x_pthread_create(t_ph *ph, pthread_t *t, \
 				void *(*f)(void *), void *p)
 {
 	int	ret;
@@ -39,7 +39,7 @@ bool	x_pthread_create(t_philo_main *ph, pthread_t *t, \
 	return (true);
 }
 
-bool	x_pthread_detach(t_philo_main *ph, pthread_t *thread)
+bool	x_pthread_detach(t_ph *ph, pthread_t *thread)
 {
 	int	ret;
 

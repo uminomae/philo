@@ -6,20 +6,20 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 10:54:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
-static bool	check_hungry(t_philo_main *ph, size_t num_people);
-static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
+static bool	judge_ate_all(t_ph *ph, size_t num_people);
+static bool	check_hungry(t_ph *ph, size_t num_people);
+static int	check_time_ate(t_ph *ph, t_philo_node *node_philo);
 
 void	*run_rutine_monitor(void *ptr)
 {
 	t_monitor_node	*node_monitor;
-	t_philo_main	*ph;
+	t_ph	*ph;
 	size_t			num_people;
 
 	node_monitor = (t_monitor_node *)ptr;
@@ -42,7 +42,7 @@ void	*run_rutine_monitor(void *ptr)
 	return (ptr);
 }
 
-static bool	judge_ate_all(t_philo_main *ph, size_t num_people)
+static bool	judge_ate_all(t_ph *ph, size_t num_people)
 {
 	t_mutex	*mutex_struct;
 
@@ -65,7 +65,7 @@ static bool	judge_ate_all(t_philo_main *ph, size_t num_people)
 	return (false);
 }
 
-static bool	check_hungry(t_philo_main *ph, size_t num_people)
+static bool	check_hungry(t_ph *ph, size_t num_people)
 {
 	size_t			i;
 	t_philo_node	*node_philo;
@@ -92,7 +92,7 @@ static bool	check_hungry(t_philo_main *ph, size_t num_people)
 	return (true);
 }
 
-static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
+static int	check_time_ate(t_ph *ph, t_philo_node *node_philo)
 {
 	long	elapsed_time;
 	long	hungry_time;

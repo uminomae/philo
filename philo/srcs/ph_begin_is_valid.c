@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:05:21 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	is_digit_argv(int argc, char **argv);
-static bool	argv_to_int(t_philo_main *ph, int argc, char **argv);
+static bool	argv_to_int(t_ph *ph, int argc, char **argv);
 
-bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
+bool	is_valid_values(t_ph *ph, int argc, char **argv)
 {
 	if (argc < 5 || 6 < argc)
 		return (false);
@@ -26,7 +26,7 @@ bool	is_valid_values(t_philo_main *ph, int argc, char **argv)
 		get_err_num_ph(ph, ERR_IS_DIGIT);
 		return (false);
 	}
-	if (!memset(ph, 0, sizeof(t_philo_main)))
+	if (!memset(ph, 0, sizeof(t_ph)))
 		return (false);
 	if (!argv_to_int(ph, argc, argv))
 		return (false);
@@ -55,7 +55,7 @@ static bool	is_digit_argv(int argc, char **argv)
 	return (true);
 }
 
-static bool	argv_to_int(t_philo_main *ph, int argc, char **argv)
+static bool	argv_to_int(t_ph *ph, int argc, char **argv)
 {
 	int	i;
 	int	ret;

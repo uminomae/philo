@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:31:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	wait_action_usleep_ms(t_philo_main *ph, \
+static bool	wait_action_usleep_ms(t_ph *ph, \
 				long start, size_t wait_ms);
 
 bool	put_state(size_t state, t_philo_node *node_ph, \
@@ -51,7 +51,7 @@ int	put_stamp(long time, size_t id, char *state)
 	return (ret);
 }
 
-static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
+static bool	wait_action_usleep_ms(t_ph *ph, long start, size_t wait_ms)
 {
 	long	total;
 	long	elapsed_time;
@@ -72,7 +72,7 @@ static bool	wait_action_usleep_ms(t_philo_main *ph, long start, size_t wait_ms)
 	return (true);
 }
 
-bool	put_died(t_philo_main *ph)
+bool	put_died(t_ph *ph)
 {
 	long	elapsed_time;
 	t_mutex	*mtx_st;

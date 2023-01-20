@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 17:17:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 	return (ret);
 }
 
-bool	judge_time_to_die(t_philo_main *ph, size_t num_people)
+bool	judge_time_to_die(t_ph *ph, size_t num_people)
 {
 	size_t			i;
 	t_philo_node	*node_philo;
@@ -70,7 +70,7 @@ static bool	check_time_to_die(t_philo_node *node_philo)
 	return (false);
 }
 
-void	set_flag_died(t_philo_main *ph, size_t id)
+void	set_flag_died(t_ph *ph, size_t id)
 {
 	t_mutex	*mutex_struct;
 
@@ -87,7 +87,7 @@ void	set_flag_died(t_philo_main *ph, size_t id)
 	x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
 }
 
-void	set_flag_end(t_philo_main *ph, \
+void	set_flag_end(t_ph *ph, \
 			pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
 {
 	x_lock_mutex_struct(mutex_end, mutex_struct);

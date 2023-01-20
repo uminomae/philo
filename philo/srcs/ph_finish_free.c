@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 15:11:49 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 19:10:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	free_alloc_ptr(t_philo_main *ph);
-bool	free_alloc_list_node(t_philo_main *ph);
+bool	free_alloc_ptr(t_ph *ph);
+bool	free_alloc_list_node(t_ph *ph);
 
-bool	free_all(t_philo_main *ph)
+bool	free_all(t_ph *ph)
 {
 	if (!free_alloc_ptr(ph))
 		return (false);
@@ -24,7 +24,7 @@ bool	free_all(t_philo_main *ph)
 	return (true);
 }
 
-bool	free_alloc_ptr(t_philo_main *ph)
+bool	free_alloc_ptr(t_ph *ph)
 {
 	t_ptr_node	*node;
 
@@ -41,7 +41,7 @@ bool	free_alloc_ptr(t_philo_main *ph)
 	return (true);
 }
 
-bool	free_alloc_list_node(t_philo_main *ph)
+bool	free_alloc_list_node(t_ph *ph)
 {
 	t_ptr_node	*node;
 	t_ptr_node	*tmp;
