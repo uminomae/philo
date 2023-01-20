@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	wait_action_usleep_ms(t_ph *ph, \
 				long start, size_t wait_ms);
 
-bool	put_state(size_t state, t_philo_node *node_ph, \
+bool	put_state(size_t state, t_philo *node_ph, \
 				long ms, size_t id)
 {
 	long	elapsed_time;

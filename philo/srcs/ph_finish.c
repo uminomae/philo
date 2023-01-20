@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	destroy_mutex(t_ph *ph)
 	size_t			i;
 	size_t			num_people;
 	t_fork_node		*node_fork;	
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 	size_t			ret;
 
 	ret = true;

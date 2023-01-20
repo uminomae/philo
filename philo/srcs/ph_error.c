@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	get_err_num_fork(t_fork_node *node_fork, size_t err_num)
 	x_unlock_mutex_fork(node_fork);
 }
 
-void	get_err_num_philo(t_philo_node *node_philo, size_t err_num)
+void	get_err_num_philo(t_philo *node_philo, size_t err_num)
 {
 	x_lock_mutex_philo(node_philo);
 	node_philo->error_num = err_num;

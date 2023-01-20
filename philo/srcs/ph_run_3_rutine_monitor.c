@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	judge_ate_all(t_ph *ph, size_t num_people);
 static bool	check_hungry(t_ph *ph, size_t num_people);
-static int	check_time_ate(t_ph *ph, t_philo_node *node_philo);
+static int	check_time_ate(t_ph *ph, t_philo *node_philo);
 
 void	*run_rutine_monitor(void *ptr)
 {
@@ -68,13 +68,13 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people)
 static bool	check_hungry(t_ph *ph, size_t num_people)
 {
 	size_t			i;
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 	int				ret;
 
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo_node(&ph->philo_list, i);
+		node_philo = get_philo(&ph->philo_list, i);
 		x_lock_mutex_philo(node_philo);
 		ret = check_time_ate(ph, node_philo);
 		if (ret == HUNGRY)
@@ -92,7 +92,7 @@ static bool	check_hungry(t_ph *ph, size_t num_people)
 	return (true);
 }
 
-static int	check_time_ate(t_ph *ph, t_philo_node *node_philo)
+static int	check_time_ate(t_ph *ph, t_philo *node_philo)
 {
 	long	elapsed_time;
 	long	hungry_time;

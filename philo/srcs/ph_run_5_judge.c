@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	check_time_to_die(t_philo_node *node_philo);
+static bool	check_time_to_die(t_philo *node_philo);
 
 bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 {
@@ -29,12 +29,12 @@ bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
 bool	judge_time_to_die(t_ph *ph, size_t num_people)
 {
 	size_t			i;
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo_node(&ph->philo_list, i);
+		node_philo = get_philo(&ph->philo_list, i);
 		x_lock_mutex_philo(node_philo);
 		if (check_time_to_die(node_philo))
 		{
@@ -47,7 +47,7 @@ bool	judge_time_to_die(t_ph *ph, size_t num_people)
 	return (false);
 }
 
-static bool	check_time_to_die(t_philo_node *node_philo)
+static bool	check_time_to_die(t_philo *node_philo)
 {
 	long	eating;
 	long	time_to_die;

@@ -6,23 +6,23 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_philo_node	*init_philo_node(t_ptr_list *ptr_list);
-static void			make_first_philo_node(t_philo_list *list, \
-						t_philo_node *node);
-static void			add_last_philo_node(t_philo_list *list, t_philo_node *node);
+static t_philo	*init_philo(t_ptr_list *ptr_list);
+static void			make_first_philo(t_philo_list *list, \
+						t_philo *node);
+static void			add_last_philo(t_philo_list *list, t_philo *node);
 
 bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 						t_ptr_list *ptr_list, size_t id)
 {
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 
-	node_philo = init_philo_node(ptr_list);
+	node_philo = init_philo(ptr_list);
 	if (node_philo == NULL)
 	{
 		get_err_num_ph(ph, ERR_ADD_PHILO_LIST);
@@ -34,25 +34,25 @@ bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 	node_philo->times_must_eat = ph->argv[5];
 	node_philo->time[EATING] = 0;
 	if (list->head == NULL)
-		make_first_philo_node(list, node_philo);
+		make_first_philo(list, node_philo);
 	else
-		add_last_philo_node(list, node_philo);
+		add_last_philo(list, node_philo);
 	return (true);
 }
 
-static t_philo_node	*init_philo_node(t_ptr_list *ptr_list)
+static t_philo	*init_philo(t_ptr_list *ptr_list)
 {
-	t_philo_node	*node;
+	t_philo	*node;
 
-	node = (t_philo_node *)malloc_and_add_ptr_list(ptr_list, \
-				sizeof(t_philo_node));
+	node = (t_philo *)malloc_and_add_ptr_list(ptr_list, \
+				sizeof(t_philo));
 	if (node == NULL)
 		return (NULL);
-	memset(node, 0, sizeof(t_philo_node));
+	memset(node, 0, sizeof(t_philo));
 	return (node);
 }
 
-static void	make_first_philo_node(t_philo_list *list, t_philo_node *node)
+static void	make_first_philo(t_philo_list *list, t_philo *node)
 {
 	list->head = node;
 	list->tail = node;
@@ -60,7 +60,7 @@ static void	make_first_philo_node(t_philo_list *list, t_philo_node *node)
 	node->prev = list->tail;
 }
 
-static void	add_last_philo_node(t_philo_list *list, t_philo_node *node)
+static void	add_last_philo(t_philo_list *list, t_philo *node)
 {
 	list->tail->next = node;
 	node->prev = list->tail;

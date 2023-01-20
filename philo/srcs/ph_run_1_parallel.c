@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	init_mutex(t_ph *ph)
 	size_t			i;
 	size_t			num_people;
 	t_fork_node		*node_fork;	
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 	size_t			ret;
 
 	ret = true;
@@ -76,14 +76,14 @@ static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex)
 static bool	create_thread(t_ph *ph, size_t num_people)
 {
 	size_t			i;
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 
 	if (!gettimeofday_millisec(ph, &ph->start_time))
 		return (false);
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo_node(&ph->philo_list, i);
+		node_philo = get_philo(&ph->philo_list, i);
 		x_pthread_create(ph, &node_philo->philo_th, \
 					run_rutine_philo, node_philo);
 		i++;
@@ -104,14 +104,14 @@ static bool	join_pthread(t_ph *ph)
 {
 	size_t			i;
 	const size_t	num_people = ph->argv[1];
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 
 	if (pthread_join(ph->monitor_node.monitor_th, NULL) != 0)
 		get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo_node(&ph->philo_list, i);
+		node_philo = get_philo(&ph->philo_list, i);
 		if (pthread_join(node_philo->philo_th, NULL) != 0)
 			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;

@@ -6,16 +6,16 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_philo_node	*get_philo_node(t_philo_list *list_philo, size_t id)
+t_philo	*get_philo(t_philo_list *list_philo, size_t id)
 {
 	size_t			i;
-	t_philo_node	*node_philo;
+	t_philo	*node_philo;
 
 	node_philo = list_philo->head;
 	i = 0;

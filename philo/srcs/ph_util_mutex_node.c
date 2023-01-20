@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 12:17:06 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:25:57 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	x_lock_mutex_philo(t_philo_node *node_philo)
+void	x_lock_mutex_philo(t_philo *node_philo)
 {
 	int	ret;
 
@@ -21,7 +21,7 @@ void	x_lock_mutex_philo(t_philo_node *node_philo)
 		get_err_num_ph(node_philo->ph, ERR_PTHREAD_LOCK);
 }
 
-void	x_unlock_mutex_philo(t_philo_node *node_philo)
+void	x_unlock_mutex_philo(t_philo *node_philo)
 {
 	int	ret;
 
