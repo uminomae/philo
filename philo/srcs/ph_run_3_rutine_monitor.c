@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 10:48:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:54:13 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
 static bool	check_hungry(t_philo_main *ph, size_t num_people);
 static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
-// static bool	put_died(t_philo_main *ph);
 
 void	*run_rutine_monitor(void *ptr)
 {
@@ -40,8 +39,6 @@ void	*run_rutine_monitor(void *ptr)
 		if (is_error(ph))
 			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
 	}
-	// if (!put_died(ph))
-	// 	return (NULL);
 	return (ptr);
 }
 
@@ -84,7 +81,7 @@ static bool	check_hungry(t_philo_main *ph, size_t num_people)
 			node_philo->hungry = true;
 		else if (ret == ERR_NEGA_NUM)
 		{
-			// x_unlock_mutex_philo(node_philo);
+			x_unlock_mutex_philo(node_philo);
 			return (false);
 		}
 		else
@@ -112,19 +109,3 @@ static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
 		return (HUNGRY);
 	return (OK);
 }
-
-// bool	put_died(t_philo_main *ph)
-// {
-// 	long	elapsed_time;
-
-// 	x_lock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
-// 	if (ph->died_struct.died_flag)
-// 	{
-// 		if (!get_time_from_start(ph, &elapsed_time))
-// 			return (false);
-// 		if (!put_stamp(elapsed_time, ph->died_struct.died_id, DIED_STR))
-// 			return (false);
-// 	}
-// 	x_unlock_mutex_struct(&ph->mutex_struct.mutex_die, &ph->mutex_struct);
-// 	return (true);
-// }
