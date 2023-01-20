@@ -149,7 +149,7 @@ test:
 	make sani_thread
 	./philo 4 410 200 200
 5:
-	make sani_add
+	make re
 	./philo 200 2000 1000 1000  >out 
 
 error:
