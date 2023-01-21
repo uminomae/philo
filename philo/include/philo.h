@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 08:49:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:03:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct s_ph
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
-	struct s_monitor		monitor_node;
+	struct s_monitor		monitor;
 	struct s_ptr_list		alloc_list;
 	char					*status[5];
 	bool					ate_all;
