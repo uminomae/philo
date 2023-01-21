@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:36:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:08:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	put_state(size_t state, t_philo *node_ph, \
 
 	if (!get_time_from_start(node_ph->ph, &elapsed_time))
 		return (false);
-	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mutex_struct))
+	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mutex_st))
 		return (false);
 	x_lock_mutex_philo(node_ph);
 	node_ph->time[state] = elapsed_time;
@@ -38,7 +38,7 @@ bool	put_state(size_t state, t_philo *node_ph, \
 		if (!wait_action_usleep_ms(node_ph->ph, node_ph->time[state], ms))
 			return (false);
 	}
-	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mutex_struct))
+	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mutex_st))
 		return (false);
 	return (true);
 }
@@ -77,7 +77,7 @@ bool	put_died(t_ph *ph)
 	long	elapsed_time;
 	t_mutex	*mtx_st;
 
-	mtx_st = &ph->mutex_struct;
+	mtx_st = &ph->mutex_st;
 	x_lock_mutex_struct(&mtx_st->mutex_die, mtx_st);
 	if (ph->ate_struct.ate_cnt == true)
 	{

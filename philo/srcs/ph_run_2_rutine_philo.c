@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:05:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:08:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	run_case_1person(t_philo *node_philo, t_fork *node_fork)
 		return ;
 	}
 	x_unlock_mutex_fork(node_fork);
-	while (!is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_struct))
+	while (!is_end(&node_philo->ph->end_struct, &node_philo->ph->mutex_st))
 		;
 	return ;
 }
@@ -55,7 +55,7 @@ static void	run_case_normal(t_ph *ph, \
 		if (!x_usleep_millisec(ph, 1))
 			return ;
 	}
-	while (!is_end(&ph->end_struct, &ph->mutex_struct))
+	while (!is_end(&ph->end_struct, &ph->mutex_st))
 	{
 		if (is_hungly(node_philo))
 			continue ;
@@ -77,16 +77,16 @@ static void	run_case_normal(t_ph *ph, \
 
 static void	count_ate_in_philo(t_philo *node_philo)
 {
-	t_mutex	*mutex_struct;
+	t_mutex	*mutex_st;
 
-	mutex_struct = &node_philo->ph->mutex_struct;
+	mutex_st = &node_philo->ph->mutex_st;
 	x_lock_mutex_philo(node_philo);
 	if (node_philo->times_must_eat == node_philo->cnt)
 	{
 		x_unlock_mutex_philo(node_philo);
-		x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+		x_lock_mutex_struct(&mutex_st->mutex_cnt_ate, mutex_st);
 		node_philo->ph->ate_struct.ate_cnt++;
-		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, mutex_struct);
+		x_unlock_mutex_struct(&mutex_st->mutex_cnt_ate, mutex_st);
 	}
 	x_unlock_mutex_philo(node_philo);
 }

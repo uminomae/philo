@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:40:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:08:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static bool	check_time_to_die(t_philo *node_philo);
 
-bool	is_end(t_end_struct *end_struct, t_mutex *mutex_struct)
+bool	is_end(t_end_struct *end_struct, t_mutex *mutex_st)
 {
 	bool	ret;
 
 	ret = false;
-	x_lock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	x_lock_mutex_struct(&mutex_st->mutex_end, mutex_st);
 	if (end_struct->flag_end == true)
 		ret = true;
-	x_unlock_mutex_struct(&mutex_struct->mutex_end, mutex_struct);
+	x_unlock_mutex_struct(&mutex_st->mutex_end, mutex_st);
 	return (ret);
 }
 
@@ -72,25 +72,25 @@ static bool	check_time_to_die(t_philo *node_philo)
 
 void	set_flag_died(t_ph *ph, size_t id)
 {
-	t_mutex	*mutex_struct;
+	t_mutex	*mutex_st;
 
-	mutex_struct = &ph->mutex_struct;
-	x_lock_mutex_struct(&mutex_struct->mutex_die, mutex_struct);
+	mutex_st = &ph->mutex_st;
+	x_lock_mutex_struct(&mutex_st->mutex_die, mutex_st);
 	if (ph->died_struct.died_flag == false)
 	{
 		ph->died_struct.died_flag = true;
 		ph->died_struct.died_id = id;
 	}
-	x_unlock_mutex_struct(&mutex_struct->mutex_die, mutex_struct);
-	x_lock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
+	x_unlock_mutex_struct(&mutex_st->mutex_die, mutex_st);
+	x_lock_mutex_struct(&mutex_st->mutex_end, &ph->mutex_st);
 	ph->end_struct.flag_end = true;
-	x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
+	x_unlock_mutex_struct(&mutex_st->mutex_end, &ph->mutex_st);
 }
 
 void	set_flag_end(t_ph *ph, \
-			pthread_mutex_t *mutex_end, t_mutex *mutex_struct)
+			pthread_mutex_t *mutex_end, t_mutex *mutex_st)
 {
-	x_lock_mutex_struct(mutex_end, mutex_struct);
+	x_lock_mutex_struct(mutex_end, mutex_st);
 	ph->end_struct.flag_end = true;
-	x_unlock_mutex_struct(mutex_end, mutex_struct);
+	x_unlock_mutex_struct(mutex_end, mutex_st);
 }
