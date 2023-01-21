@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:12:58 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	init_mutex(t_ph *ph)
 	i = 0;
 	while (i < num_people)
 	{
-		ret &= x_pthread_mutex_init(ph, &node_fork->mutex_fork);
+		ret &= x_pthread_mutex_init(ph, &node_fork->mtx_fork);
 		node_fork = node_fork->next;
 		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_philo);
 		node_philo = node_philo->next;

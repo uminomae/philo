@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:20:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_ptr_list
 typedef struct s_fork
 {
 	size_t			data;
-	pthread_mutex_t	mutex_fork;
+	pthread_mutex_t	mtx_fork;
 	bool			flag_err;
 	struct s_ph		*ph;
 	size_t			err_num;
@@ -58,35 +58,34 @@ typedef struct s_fork_list
 
 typedef struct s_monitor
 {
-	struct s_monitor	*next;
+	// struct s_monitor	*next;
 	pthread_t			monitor_th;
-	pthread_mutex_t		mutex_monitor;
-	struct s_philo		*node_philo;
+	// struct s_philo		*node_philo;
 	bool				flag_must_eat;
 	size_t				times_must_eat;
 	size_t				num_people;
 	struct s_ph			*ph;
 }	t_monitor;
 
-typedef struct s_end_struct
+typedef struct s_end
 {
 	bool	flag_end;
-}	t_end_struct;
+}	t_end;
 
-typedef struct s_die_struct
+typedef struct s_die
 {
 	bool	died_flag;
 	long	time_died;
 	size_t	died_id;
-}	t_die_struct;
+}	t_die;
 
-typedef struct s_ate_struct
+typedef struct s_ate
 {
 	size_t	ate_cnt;
 	bool	ate_all;
 	size_t	id;
 	long	time;
-}	t_ate_struct;
+}	t_ate;
 
 typedef struct s_mutex
 {
@@ -101,7 +100,7 @@ typedef struct s_philo
 {
 	pthread_mutex_t	mutex_philo;
 	pthread_t		philo_th;
-	pthread_t		philo_monit_th;
+	// pthread_t		philo_monit_th;
 	size_t			id;
 	long			time[5];
 	struct s_philo	*next;
@@ -115,8 +114,8 @@ typedef struct s_philo
 	size_t			err_num;
 	struct s_mutex	*mtx_st;
 	bool			hungry;
-	pthread_t		philo_sleep_th;
-	pthread_t		philo_eat_th;
+	// pthread_t		philo_sleep_th;
+	// pthread_t		philo_eat_th;
 	struct s_fork	*node_fork;
 }	t_philo;
 
@@ -135,22 +134,22 @@ typedef struct s_philo_list
 typedef struct s_ph
 {
 	pthread_mutex_t			mutex_ph;
-	long					sleep_seconds;
+	long					sleep_time;
 	bool					flag_must_eat;
 	size_t					err_num;
 	size_t					argv[6];
-	long					passed_time;
+	// long					passed_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
-	struct s_monitor		monitor;
 	struct s_ptr_list		alloc_list;
+	struct s_monitor		monitor;
 	char					*status[5];
 	bool					ate_all;
 	struct s_mutex			mtx_st;
-	struct s_ate_struct		ate_struct;
-	struct s_die_struct		died_struct;
-	struct s_end_struct		end_struct;
+	struct s_ate		ate_struct;
+	struct s_die		died_struct;
+	struct s_end		end_struct;
 	long					start_time;
 }	t_ph;
 
@@ -216,7 +215,7 @@ bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 			t_ptr_list *ptr_list, size_t id);
 bool	destroy_mutex(t_ph *ph);
 int		usleep_ms(size_t ms);
-bool	is_end(t_end_struct *end_struct, t_mutex *mtx_st);
+bool	is_end(t_end *end_struct, t_mutex *mtx_st);
 void	*run_rutine_philo(void *ptr);
 bool	gettimeofday_millisec(t_ph *ph, long *cur_time);
 bool	get_time_from_start(t_ph *ph, long *current_time);
