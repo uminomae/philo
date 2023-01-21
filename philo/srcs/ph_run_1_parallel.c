@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:08:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ bool	init_mutex(t_ph *ph)
 	size_t		ret;
 
 	ret = true;
-	ret &= x_pthread_mutex_init(ph, &ph->mutex_st.mutex_cnt_ate);
-	ret &= x_pthread_mutex_init(ph, &ph->mutex_st.mutex_ate_all);
-	ret &= x_pthread_mutex_init(ph, &ph->mutex_st.mutex_die);
-	ret &= x_pthread_mutex_init(ph, &ph->mutex_st.mutex_end);
+	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_cnt_ate);
+	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_ate_all);
+	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_die);
+	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_end);
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_ph);
 	node_fork = ph->fork_list.head;
 	node_philo = ph->philo_list.head;

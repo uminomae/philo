@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:08:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*run_rutine_monitor(void *ptr)
 	monitor = (t_monitor *)ptr;
 	ph = monitor->ph;
 	num_people = monitor->num_people;
-	while (!is_end(&ph->end_struct, &ph->mutex_st))
+	while (!is_end(&ph->end_struct, &ph->mtx_st))
 	{
 		if (ph->flag_must_eat == true)
 		{
@@ -35,33 +35,33 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 		if (!check_hungry(ph, num_people))
-			set_flag_end(ph, &ph->mutex_st.mutex_end, &ph->mutex_st);
+			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
 		if (is_error(ph))
-			set_flag_end(ph, &ph->mutex_st.mutex_end, &ph->mutex_st);
+			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
 	}
 	return (ptr);
 }
 
 static bool	judge_ate_all(t_ph *ph, size_t num_people)
 {
-	t_mutex	*mutex_st;
+	t_mutex	*mtx_st;
 
-	mutex_st = &ph->mutex_st;
-	x_lock_mutex_struct(&mutex_st->mutex_cnt_ate, &ph->mutex_st);
+	mtx_st = &ph->mtx_st;
+	x_lock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 	if (ph->ate_struct.ate_cnt >= num_people && ph->ate_struct.ate_all == false)
 	{
-		x_unlock_mutex_struct(&mutex_st->mutex_cnt_ate, &ph->mutex_st);
+		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 		if (!x_usleep_millisec(ph, ph->argv[3]))
 			return (false);
-		x_lock_mutex_struct(&mutex_st->mutex_ate_all, &ph->mutex_st);
+		x_lock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
 		ph->ate_struct.ate_all = true;
-		x_unlock_mutex_struct(&mutex_st->mutex_ate_all, &ph->mutex_st);
-		x_lock_mutex_struct(&mutex_st->mutex_end, &ph->mutex_st);
+		x_unlock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
+		x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 		ph->end_struct.flag_end = true;
-		x_unlock_mutex_struct(&mutex_st->mutex_end, &ph->mutex_st);
+		x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 		return (true);
 	}
-	x_unlock_mutex_struct(&mutex_st->mutex_cnt_ate, &ph->mutex_st);
+	x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 	return (false);
 }
 
