@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:28:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	put_state(size_t state, t_philo *node_ph, \
 
 	if (!get_time_from_start(node_ph->ph, &elapsed_time))
 		return (false);
-	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mtx_st))
+	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
 		return (false);
 	x_lock_mutex_philo(node_ph);
 	node_ph->time[state] = elapsed_time;
@@ -38,7 +38,7 @@ bool	put_state(size_t state, t_philo *node_ph, \
 		if (!wait_action_usleep_ms(node_ph->ph, node_ph->time[state], ms))
 			return (false);
 	}
-	if (is_end(&node_ph->ph->end_struct, &node_ph->ph->mtx_st))
+	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
 		return (false);
 	return (true);
 }
@@ -79,19 +79,19 @@ bool	put_died(t_ph *ph)
 
 	mtx_st = &ph->mtx_st;
 	x_lock_mutex_struct(&mtx_st->mtx_die, mtx_st);
-	if (ph->ate_struct.ate_cnt == true)
+	if (ph->ate_st.ate_cnt == true)
 	{
 		x_unlock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 		return (true);
 	}
-	if (ph->died_struct.died_flag)
+	if (ph->died_st.died_flag)
 	{
 		if (!get_time_from_start(ph, &elapsed_time))
 		{
 			x_unlock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 			return (false);
 		}
-		if (!put_stamp(elapsed_time, ph->died_struct.died_id, DIED_STR))
+		if (!put_stamp(elapsed_time, ph->died_st.died_id, DIED_STR))
 		{
 			x_unlock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 			return (false);

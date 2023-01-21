@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:18:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:28:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static bool	check_time_to_die(t_philo *node_philo);
 
-bool	is_end(t_end *end_struct, t_mutex *mtx_st)
+bool	is_end(t_end *end_st, t_mutex *mtx_st)
 {
 	bool	ret;
 
 	ret = false;
 	x_lock_mutex_struct(&mtx_st->mtx_end, mtx_st);
-	if (end_struct->flag_end == true)
+	if (end_st->flag_end == true)
 		ret = true;
 	x_unlock_mutex_struct(&mtx_st->mtx_end, mtx_st);
 	return (ret);
@@ -76,14 +76,14 @@ void	set_flag_died(t_ph *ph, size_t id)
 
 	mtx_st = &ph->mtx_st;
 	x_lock_mutex_struct(&mtx_st->mtx_die, mtx_st);
-	if (ph->died_struct.died_flag == false)
+	if (ph->died_st.died_flag == false)
 	{
-		ph->died_struct.died_flag = true;
-		ph->died_struct.died_id = id;
+		ph->died_st.died_flag = true;
+		ph->died_st.died_id = id;
 	}
 	x_unlock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 	x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
-	ph->end_struct.flag_end = true;
+	ph->end_st.flag_end = true;
 	x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 }
 
@@ -91,6 +91,6 @@ void	set_flag_end(t_ph *ph, \
 			pthread_mutex_t *mtx_end, t_mutex *mtx_st)
 {
 	x_lock_mutex_struct(mtx_end, mtx_st);
-	ph->end_struct.flag_end = true;
+	ph->end_st.flag_end = true;
 	x_unlock_mutex_struct(mtx_end, mtx_st);
 }

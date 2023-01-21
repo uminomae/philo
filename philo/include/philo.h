@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 09:25:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:48:18 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,8 @@ typedef struct s_fork_list
 
 typedef struct s_monitor
 {
-	// struct s_monitor	*next;
 	pthread_t			monitor_th;
-	// struct s_philo		*node_philo;
 	bool				flag_must_eat;
-	// size_t				times_must_eat;
 	size_t				num_people;
 	struct s_ph			*ph;
 	struct s_mutex		*mtx_st;
@@ -101,7 +98,6 @@ typedef struct s_philo
 {
 	pthread_mutex_t	mutex_philo;
 	pthread_t		philo_th;
-	// pthread_t		philo_monit_th;
 	size_t			id;
 	long			time[5];
 	struct s_philo	*next;
@@ -115,8 +111,6 @@ typedef struct s_philo
 	size_t			err_num;
 	struct s_mutex	*mtx_st;
 	bool			hungry;
-	// pthread_t		philo_sleep_th;
-	// pthread_t		philo_eat_th;
 	struct s_fork	*node_fork;
 }	t_philo;
 
@@ -139,7 +133,6 @@ typedef struct s_ph
 	bool					flag_must_eat;
 	size_t					err_num;
 	size_t					argv[6];
-	// long					passed_time;
 	size_t					id;
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
@@ -148,9 +141,9 @@ typedef struct s_ph
 	char					*status[5];
 	bool					ate_all;
 	struct s_mutex			mtx_st;
-	struct s_ate			ate_struct;
-	struct s_die			died_struct;
-	struct s_end			end_struct;
+	struct s_ate			ate_st;
+	struct s_die			died_st;
+	struct s_end			end_st;
 	long					start_time;
 }	t_ph;
 
@@ -216,7 +209,7 @@ bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 			t_ptr_list *ptr_list, size_t id);
 bool	destroy_mutex(t_ph *ph);
 int		usleep_ms(size_t ms);
-bool	is_end(t_end *end_struct, t_mutex *mtx_st);
+bool	is_end(t_end *end_st, t_mutex *mtx_st);
 void	*run_rutine_philo(void *ptr);
 bool	gettimeofday_millisec(t_ph *ph, long *cur_time);
 bool	get_time_from_start(t_ph *ph, long *current_time);
@@ -227,10 +220,8 @@ int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 bool	run_parallel_process(t_ph *ph);
 void	set_and_run_monitor(t_ph *ph, size_t id);
-bool	run_eating(t_philo *node_th, t_fork *node_fork, \
-			size_t id, long time_eat);
-bool	put_state(size_t idx_state, t_philo *node_philo, \
-			long ms, size_t id);
+bool	run_eating(t_philo *node_th, t_fork *node_fork, size_t id, long time_eat);
+bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void	end_error(t_ph *ph);
 void	end_philo(t_ph *ph);
@@ -242,18 +233,14 @@ void	get_err_num_philo(t_philo *node_philo, size_t err_num);
 bool	is_error(t_ph *ph);
 void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
-void	x_lock_mutex(pthread_mutex_t *mutex_eat, \
-			t_monitor *end_monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex_eat, \
-			t_monitor *end_monitor);
+void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
+void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
 void	x_lock_mutex_fork(t_fork *node_fork);
 void	x_unlock_mutex_fork(t_fork *node_fork);
 void	x_lock_mutex_philo(t_philo *node_th);
 void	x_unlock_mutex_philo(t_philo *node_th);
-void	x_lock_mutex_struct(pthread_mutex_t *mutex, \
-			t_mutex *mtx_st);
-void	x_unlock_mutex_struct(pthread_mutex_t *mutex, \
-			t_mutex *mtx_st);
+void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
+void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 bool	x_pthread_create(t_ph *ph, pthread_t *t, \
 			void *(*f)(void *), void *p);
 bool	x_pthread_detach(t_ph *ph, pthread_t *thread);
@@ -266,8 +253,7 @@ void	*run_judge_hungry(void *ptr);
 void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
 t_fork	*get_fork(t_fork_list *list_fork, size_t id);
 t_philo	*get_philo(t_philo_list *list_philo, size_t id);
-void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, \
-			t_mutex *mtx_st);
+void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
 void	get_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
 #endif

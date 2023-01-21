@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:26:28 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:35:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void	*run_rutine_monitor(void *ptr)
 	monitor = (t_monitor *)ptr;
 	ph = monitor->ph;
 	num_people = monitor->num_people;
-	while (!is_end(&ph->end_struct, &ph->mtx_st))
+	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
-		// if (ph->flag_must_eat == true)
 		if (monitor->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
@@ -49,16 +48,16 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people)
 
 	mtx_st = &ph->mtx_st;
 	x_lock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
-	if (ph->ate_struct.ate_cnt >= num_people && ph->ate_struct.ate_all == false)
+	if (ph->ate_st.ate_cnt >= num_people && ph->ate_st.ate_all == false)
 	{
 		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 		if (!x_usleep_millisec(ph, ph->argv[3]))
 			return (false);
 		x_lock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
-		ph->ate_struct.ate_all = true;
+		ph->ate_st.ate_all = true;
 		x_unlock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
 		x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
-		ph->end_struct.flag_end = true;
+		ph->end_st.flag_end = true;
 		x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 		return (true);
 	}
