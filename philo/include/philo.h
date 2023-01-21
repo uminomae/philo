@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 09:20:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:25:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ typedef struct s_monitor
 	pthread_t			monitor_th;
 	// struct s_philo		*node_philo;
 	bool				flag_must_eat;
-	size_t				times_must_eat;
+	// size_t				times_must_eat;
 	size_t				num_people;
 	struct s_ph			*ph;
+	struct s_mutex		*mtx_st;
 }	t_monitor;
 
 typedef struct s_end
@@ -147,9 +148,9 @@ typedef struct s_ph
 	char					*status[5];
 	bool					ate_all;
 	struct s_mutex			mtx_st;
-	struct s_ate		ate_struct;
-	struct s_die		died_struct;
-	struct s_end		end_struct;
+	struct s_ate			ate_struct;
+	struct s_die			died_struct;
+	struct s_end			end_struct;
 	long					start_time;
 }	t_ph;
 

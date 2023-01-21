@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:16:40 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:26:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ bool	build_struct_and_list(t_ph *ph, int argc)
 	ph->monitor.ph = ph;
 	ph->monitor.num_people = ph->argv[1];
 	ph->sleep_time = ph->argv[4];
+	ph->monitor.flag_must_eat = ph->flag_must_eat;
+	ph->monitor.mtx_st = &ph->mtx_st;
 	return (true);
 }
 

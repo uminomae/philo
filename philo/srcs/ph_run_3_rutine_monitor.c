@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:11:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:26:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	*run_rutine_monitor(void *ptr)
 	num_people = monitor->num_people;
 	while (!is_end(&ph->end_struct, &ph->mtx_st))
 	{
-		if (ph->flag_must_eat == true)
+		// if (ph->flag_must_eat == true)
+		if (monitor->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
 				break ;
