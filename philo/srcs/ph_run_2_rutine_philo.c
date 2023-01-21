@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:43:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:05:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	run_case_normal(t_ph *ph, \
 			break ;
 	}
 	x_lock_mutex_ph(&ph->mutex_ph, ph);
-	ph->error_num = node_fork->error_num;
-	ph->error_num = node_philo->error_num;
+	ph->err_num = node_fork->err_num;
+	ph->err_num = node_philo->err_num;
 	x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	return ;
 }

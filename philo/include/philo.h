@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 09:03:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:05:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 typedef struct s_ptr_node
 {
 	void				*ptr;
-	size_t				error_num;
+	size_t				err_num;
 	struct s_ptr_node	*next;
 }	t_ptr_node;
 
@@ -46,7 +46,7 @@ typedef struct s_fork
 	pthread_mutex_t	mutex_fork;
 	bool			flag_err;
 	struct s_ph		*ph;
-	size_t			error_num;
+	size_t			err_num;
 	struct s_fork	*next;
 }	t_fork;
 
@@ -94,7 +94,7 @@ typedef struct s_mutex
 	pthread_mutex_t	mutex_ate_all;
 	pthread_mutex_t	mutex_die;
 	pthread_mutex_t	mutex_end;
-	size_t			error_num;
+	size_t			err_num;
 }	t_mutex;
 
 typedef struct s_philo
@@ -112,7 +112,7 @@ typedef struct s_philo
 	size_t			cnt;
 	bool			ate;
 	bool			flag_wait_ate;
-	size_t			error_num;
+	size_t			err_num;
 	struct s_mutex	*mutex_struct;
 	bool			hungry;
 	pthread_t		philo_sleep_th;
@@ -137,7 +137,7 @@ typedef struct s_ph
 	pthread_mutex_t			mutex_ph;
 	long					sleep_seconds;
 	bool					flag_must_eat;
-	size_t					error_num;
+	size_t					err_num;
 	size_t					argv[6];
 	long					passed_time;
 	size_t					id;

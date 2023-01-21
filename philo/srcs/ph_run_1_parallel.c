@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:03:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:05:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static bool	create_thread(t_ph *ph, size_t num_people)
 	x_pthread_create(ph, &ph->monitor.monitor_th, \
 				run_rutine_monitor, &ph->monitor);
 	x_lock_mutex_ph(&ph->mutex_ph, ph);
-	if (ph->error_num > NUM_ERR_LOW)
+	if (ph->err_num > NUM_ERR_LOW)
 	{
 		x_unlock_mutex_ph(&ph->mutex_ph, ph);
 		return (false);
@@ -116,7 +116,7 @@ static bool	join_pthread(t_ph *ph)
 			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}
-	if (ph->error_num > NUM_ERR_LOW)
+	if (ph->err_num > NUM_ERR_LOW)
 		return (false);
 	return (true);
 }
