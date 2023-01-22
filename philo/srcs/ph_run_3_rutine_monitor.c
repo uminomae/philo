@@ -6,28 +6,28 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 10:54:13 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:35:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	judge_ate_all(t_philo_main *ph, size_t num_people);
-static bool	check_hungry(t_philo_main *ph, size_t num_people);
-static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo);
+static bool	judge_ate_all(t_ph *ph, size_t num_people);
+static bool	check_hungry(t_ph *ph, size_t num_people);
+static int	check_time_ate(t_ph *ph, t_philo *node_philo);
 
 void	*run_rutine_monitor(void *ptr)
 {
-	t_monitor_node	*node_monitor;
-	t_philo_main	*ph;
-	size_t			num_people;
+	t_monitor	*monitor;
+	t_ph		*ph;
+	size_t		num_people;
 
-	node_monitor = (t_monitor_node *)ptr;
-	ph = node_monitor->ph;
-	num_people = node_monitor->num_people;
-	while (!is_end(&ph->end_struct, &ph->mutex_struct))
+	monitor = (t_monitor *)ptr;
+	ph = monitor->ph;
+	num_people = monitor->num_people;
+	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
-		if (ph->flag_must_eat == true)
+		if (monitor->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
 				break ;
@@ -35,46 +35,46 @@ void	*run_rutine_monitor(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 		if (!check_hungry(ph, num_people))
-			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
 		if (is_error(ph))
-			set_flag_end(ph, &ph->mutex_struct.mutex_end, &ph->mutex_struct);
+			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
 	}
 	return (ptr);
 }
 
-static bool	judge_ate_all(t_philo_main *ph, size_t num_people)
+static bool	judge_ate_all(t_ph *ph, size_t num_people)
 {
-	t_mutex	*mutex_struct;
+	t_mutex	*mtx_st;
 
-	mutex_struct = &ph->mutex_struct;
-	x_lock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
-	if (ph->ate_struct.ate_cnt >= num_people && ph->ate_struct.ate_all == false)
+	mtx_st = &ph->mtx_st;
+	x_lock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
+	if (ph->ate_st.ate_cnt >= num_people && ph->ate_st.ate_all == false)
 	{
-		x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
+		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 		if (!x_usleep_millisec(ph, ph->argv[3]))
 			return (false);
-		x_lock_mutex_struct(&mutex_struct->mutex_ate_all, &ph->mutex_struct);
-		ph->ate_struct.ate_all = true;
-		x_unlock_mutex_struct(&mutex_struct->mutex_ate_all, &ph->mutex_struct);
-		x_lock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
-		ph->end_struct.flag_end = true;
-		x_unlock_mutex_struct(&mutex_struct->mutex_end, &ph->mutex_struct);
+		x_lock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
+		ph->ate_st.ate_all = true;
+		x_unlock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
+		x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
+		ph->end_st.flag_end = true;
+		x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 		return (true);
 	}
-	x_unlock_mutex_struct(&mutex_struct->mutex_cnt_ate, &ph->mutex_struct);
+	x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
 	return (false);
 }
 
-static bool	check_hungry(t_philo_main *ph, size_t num_people)
+static bool	check_hungry(t_ph *ph, size_t num_people)
 {
-	size_t			i;
-	t_philo_node	*node_philo;
-	int				ret;
+	size_t	i;
+	t_philo	*node_philo;
+	int		ret;
 
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo_node(&ph->philo_list, i);
+		node_philo = get_philo(&ph->philo_list, i);
 		x_lock_mutex_philo(node_philo);
 		ret = check_time_ate(ph, node_philo);
 		if (ret == HUNGRY)
@@ -92,20 +92,22 @@ static bool	check_hungry(t_philo_main *ph, size_t num_people)
 	return (true);
 }
 
-static int	check_time_ate(t_philo_main *ph, t_philo_node *node_philo)
+static int	check_time_ate(t_ph *ph, t_philo *node_philo)
 {
+	long	eat_time;
+	long	limit;
 	long	elapsed_time;
-	long	hungry_time;
 
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	hungry_time = (long)ph->argv[3] * 2 + LIMIT_HUNGRY;
+	eat_time = (long)ph->argv[3];
+	limit = eat_time * 2 + eat_time / 4;
 	if (node_philo->time[EATING] == 0)
 	{
-		if (elapsed_time > hungry_time)
+		if (elapsed_time > limit)
 			return (HUNGRY);
 	}
-	else if (elapsed_time > node_philo->time[EATING] + hungry_time)
+	else if (elapsed_time > node_philo->time[EATING] + limit)
 		return (HUNGRY);
 	return (OK);
 }

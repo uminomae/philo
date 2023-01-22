@@ -102,6 +102,10 @@ sani_add: re
 
 sani_thread: CFLAGS +=  -g  -fsanitize=thread 
 sani_thread: re
+
+sani-helgrind:  CFLAGS +=  -g  valgrind --tool=helgrind
+sani_thread: re
+
 #=============================
 #make&test
 #=============================
@@ -136,21 +140,27 @@ test:
 #	make sani_thread
 	bash test.sh
 
+test2: 
+	make helgrind
+#	make sani_thread
+	bash test.sh
+
 1: 
-	make sani_thread
+	make re
 	./philo 4 310 200 100
 2:
 	make re
 	./philo 5 800 200 200 7
 3:
-	make sani_thread
+	make re
 	./philo 5 800 200 200 
 4:
-	make sani_thread
+	make re
 	./philo 4 410 200 200
 5:
-	make sani_add
-	./philo 200 2000 1000 1000  >out 
+	make re
+#	./philo 200 2000 1000 1000  >out 
+	./philo 200 2000 1000 1000
 
 error:
 	make sani_thread
