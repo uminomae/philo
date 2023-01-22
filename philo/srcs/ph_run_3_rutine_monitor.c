@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/22 10:02:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/22 10:17:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ void	*run_rutine_monitor(void *ptr)
 	t_monitor	*monitor;
 	t_ph		*ph;
 	size_t		num_people;
+	long		elapsed_time;
+	long		prev;
 
 	monitor = (t_monitor *)ptr;
 	ph = monitor->ph;
 	num_people = monitor->num_people;
+	prev = ph->start_time;
 	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
 		if (monitor->flag_must_eat == true)
@@ -36,8 +39,18 @@ void	*run_rutine_monitor(void *ptr)
 			break ;
 		if (!check_hungry(ph, num_people))
 			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
-		if (is_error(ph))
-			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
+		// if (is_error(ph))
+		// 	set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
+		if (!get_time_from_start(ph, &elapsed_time))
+			return (false);
+		if (prev + 100 < elapsed_time)
+		{
+			prev = elapsed_time;
+			if (is_error(ph))
+				set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
+			// if (!x_usleep_microsec(ph, 1))
+			// 	return (false);
+		}
 	}
 	return (ptr);
 }
