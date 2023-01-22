@@ -6,19 +6,19 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:08:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:37:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	lock_fork_mutex(t_philo_node *node_philo, \
-		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id);
-static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
-		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id);
+static bool	lock_fork_mutex(t_philo *node_philo, \
+		t_fork *node_fork, t_fork *node_next_fork, size_t id);
+static bool	lock_next_fork_mutex(t_philo *node_philo, \
+		t_fork *node_fork, t_fork *node_next_fork, size_t id);
 
-static void	unlock_next_fork(t_philo_node *node_philo, \
-		t_fork_node *node_fork, t_fork_node *node_next_fork)
+static void	unlock_next_fork(t_philo *node_philo, \
+		t_fork *node_fork, t_fork *node_next_fork)
 {
 	if (node_philo->id % 2 == 0)
 		x_unlock_mutex_fork(node_next_fork);
@@ -26,10 +26,10 @@ static void	unlock_next_fork(t_philo_node *node_philo, \
 		x_unlock_mutex_fork(node_fork);
 }
 
-bool	run_eating(t_philo_node *node_philo, \
-	t_fork_node *node_fork, size_t id, long time_eat)
+bool	run_eating(t_philo *node_philo, \
+	t_fork *node_fork, size_t id, long time_eat)
 {
-	t_fork_node	*node_next_fork;
+	t_fork	*node_next_fork;
 
 	x_lock_mutex_fork(node_fork);
 	node_next_fork = node_fork->next;
@@ -55,8 +55,8 @@ bool	run_eating(t_philo_node *node_philo, \
 	return (true);
 }
 
-static bool	lock_fork_mutex(t_philo_node *node_philo, \
-		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id)
+static bool	lock_fork_mutex(t_philo *node_philo, \
+		t_fork *node_fork, t_fork *node_next_fork, size_t id)
 {
 	if (node_philo->id % 2 == 0)
 	{
@@ -79,8 +79,8 @@ static bool	lock_fork_mutex(t_philo_node *node_philo, \
 	return (true);
 }
 
-static bool	lock_next_fork_mutex(t_philo_node *node_philo, \
-		t_fork_node *node_fork, t_fork_node *node_next_fork, size_t id)
+static bool	lock_next_fork_mutex(t_philo *node_philo, \
+		t_fork *node_fork, t_fork *node_next_fork, size_t id)
 {
 	if (node_philo->id % 2 == 0)
 	{
