@@ -162,6 +162,16 @@ test2:
 #	./philo 200 2000 1000 1000  >out 
 	./philo 200 2000 1000 1000
 
+6:
+	make re
+#	./philo 200 2000 1000 1000  >out 
+	./philo 5 510 200 100
+
+7:
+	make re
+#	./philo 200 2000 1000 1000  >out 
+	./philo 5 1410 200 500
+
 error:
 	make sani_thread
 	./philo 5 800 200 200 >> err1

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 10:35:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/22 10:02:38 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,17 @@ static bool	check_hungry(t_ph *ph, size_t num_people)
 
 static int	check_time_ate(t_ph *ph, t_philo *node_philo)
 {
-	long	eat_time;
 	long	limit;
 	long	elapsed_time;
+	// long	eat_time;
 
+	// eat_time = (long)ph->argv[3];
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	eat_time = (long)ph->argv[3];
-	limit = eat_time * 2 + eat_time / 4;
+	// limit = (long)ph->argv[2] /  + 10;
+	limit = (long)ph->argv[2] / 2 * 3 ;
+	// limit = eat_time * 2 + (long)ph->argv[4];
+	// limit = eat_time * 2 + eat_time / 4;
 	if (node_philo->time[EATING] == 0)
 	{
 		if (elapsed_time > limit)
