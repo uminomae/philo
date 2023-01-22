@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/21 09:48:18 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/22 10:07:37 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,4 +256,6 @@ t_philo	*get_philo(t_philo_list *list_philo, size_t id);
 void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
 void	get_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
+bool	x_usleep_microsec(t_ph *ph, long time_microsec);
+
 #endif
