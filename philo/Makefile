@@ -25,10 +25,10 @@ ph_run_2_1_rutine_philo.c \
 ph_run_2_2_eating.c \
 ph_run_3_rutine_monitor.c \
 ph_run_4_rutine_err_monitor.c \
-ph_run_5_judge.c \
-ph_run_6_set.c \
-ph_run_7_put.c \
-ph_run_8_util.c \
+ph_run_5_1_eat_hungry.c \
+ph_run_5_2_die_end.c \
+ph_run_put.c \
+ph_run_util.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \

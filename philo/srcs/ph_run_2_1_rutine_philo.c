@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_2_rutine_philo.c                            :+:      :+:    :+:   */
+/*   ph_run_2_1_rutine_philo.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 12:09:59 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:39:04 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		run_case_1person(t_philo *node_philo, t_fork *node_fork);
 static void	run_case_normal(t_ph *ph, t_philo	*node_philo, \
 						t_fork *node_fork);
+static void	delay_start_eating(t_ph *ph, t_philo *node_philo);
 static void	count_ate_in_philo(t_philo *node_philo);
 
 void	*run_rutine_philo(void *ptr)
@@ -46,23 +47,6 @@ void	run_case_1person(t_philo *node_philo, t_fork *node_fork)
 	return ;
 }
 
-static void	delay_start_eating(t_ph *ph, t_philo *node_philo)
-{
-	if (ph->argv[1] % 2 == 1 && node_philo->id != 0)
-	{
-		if (!x_usleep_millisec(ph, ph->argv[3] / 2))
-			return ;
-	}
-	else
-	{
-		if (node_philo->id % 2 == 1)
-		{
-			if (!x_usleep_millisec(ph, 1))
-				return ;
-		}
-	}
-}
-
 static void	run_case_normal(t_ph *ph, \
 			t_philo *node_philo, t_fork *node_fork)
 {
@@ -89,6 +73,23 @@ static void	run_case_normal(t_ph *ph, \
 		ph->err_num = node_philo->err_num;
 	x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	return ;
+}
+
+static void	delay_start_eating(t_ph *ph, t_philo *node_philo)
+{
+	if (ph->argv[1] % 2 == 1 && node_philo->id != 0)
+	{
+		if (!x_usleep_millisec(ph, ph->argv[3] / 2))
+			return ;
+	}
+	else
+	{
+		if (node_philo->id % 2 == 1)
+		{
+			if (!x_usleep_millisec(ph, 1))
+				return ;
+		}
+	}
 }
 
 static void	count_ate_in_philo(t_philo *node_philo)

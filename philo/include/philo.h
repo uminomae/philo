@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 12:35:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:44:08 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,10 @@ void	set_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
 bool	is_hungly(t_philo *node_philo);
-//todo
 void	*run_monitor_error(void *ptr);
+bool	judge_hungry(t_ph *ph, size_t num_people);
+int		check_time_ate(t_ph *ph, t_philo *node_philo);
+bool	judge_ate_all(t_ph *ph, size_t num_people);
+
 
 #endif
