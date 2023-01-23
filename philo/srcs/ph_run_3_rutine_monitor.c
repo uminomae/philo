@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/22 10:19:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:49:38 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,10 @@ static int	check_time_ate(t_ph *ph, t_philo *node_philo)
 {
 	long	limit;
 	long	elapsed_time;
-	// long	eat_time;
 
-	// eat_time = (long)ph->argv[3];
 	if (!get_time_from_start(ph, &elapsed_time))
 		return (ERR_NEGA_NUM);
-	// limit = (long)ph->argv[2] /  + 10;
-	limit = (long)ph->argv[2] / 2 * 3 ;
-	// limit = eat_time * 2 + (long)ph->argv[4];
-	// limit = eat_time * 2 + eat_time / 4;
+	limit = (long)ph->argv[2] * 3 / 4;
 	if (node_philo->time[EATING] == 0)
 	{
 		if (elapsed_time > limit)

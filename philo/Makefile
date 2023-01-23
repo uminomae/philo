@@ -169,8 +169,11 @@ test2:
 
 7:
 	make re
-#	./philo 200 2000 1000 1000  >out 
 	./philo 5 1410 200 500
+
+8:
+	make re
+	./philo 3 1410 200 500
 
 error:
 	make sani_thread
