@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 12:19:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:07:53 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ bool	build_struct_and_list(t_ph *ph, int argc)
 	ph->err_monitor.num_people = ph->argv[1];
 	ph->err_monitor.flag_must_eat = ph->flag_must_eat;
 	ph->err_monitor.mtx_st = &ph->mtx_st;
+	ph->die_monitor.ph = ph;
+	ph->die_monitor.num_people = ph->argv[1];
+	ph->die_monitor.flag_must_eat = ph->flag_must_eat;
+	ph->die_monitor.mtx_st = &ph->mtx_st;
+	ph->hungry_monitor.ph = ph;
+	ph->hungry_monitor.num_people = ph->argv[1];
+	ph->hungry_monitor.flag_must_eat = ph->flag_must_eat;
+	ph->hungry_monitor.mtx_st = &ph->mtx_st;
 	return (true);
 }
 

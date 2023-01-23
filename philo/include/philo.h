@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 12:44:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:15:39 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ typedef struct s_ph
 	struct s_ptr_list		alloc_list;
 	struct s_monitor		monitor;
 	struct s_monitor		err_monitor;
+	struct s_monitor		die_monitor;
+	struct s_monitor		hungry_monitor;
 	char					*status[5];
 	bool					ate_all;
 	struct s_mutex			mtx_st;
@@ -215,7 +217,7 @@ bool	is_end(t_end *end_st, t_mutex *mtx_st);
 void	*run_rutine_philo(void *ptr);
 bool	gettimeofday_millisec(t_ph *ph, long *cur_time);
 bool	get_time_from_start(t_ph *ph, long *current_time);
-void	*run_rutine_monitor(void *ptr);
+void	*run_monitor_ate_all(void *ptr);
 int		put_stamp(long time, size_t id, char *state);
 int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
@@ -251,7 +253,7 @@ bool	x_usleep_millisec(t_ph *ph, long time_ms);
 bool	is_flag_died(t_monitor *eat_monitor);
 void	wait_ate_person(t_philo *node_th);
 void	set_flag_died(t_ph *ph, size_t id);
-bool	judge_time_to_die(t_ph *ph, size_t num_people);
+// bool	judge_time_to_die(t_ph *ph, size_t num_people);
 void	*run_judge_hungry(void *ptr);
 void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
 t_fork	*get_fork(t_fork_list *list_fork, size_t id);
@@ -262,9 +264,10 @@ bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
 bool	is_hungly(t_philo *node_philo);
 void	*run_monitor_error(void *ptr);
-bool	judge_hungry(t_ph *ph, size_t num_people);
-int		check_time_ate(t_ph *ph, t_philo *node_philo);
-bool	judge_ate_all(t_ph *ph, size_t num_people);
-
+// bool	judge_hungry(t_ph *ph, size_t num_people);
+// int		check_time_ate(t_ph *ph, t_philo *node_philo);
+// bool	judge_ate_all(t_ph *ph, size_t num_people);
+void	*run_monitor_die(void *ptr);
+void	*run_monitor_hungry(void *ptr);
 
 #endif
