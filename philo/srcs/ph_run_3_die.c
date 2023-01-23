@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 03:25:48 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 04:05:50 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 static bool	judge_time_to_die(t_ph *ph, size_t num_people);
 static bool	check_time_to_die(t_philo *node_philo);
 static void	set_flag_died(t_ph *ph, size_t id);
+static void	put_died_with_mutex(t_ph *ph, size_t num_people);
 
 void	*run_monitor_die(void *ptr)
 {
 	t_monitor	*die_monitor;
 	t_ph		*ph;
 	size_t		num_people;
-	size_t		i;
-	t_philo		*node_philo;
 
 	die_monitor = (t_monitor *)ptr;
 	ph = die_monitor->ph;
@@ -32,6 +31,15 @@ void	*run_monitor_die(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
+	put_died_with_mutex(ph, num_people);
+	return (ptr);
+}
+
+static void	put_died_with_mutex(t_ph *ph, size_t num_people)
+{
+	size_t		i;
+	t_philo		*node_philo;
+
 	i = 0;
 	while (i < num_people)
 	{
@@ -40,7 +48,7 @@ void	*run_monitor_die(void *ptr)
 		i++;
 	}
 	if (!put_died(ph))
-		return (NULL);
+		set_err_num_ph(ph, ERR_PUT_DIED);
 	i = 0;
 	while (i < num_people)
 	{
@@ -48,7 +56,7 @@ void	*run_monitor_die(void *ptr)
 		x_unlock_mutex_philo(node_philo);
 		i++;
 	}
-	return (ptr);
+	return ;
 }
 
 static bool	judge_time_to_die(t_ph *ph, size_t num_people)

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 23:19:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 03:46:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ enum e_err_type {
 	ERR_judge_hungry,
 	ERR_PUT_STATE,
 	ERR_WAIT_ACTION,
+	ERR_PUT_DIED,
 	ERR_TYPE_END,
 };
 

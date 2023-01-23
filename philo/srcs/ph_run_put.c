@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 03:26:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 04:07:57 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ bool	put_state(size_t state, t_philo *node_ph, \
 {
 	long	elapsed_time;
 
-	if (!get_time_from_start(node_ph->ph, &elapsed_time))
-		return (false);
 	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
 		return (false);
 	x_lock_mutex_philo(node_ph);
+	if (!get_time_from_start(node_ph->ph, &elapsed_time))
+		return (false);
 	node_ph->time[state] = elapsed_time;
 	if (put_stamp(node_ph->time[state], id, node_ph->ph->status[state]) == -1)
 	{
