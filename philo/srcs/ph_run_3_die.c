@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 23:18:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 03:25:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	*run_monitor_die(void *ptr)
 	t_monitor	*die_monitor;
 	t_ph		*ph;
 	size_t		num_people;
+	size_t		i;
+	t_philo		*node_philo;
 
 	die_monitor = (t_monitor *)ptr;
 	ph = die_monitor->ph;
@@ -29,6 +31,22 @@ void	*run_monitor_die(void *ptr)
 	{
 		if (judge_time_to_die(ph, num_people))
 			break ;
+	}
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo(&ph->philo_list, i);
+		x_lock_mutex_philo(node_philo);
+		i++;
+	}
+	if (!put_died(ph))
+		return (NULL);
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo(&ph->philo_list, i);
+		x_unlock_mutex_philo(node_philo);
+		i++;
 	}
 	return (ptr);
 }
@@ -84,6 +102,7 @@ static void	set_flag_died(t_ph *ph, size_t id)
 	t_mutex	*mtx_st;
 
 	mtx_st = &ph->mtx_st;
+
 	x_lock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 	if (ph->died_st.died_flag == false)
 	{
