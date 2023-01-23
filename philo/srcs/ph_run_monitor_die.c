@@ -1,20 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_5_2_die_end.c                               :+:      :+:    :+:   */
+/*   ph_run_5_rutine_die_monitor.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 12:53:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:15:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static bool	judge_time_to_die(t_ph *ph, size_t num_people);
 static bool	check_time_to_die(t_philo *node_philo);
 
-bool	judge_time_to_die(t_ph *ph, size_t num_people)
+void	*run_monitor_die(void *ptr)
+{
+	t_monitor	*die_monitor;
+	t_ph		*ph;
+	size_t		num_people;
+
+	die_monitor = (t_monitor *)ptr;
+	ph = die_monitor->ph;
+	num_people = die_monitor->num_people;
+	while (!is_end(&ph->end_st, &ph->mtx_st))
+	{
+		if (judge_time_to_die(ph, num_people))
+			break ;
+	}
+	return (ptr);
+}
+
+static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 {
 	size_t	i;
 	t_philo	*node_philo;
@@ -73,24 +91,4 @@ void	set_flag_died(t_ph *ph, size_t id)
 	x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
 	ph->end_st.flag_end = true;
 	x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
-}
-
-void	set_flag_end(t_ph *ph, \
-			pthread_mutex_t *mtx_end, t_mutex *mtx_st)
-{
-	x_lock_mutex_struct(mtx_end, mtx_st);
-	ph->end_st.flag_end = true;
-	x_unlock_mutex_struct(mtx_end, mtx_st);
-}
-
-bool	is_end(t_end *end_st, t_mutex *mtx_st)
-{
-	bool	ret;
-
-	ret = false;
-	x_lock_mutex_struct(&mtx_st->mtx_end, mtx_st);
-	if (end_st->flag_end == true)
-		ret = true;
-	x_unlock_mutex_struct(&mtx_st->mtx_end, mtx_st);
-	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 12:20:51 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:13:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,13 @@ static bool	create_thread(t_ph *ph, size_t num_people)
 		i++;
 	}
 	x_pthread_create(ph, &ph->monitor.monitor_th, \
-				run_rutine_monitor, &ph->monitor);
+				run_monitor_ate_all, &ph->monitor);
 	x_pthread_create(ph, &ph->err_monitor.monitor_th, \
 				run_monitor_error, &ph->err_monitor);
+	x_pthread_create(ph, &ph->die_monitor.monitor_th, \
+				run_monitor_die, &ph->die_monitor);
+	x_pthread_create(ph, &ph->hungry_monitor.monitor_th, \
+				run_monitor_hungry, &ph->hungry_monitor);
 	x_lock_mutex_ph(&ph->mutex_ph, ph);
 	if (ph->err_num > NUM_ERR_LOW)
 	{
@@ -111,6 +115,10 @@ static bool	join_pthread(t_ph *ph)
 	if (pthread_join(ph->monitor.monitor_th, NULL) != 0)
 		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	if (pthread_join(ph->err_monitor.monitor_th, NULL) != 0)
+		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
+	if (pthread_join(ph->die_monitor.monitor_th, NULL) != 0)
+		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
+	if (pthread_join(ph->hungry_monitor.monitor_th, NULL) != 0)
 		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	i = 0;
 	while (i < num_people)
