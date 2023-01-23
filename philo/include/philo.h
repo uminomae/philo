@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 13:36:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 23:19:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 bool	run_parallel_process(t_ph *ph);
-bool	run_eating(t_philo *node_th, t_fork *node_fork, \
+bool	run_eating(t_philo *node_philo, t_fork *node_fork, \
 					size_t id, long time_eat);
 bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
@@ -241,8 +241,8 @@ void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
 void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
 void	x_lock_mutex_fork(t_fork *node_fork);
 void	x_unlock_mutex_fork(t_fork *node_fork);
-void	x_lock_mutex_philo(t_philo *node_th);
-void	x_unlock_mutex_philo(t_philo *node_th);
+void	x_lock_mutex_philo(t_philo *node_philo);
+void	x_unlock_mutex_philo(t_philo *node_philo);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 bool	x_pthread_create(t_ph *ph, pthread_t *t, \
@@ -250,7 +250,7 @@ bool	x_pthread_create(t_ph *ph, pthread_t *t, \
 bool	x_pthread_detach(t_ph *ph, pthread_t *thread);
 bool	x_usleep_millisec(t_ph *ph, long time_ms);
 bool	is_flag_died(t_monitor *eat_monitor);
-void	wait_ate_person(t_philo *node_th);
+void	wait_ate_person(t_philo *node_philo);
 void	*run_judge_hungry(void *ptr);
 void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
 t_fork	*get_fork(t_fork_list *list_fork, size_t id);
