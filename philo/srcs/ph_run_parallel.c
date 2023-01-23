@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_1_parallel.c                                :+:      :+:    :+:   */
+/*   ph_run_parallel.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 13:13:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:32:29 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,6 @@ static bool	create_thread(t_ph *ph, size_t num_people)
 				run_monitor_die, &ph->die_monitor);
 	x_pthread_create(ph, &ph->hungry_monitor.monitor_th, \
 				run_monitor_hungry, &ph->hungry_monitor);
-	x_lock_mutex_ph(&ph->mutex_ph, ph);
-	if (ph->err_num > NUM_ERR_LOW)
-	{
-		x_unlock_mutex_ph(&ph->mutex_ph, ph);
-		return (false);
-	}
-	x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	return (true);
 }
 
