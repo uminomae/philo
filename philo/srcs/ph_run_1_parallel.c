@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 03:27:47 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 04:11:31 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ bool	run_parallel_process(t_ph *ph)
 		return (false);
 	if (!create_thread(ph, ph->argv[1]))
 		return (false);
-	// put_died(ph);
 	if (!join_pthread(ph))
 		return (false);
-	// if (!put_died(ph))
-	// 	return (NULL);
 	if (is_error(ph))
 		return (false);
 	return (true);

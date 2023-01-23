@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 04:05:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 04:11:21 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ static void	set_flag_died(t_ph *ph, size_t id)
 	t_mutex	*mtx_st;
 
 	mtx_st = &ph->mtx_st;
-
 	x_lock_mutex_struct(&mtx_st->mtx_die, mtx_st);
 	if (ph->died_st.died_flag == false)
 	{
