@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/22 10:35:43 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:54:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	run_case_normal(t_ph *ph, \
 	delay_start_eating(ph, node_philo);
 	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
-		if (is_hungly(node_philo))
+		if (ph->argv[1] % 2 == 1 && is_hungly(node_philo))
 			continue ;
 		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
 			break ;
@@ -82,8 +82,12 @@ static void	run_case_normal(t_ph *ph, \
 			break ;
 	}
 	x_lock_mutex_ph(&ph->mutex_ph, ph);
-	ph->err_num = node_fork->err_num;
-	ph->err_num = node_philo->err_num;
+	x_lock_mutex_fork(node_fork);
+	if (node_fork->err_num > NUM_ERR_LOW)
+		ph->err_num = node_fork->err_num;
+	x_unlock_mutex_fork(node_fork);
+	if (node_philo->err_num > NUM_ERR_LOW)
+		ph->err_num = node_philo->err_num;
 	x_unlock_mutex_ph(&ph->mutex_ph, ph);
 	return ;
 }
