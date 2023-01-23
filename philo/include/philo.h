@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:07:14 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,8 @@ int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 bool	run_parallel_process(t_ph *ph);
 void	set_and_run_monitor(t_ph *ph, size_t id);
-bool	run_eating(t_philo *node_th, t_fork *node_fork, size_t id, long time_eat);
+bool	run_eating(t_philo *node_th, t_fork *node_fork, \
+					size_t id, long time_eat);
 bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void	end_error(t_ph *ph);
@@ -257,5 +258,6 @@ void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
 void	set_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
+bool	is_hungly(t_philo *node_philo);
 
 #endif

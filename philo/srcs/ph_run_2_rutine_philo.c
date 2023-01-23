@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 11:54:49 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:07:00 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	run_case_1person(t_philo *node_philo, t_fork *node_fork)
 	return ;
 }
 
-static void delay_start_eating(t_ph *ph, t_philo *node_philo)
+static void	delay_start_eating(t_ph *ph, t_philo *node_philo)
 {
 	if (ph->argv[1] % 2 == 1 && node_philo->id != 0)
 	{
-		if (!x_usleep_millisec(ph, ph->argv[3]/2))
+		if (!x_usleep_millisec(ph, ph->argv[3] / 2))
 			return ;
 	}
 	else
@@ -108,28 +108,28 @@ static void	count_ate_in_philo(t_philo *node_philo)
 	x_unlock_mutex_philo(node_philo);
 }
 
-static bool	is_hungly(t_philo *node_philo)
-{
-	t_philo	*node_next_philo;
-	t_philo	*node_prev_philo;
+// static bool	is_hungly(t_philo *node_philo)
+// {
+// 	t_philo	*node_next_philo;
+// 	t_philo	*node_prev_philo;
 
-	x_lock_mutex_philo(node_philo);
-	node_next_philo = node_philo->next;
-	node_prev_philo = node_philo->prev;
-	x_unlock_mutex_philo(node_philo);
-	x_lock_mutex_philo(node_next_philo);
-	if (node_next_philo->hungry == true)
-	{
-		x_unlock_mutex_philo(node_next_philo);
-		return (true);
-	}
-	x_unlock_mutex_philo(node_next_philo);
-	x_lock_mutex_philo(node_prev_philo);
-	if (node_prev_philo->hungry == true)
-	{
-		x_unlock_mutex_philo(node_prev_philo);
-		return (true);
-	}
-	x_unlock_mutex_philo(node_prev_philo);
-	return (false);
-}
+// 	x_lock_mutex_philo(node_philo);
+// 	node_next_philo = node_philo->next;
+// 	node_prev_philo = node_philo->prev;
+// 	x_unlock_mutex_philo(node_philo);
+// 	x_lock_mutex_philo(node_next_philo);
+// 	if (node_next_philo->hungry == true)
+// 	{
+// 		x_unlock_mutex_philo(node_next_philo);
+// 		return (true);
+// 	}
+// 	x_unlock_mutex_philo(node_next_philo);
+// 	x_lock_mutex_philo(node_prev_philo);
+// 	if (node_prev_philo->hungry == true)
+// 	{
+// 		x_unlock_mutex_philo(node_prev_philo);
+// 		return (true);
+// 	}
+// 	x_unlock_mutex_philo(node_prev_philo);
+// 	return (false);
+// }

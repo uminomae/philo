@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:28:39 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:08:28 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,28 @@ static bool	check_time_to_die(t_philo *node_philo)
 	return (false);
 }
 
-void	set_flag_died(t_ph *ph, size_t id)
+bool	is_hungly(t_philo *node_philo)
 {
-	t_mutex	*mtx_st;
+	t_philo	*node_next_philo;
+	t_philo	*node_prev_philo;
 
-	mtx_st = &ph->mtx_st;
-	x_lock_mutex_struct(&mtx_st->mtx_die, mtx_st);
-	if (ph->died_st.died_flag == false)
+	x_lock_mutex_philo(node_philo);
+	node_next_philo = node_philo->next;
+	node_prev_philo = node_philo->prev;
+	x_unlock_mutex_philo(node_philo);
+	x_lock_mutex_philo(node_next_philo);
+	if (node_next_philo->hungry == true)
 	{
-		ph->died_st.died_flag = true;
-		ph->died_st.died_id = id;
+		x_unlock_mutex_philo(node_next_philo);
+		return (true);
 	}
-	x_unlock_mutex_struct(&mtx_st->mtx_die, mtx_st);
-	x_lock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
-	ph->end_st.flag_end = true;
-	x_unlock_mutex_struct(&mtx_st->mtx_end, &ph->mtx_st);
-}
-
-void	set_flag_end(t_ph *ph, \
-			pthread_mutex_t *mtx_end, t_mutex *mtx_st)
-{
-	x_lock_mutex_struct(mtx_end, mtx_st);
-	ph->end_st.flag_end = true;
-	x_unlock_mutex_struct(mtx_end, mtx_st);
+	x_unlock_mutex_philo(node_next_philo);
+	x_lock_mutex_philo(node_prev_philo);
+	if (node_prev_philo->hungry == true)
+	{
+		x_unlock_mutex_philo(node_prev_philo);
+		return (true);
+	}
+	x_unlock_mutex_philo(node_prev_philo);
+	return (false);
 }

@@ -25,8 +25,9 @@ ph_run_2_rutine_philo.c \
 ph_run_3_rutine_monitor.c \
 ph_run_4_eating.c \
 ph_run_5_judge.c \
-ph_run_6_put.c \
-ph_run_7_util.c \
+ph_run_6_set.c \
+ph_run_7_put.c \
+ph_run_8_util.c \
 ph_finish.c \
 ph_finish_free.c \
 ph_util_libft.c \
