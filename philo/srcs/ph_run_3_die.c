@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_monitor_die.c                               :+:      :+:    :+:   */
+/*   ph_run_3_die.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 13:36:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 23:18:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 	i = 0;
 	while (i < num_people)
 	{
+		x_lock_mutex_philo(ph->philo_list.head);
 		node_philo = get_philo(&ph->philo_list, i);
+		x_unlock_mutex_philo(ph->philo_list.head);
 		x_lock_mutex_philo(node_philo);
 		if (check_time_to_die(node_philo))
 		{

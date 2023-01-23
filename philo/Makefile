@@ -117,35 +117,16 @@ run:
 	make sani_thread
 	bash test.sh
 
-run2: 
-	make re
-#	make sani_thread
-	./philo 5 800 200 200
-#	./philo 5 800 200 200 7 | grep died >out 
-
-run3: 
-	make re
-#	./philo 5 800 200 200 | grep eating >out 
-	./philo 5 800 200 200 
-#	./philo 4 410 200 200
-# ./philo 200 2000 1000 1000
-run4: 
-	make sani_add
-#	make sani_thread
-	./philo 4 310 200 100
-#	./philo 5 800 200 200 
-run5: 
-	make re
-	./philo 5 800 200 200 1
-
 test: 
 	make re
-#	make sani_thread
+	bash test.sh
+
+test1:
+	make sani_thread
 	bash test.sh
 
 test2: 
-	make helgrind
-#	make sani_thread
+	make sani_add
 	bash test.sh
 
 1: 
@@ -167,7 +148,6 @@ test2:
 
 6:
 	make re
-#	./philo 200 2000 1000 1000  >out 
 	./philo 5 510 200 100
 
 7:
@@ -176,7 +156,7 @@ test2:
 
 8:
 	make re
-	./philo 3 1410 200 500
+	./philo 5 510 200 100
 
 error:
 	make sani_thread
