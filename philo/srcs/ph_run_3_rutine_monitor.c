@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 11:49:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:35:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	judge_ate_all(t_ph *ph, size_t num_people);
-static bool	check_hungry(t_ph *ph, size_t num_people);
+static bool	judge_hungry(t_ph *ph, size_t num_people);
 static int	check_time_ate(t_ph *ph, t_philo *node_philo);
 
 void	*run_rutine_monitor(void *ptr)
@@ -21,13 +21,10 @@ void	*run_rutine_monitor(void *ptr)
 	t_monitor	*monitor;
 	t_ph		*ph;
 	size_t		num_people;
-	long		elapsed_time;
-	long		prev;
 
 	monitor = (t_monitor *)ptr;
 	ph = monitor->ph;
 	num_people = monitor->num_people;
-	prev = ph->start_time;
 	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
 		if (monitor->flag_must_eat == true)
@@ -37,16 +34,8 @@ void	*run_rutine_monitor(void *ptr)
 		}
 		if (judge_time_to_die(ph, num_people))
 			break ;
-		if (!check_hungry(ph, num_people))
+		if (!judge_hungry(ph, num_people))
 			set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
-		if (!get_time_from_start(ph, &elapsed_time))
-			return (false);
-		if (prev + 100 < elapsed_time)
-		{
-			prev = elapsed_time;
-			if (is_error(ph))
-				set_flag_end(ph, &ph->mtx_st.mtx_end, &ph->mtx_st);
-		}
 	}
 	return (ptr);
 }
@@ -74,7 +63,7 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people)
 	return (false);
 }
 
-static bool	check_hungry(t_ph *ph, size_t num_people)
+static bool	judge_hungry(t_ph *ph, size_t num_people)
 {
 	size_t	i;
 	t_philo	*node_philo;

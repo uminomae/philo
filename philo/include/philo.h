@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 12:07:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:35:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_ph
 	struct s_philo_list		philo_list;
 	struct s_ptr_list		alloc_list;
 	struct s_monitor		monitor;
+	struct s_monitor		err_monitor;
 	char					*status[5];
 	bool					ate_all;
 	struct s_mutex			mtx_st;
@@ -167,7 +168,7 @@ enum e_err_type {
 	ERR_PTHREAD_MUTEX_INIT,
 	ERR_STRDUP,
 	ERR_IS_DIGIT,
-	ERR_CHECK_HUNGRY,
+	ERR_judge_hungry,
 	ERR_PUT_STATE,
 	ERR_WAIT_ACTION,
 	ERR_TYPE_END,
@@ -190,6 +191,7 @@ enum e_err_type {
 # define HUNGRY			1
 # define OK				0
 # define NUM_OF_TYPES	5
+# define WAIT_REGULARLY	100
 
 enum e_put_state {
 	TAKEN_FORK = 0,
@@ -259,5 +261,7 @@ void	set_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
 bool	is_hungly(t_philo *node_philo);
+//todo
+void	*run_monitor_error(void *ptr);
 
 #endif

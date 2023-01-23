@@ -21,9 +21,10 @@ ph_begin_list_philo.c \
 ph_error.c \
 ph_malloc.c \
 ph_run_1_parallel.c \
-ph_run_2_rutine_philo.c \
+ph_run_2_1_rutine_philo.c \
+ph_run_2_2_eating.c \
 ph_run_3_rutine_monitor.c \
-ph_run_4_eating.c \
+ph_run_4_rutine_err_monitor.c \
 ph_run_5_judge.c \
 ph_run_6_set.c \
 ph_run_7_put.c \
