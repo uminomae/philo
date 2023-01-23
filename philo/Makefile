@@ -136,26 +136,33 @@ test2:
 	make re
 	./philo 5 800 200 200 7
 3:
-	make re
+	make sani_add
+# make re
 	./philo 5 800 200 200 
 4:
-	make re
+	make sani_add
+#	make re
 	./philo 4 410 200 200
 5:
-	make re
+#	make re	
+	make sani_add
+#	make sani_thread
 #	./philo 200 2000 1000 1000  >out 
 	./philo 200 2000 1000 1000
 
 6:
-	make re
+#	make re
+	make sani_add
 	./philo 5 510 200 100
 
 7:
-	make re
+	make sani_add
+#	make re
 	./philo 5 1410 200 500
 
 8:
-	make re
+	make sani_add
+#	make re
 	./philo 5 510 200 100
 
 error:
