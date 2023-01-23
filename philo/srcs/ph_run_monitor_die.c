@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_5_rutine_die_monitor.c                      :+:      :+:    :+:   */
+/*   ph_run_monitor_die.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 13:15:52 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:36:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static bool	judge_time_to_die(t_ph *ph, size_t num_people);
 static bool	check_time_to_die(t_philo *node_philo);
+static void	set_flag_died(t_ph *ph, size_t id);
 
 void	*run_monitor_die(void *ptr)
 {
@@ -76,7 +77,7 @@ static bool	check_time_to_die(t_philo *node_philo)
 	return (false);
 }
 
-void	set_flag_died(t_ph *ph, size_t id)
+static void	set_flag_died(t_ph *ph, size_t id)
 {
 	t_mutex	*mtx_st;
 
