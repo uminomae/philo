@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:21:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:26:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static bool	strdup_status_array(t_ph *ph)
 	{
 		if (ph->status[i] == NULL)
 		{
-			get_err_num_ph(ph, ERR_STRDUP);
+			set_err_num_ph(ph, ERR_STRDUP);
 			return (false);
 		}
 		i++;

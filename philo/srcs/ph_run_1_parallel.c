@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:12:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex)
 	ret = pthread_mutex_init(mutex, NULL);
 	if (ret != 0)
 	{
-		get_err_num_ph(ph, ERR_PTHREAD_MUTEX_INIT);
+		set_err_num_ph(ph, ERR_PTHREAD_MUTEX_INIT);
 		return (false);
 	}
 	return (true);
@@ -107,13 +107,13 @@ static bool	join_pthread(t_ph *ph)
 	t_philo			*node_philo;
 
 	if (pthread_join(ph->monitor.monitor_th, NULL) != 0)
-		get_err_num_ph(ph, ERR_PTHREAD_JOIN);
+		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	i = 0;
 	while (i < num_people)
 	{
 		node_philo = get_philo(&ph->philo_list, i);
 		if (pthread_join(node_philo->philo_th, NULL) != 0)
-			get_err_num_ph(ph, ERR_PTHREAD_JOIN);
+			set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}
 	if (ph->err_num > NUM_ERR_LOW)

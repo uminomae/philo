@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/22 10:07:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	x_usleep_millisec(t_ph *ph, long time_ms)
 	ret = usleep(time_ms * 1000);
 	if (ret == -1)
 	{
-		get_err_num_ph(ph, ERR_USLEEP);
+		set_err_num_ph(ph, ERR_USLEEP);
 		return (false);
 	}
 	return (true);
@@ -32,7 +32,7 @@ bool	x_usleep_microsec(t_ph *ph, long time_microsec)
 	ret = usleep(time_microsec);
 	if (ret == -1)
 	{
-		get_err_num_ph(ph, ERR_USLEEP);
+		set_err_num_ph(ph, ERR_USLEEP);
 		return (false);
 	}
 	return (true);
@@ -46,7 +46,7 @@ bool	x_pthread_create(t_ph *ph, pthread_t *t, \
 	ret = pthread_create(t, NULL, f, p);
 	if (ret != 0)
 	{
-		get_err_num_ph(ph, ERR_PTHREAD_CREATE);
+		set_err_num_ph(ph, ERR_PTHREAD_CREATE);
 		return (false);
 	}
 	return (true);
@@ -59,7 +59,7 @@ bool	x_pthread_detach(t_ph *ph, pthread_t *thread)
 	ret = pthread_detach(*thread);
 	if (ret != 0)
 	{
-		get_err_num_ph(ph, ERR_PTHREAD_DETACH);
+		set_err_num_ph(ph, ERR_PTHREAD_DETACH);
 		return (false);
 	}
 	return (true);
