@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:12:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static bool	x_pthread_mutex_destroy(t_ph *ph, pthread_mutex_t *mutex)
 	ret = pthread_mutex_destroy(mutex);
 	if (ret != 0)
 	{
-		get_err_num_ph(ph, ERR_PTHREAD_DESTROY);
+		set_err_num_ph(ph, ERR_PTHREAD_DESTROY);
 		return (false);
 	}
 	return (true);

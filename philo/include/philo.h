@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/22 10:07:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,10 +226,10 @@ void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 void	end_error(t_ph *ph);
 void	end_philo(t_ph *ph);
 bool	free_all(t_ph *ph);
-void	get_err_num_mutex(t_mutex *mtx_st, size_t err_num);
-void	get_err_num_ph(t_ph *ph, size_t err_num);
-void	get_err_num_fork(t_fork *node_fork, size_t err_num);
-void	get_err_num_philo(t_philo *node_philo, size_t err_num);
+void	set_err_num_mutex(t_mutex *mtx_st, size_t err_num);
+void	set_err_num_ph(t_ph *ph, size_t err_num);
+void	set_err_num_fork(t_fork *node_fork, size_t err_num);
+void	set_err_num_philo(t_philo *node_philo, size_t err_num);
 bool	is_error(t_ph *ph);
 void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
@@ -254,7 +254,7 @@ void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
 t_fork	*get_fork(t_fork_list *list_fork, size_t id);
 t_philo	*get_philo(t_philo_list *list_philo, size_t id);
 void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
-void	get_err_num(t_ph *ph);
+void	set_err_num(t_ph *ph);
 bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
 

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 13:34:14 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:58:36 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_valid_values(t_ph *ph, int argc, char **argv)
 		return (false);
 	if (!is_digit_argv(argc, argv))
 	{
-		get_err_num_ph(ph, ERR_IS_DIGIT);
+		set_err_num_ph(ph, ERR_IS_DIGIT);
 		return (false);
 	}
 	if (!memset(ph, 0, sizeof(t_ph)))
@@ -65,13 +65,13 @@ static bool	argv_to_int(t_ph *ph, int argc, char **argv)
 	{
 		if (argv[i] == NULL)
 		{
-			get_err_num_ph(ph, ERR_ARGV_NULL);
+			set_err_num_ph(ph, ERR_ARGV_NULL);
 			return (false);
 		}
 		ret = ph_atoi(argv[i]);
 		if (ret < 0)
 		{		
-			get_err_num_ph(ph, ERR_ATOI);
+			set_err_num_ph(ph, ERR_ATOI);
 			return (false);
 		}
 		ph->argv[i] = (size_t)ret;
