@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/23 13:35:50 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:36:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ int		ft_isdigit(int c);
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);
 bool	run_parallel_process(t_ph *ph);
-// void	set_and_run_monitor(t_ph *ph, size_t id);
 bool	run_eating(t_philo *node_th, t_fork *node_fork, \
 					size_t id, long time_eat);
 bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
@@ -252,7 +251,6 @@ bool	x_pthread_detach(t_ph *ph, pthread_t *thread);
 bool	x_usleep_millisec(t_ph *ph, long time_ms);
 bool	is_flag_died(t_monitor *eat_monitor);
 void	wait_ate_person(t_philo *node_th);
-// void	set_flag_died(t_ph *ph, size_t id);
 void	*run_judge_hungry(void *ptr);
 void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
 t_fork	*get_fork(t_fork_list *list_fork, size_t id);
