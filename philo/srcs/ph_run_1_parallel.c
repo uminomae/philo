@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 04:11:31 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:06:27 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ bool	init_mutex(t_ph *ph)
 		ret &= x_pthread_mutex_init(ph, &node_fork->mtx_fork);
 		node_fork = node_fork->next;
 		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_philo);
+		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_put);
 		node_philo = node_philo->next;
 		i++;
 	}

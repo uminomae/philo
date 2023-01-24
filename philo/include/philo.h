@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/24 03:46:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:05:35 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_mutex
 typedef struct s_philo
 {
 	pthread_mutex_t	mutex_philo;
+	pthread_mutex_t	mutex_put;
 	pthread_t		philo_th;
 	size_t			id;
 	long			time[5];
