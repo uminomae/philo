@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:30:09 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:33:32 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	put_died_with_mutex(t_ph *ph, size_t num_people)
 		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
 		node_philo = get_philo(&ph->philo_list, i);
 		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		// pthread_mutex_lock(&node_philo->mutex_put);
 		x_lock_mutex_philo(node_philo, &node_philo->mutex_put);
 		i++;
 	}
@@ -58,7 +57,6 @@ static void	put_died_with_mutex(t_ph *ph, size_t num_people)
 		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
 		node_philo = get_philo(&ph->philo_list, i);
 		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		// pthread_mutex_unlock(&node_philo->mutex_put);
 		x_unlock_mutex_philo(node_philo, &node_philo->mutex_put);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:25:01 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:33:49 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ bool	run_eating(t_philo *node_philo, \
 	}
 	x_unlock_mutex_fork(node_fork);
 	x_unlock_mutex_fork(node_next_fork);
-	// pthread_mutex_lock(&node_philo->mutex_philo);
 	x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
 	node_philo->cnt++;
 	x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
-	// x_unlock_mutex_philo(node_philo);
 	return (true);
 }
 
