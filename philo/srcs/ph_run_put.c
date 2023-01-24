@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 13:31:24 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:31:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,21 @@ bool	put_state(size_t state, t_philo *node_ph, \
 
 	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
 		return (false);
-	pthread_mutex_lock(&node_ph->mutex_put);
-	x_lock_mutex_philo(node_ph);
+	x_lock_mutex_philo(node_ph, &node_ph->mutex_put);
+	x_lock_mutex_philo(node_ph, &node_ph->mutex_philo);
 	if (!get_time_from_start(node_ph->ph, &elapsed_time))
 		return (false);
 	node_ph->time[state] = elapsed_time;
 	if (put_stamp(node_ph->time[state], id, node_ph->ph->status[state]) == -1)
 	{
 		set_err_num_philo(node_ph, ERR_PRINTF);
-		x_unlock_mutex_philo(node_ph);
-		pthread_mutex_unlock(&node_ph->mutex_put);
+		x_unlock_mutex_philo(node_ph, &node_ph->mutex_philo);
+		x_unlock_mutex_philo(node_ph, &node_ph->mutex_put);
 		return (false);
 	}
-	x_unlock_mutex_philo(node_ph);
-	pthread_mutex_unlock(&node_ph->mutex_put);
+	x_unlock_mutex_philo(node_ph, &node_ph->mutex_philo);
+	x_unlock_mutex_philo(node_ph, &node_ph->mutex_put);
+
 	if (ms > 0)
 	{
 		if (!wait_action_usleep_ms(node_ph->ph, node_ph->time[state], ms))

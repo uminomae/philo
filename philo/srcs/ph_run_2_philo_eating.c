@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 13:28:58 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:25:01 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ bool	run_eating(t_philo *node_philo, \
 	x_lock_mutex_fork(node_fork);
 	node_next_fork = node_fork->next;
 	x_unlock_mutex_fork(node_fork);
+
 	if (!lock_fork_mutex(node_philo, node_fork, node_next_fork, id))
 		return (false);
 	if (!lock_next_fork_mutex(node_philo, node_fork, node_next_fork, id))
@@ -49,9 +50,11 @@ bool	run_eating(t_philo *node_philo, \
 	}
 	x_unlock_mutex_fork(node_fork);
 	x_unlock_mutex_fork(node_next_fork);
-	x_lock_mutex_philo(node_philo);
+	// pthread_mutex_lock(&node_philo->mutex_philo);
+	x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
 	node_philo->cnt++;
-	x_unlock_mutex_philo(node_philo);
+	x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
+	// x_unlock_mutex_philo(node_philo);
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 23:15:37 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:30:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,21 @@ static bool	judge_hungry(t_ph *ph, size_t num_people)
 	i = 0;
 	while (i < num_people)
 	{
-		x_lock_mutex_philo(ph->philo_list.head);
+		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
 		node_philo = get_philo(&ph->philo_list, i);
-		x_unlock_mutex_philo(ph->philo_list.head);
-		x_lock_mutex_philo(node_philo);
+		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
+		x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
 		ret = check_time_ate(ph, node_philo);
 		if (ret == HUNGRY)
 			node_philo->hungry = true;
 		else if (ret == ERR_NEGA_NUM)
 		{
-			x_unlock_mutex_philo(node_philo);
+			x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
 			return (false);
 		}
 		else
 			node_philo->hungry = false;
-		x_unlock_mutex_philo(node_philo);
+		x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
 		i++;
 	}
 	return (true);
