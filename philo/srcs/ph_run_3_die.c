@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:33:32 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:56:03 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,6 @@ void	*run_monitor_die(void *ptr)
 	return (ptr);
 }
 
-static void	put_died_with_mutex(t_ph *ph, size_t num_people)
-{
-	size_t		i;
-	t_philo		*node_philo;
-
-	i = 0;
-	while (i < num_people)
-	{
-		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		node_philo = get_philo(&ph->philo_list, i);
-		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		x_lock_mutex_philo(node_philo, &node_philo->mutex_put);
-		i++;
-	}
-	if (!put_died(ph))
-		set_err_num_ph(ph, ERR_PUT_DIED);
-	i = 0;
-	while (i < num_people)
-	{
-		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		node_philo = get_philo(&ph->philo_list, i);
-		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
-		x_unlock_mutex_philo(node_philo, &node_philo->mutex_put);
-		i++;
-	}
-	return ;
-}
-
 static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 {
 	size_t	i;
@@ -71,9 +43,7 @@ static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 	i = 0;
 	while (i < num_people)
 	{
-		// x_lock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
 		node_philo = get_philo(&ph->philo_list, i);
-		// x_unlock_mutex_philo(ph->philo_list.head, &node_philo->mutex_philo);
 		x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
 		if (check_time_to_die(node_philo))
 		{
@@ -84,6 +54,30 @@ static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 		i++;
 	}
 	return (false);
+}
+
+static void	put_died_with_mutex(t_ph *ph, size_t num_people)
+{
+	size_t		i;
+	t_philo		*node_philo;
+
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo(&ph->philo_list, i);
+		x_lock_mutex_philo(node_philo, &node_philo->mutex_put);
+		i++;
+	}
+	if (!put_died(ph))
+		set_err_num_ph(ph, ERR_PUT_DIED);
+	i = 0;
+	while (i < num_people)
+	{
+		node_philo = get_philo(&ph->philo_list, i);
+		x_unlock_mutex_philo(node_philo, &node_philo->mutex_put);
+		i++;
+	}
+	return ;
 }
 
 static bool	check_time_to_die(t_philo *node_philo)

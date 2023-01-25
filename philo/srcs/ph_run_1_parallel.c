@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 13:06:27 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:41:54 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ bool	run_parallel_process(t_ph *ph)
 bool	init_mutex(t_ph *ph)
 {
 	size_t		i;
-	size_t		num_people;
 	t_fork		*node_fork;	
 	t_philo		*node_philo;
 	size_t		ret;
@@ -45,9 +44,8 @@ bool	init_mutex(t_ph *ph)
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_ph);
 	node_fork = ph->fork_list.head;
 	node_philo = ph->philo_list.head;
-	num_people = ph->argv[1];
 	i = 0;
-	while (i < num_people)
+	while (i < ph->argv[1])
 	{
 		ret &= x_pthread_mutex_init(ph, &node_fork->mtx_fork);
 		node_fork = node_fork->next;

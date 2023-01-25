@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:30:29 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:51:55 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	run_case_normal(t_ph *ph, \
 			continue ;
 		if (!run_eating(node_philo, node_fork, node_philo->id, ph->argv[3]))
 			break ;
+		if (is_end(&node_philo->ph->end_st, &node_philo->ph->mtx_st))
+			break ;
 		if (node_philo->flag_must_eat == true)
 			count_ate_in_philo(node_philo);
 		if (!put_state(SLEEPING, node_philo, ph->argv[4], node_philo->id))
@@ -65,10 +67,8 @@ static void	run_case_normal(t_ph *ph, \
 			break ;
 	}
 	x_lock_mutex_ph(&ph->mutex_ph, ph);
-	x_lock_mutex_fork(node_fork);
 	if (node_fork->err_num > NUM_ERR_LOW)
 		ph->err_num = node_fork->err_num;
-	x_unlock_mutex_fork(node_fork);
 	if (node_philo->err_num > NUM_ERR_LOW)
 		ph->err_num = node_philo->err_num;
 	x_unlock_mutex_ph(&ph->mutex_ph, ph);

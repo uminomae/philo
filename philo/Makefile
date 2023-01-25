@@ -145,8 +145,8 @@ test2:
 	./philo 4 410 200 200
 5:
 #	make re	
-	make sani_add
-#	make sani_thread
+#	make sani_add
+	make sani_thread
 #	./philo 200 2000 1000 1000  >out 
 	./philo 200 2000 1000 1000
 
@@ -160,10 +160,6 @@ test2:
 #	make re
 	./philo 5 1410 200 500
 
-8:
-	make sani_add
-#	make re
-	./philo 5 510 200 100
 
 error:
 	make sani_thread

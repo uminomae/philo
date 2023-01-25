@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/24 13:50:14 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/25 09:33:34 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,10 +243,8 @@ void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
 void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
 void	x_lock_mutex_fork(t_fork *node_fork);
 void	x_unlock_mutex_fork(t_fork *node_fork);
-// void	x_lock_mutex_philo(t_philo *node_philo);
 void	x_lock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
 void	x_unlock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
-// void	x_unlock_mutex_philo(t_philo *node_philo);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 bool	x_pthread_create(t_ph *ph, pthread_t *t, \

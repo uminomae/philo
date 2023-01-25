@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 13:06:09 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:46:38 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static bool	x_pthread_mutex_destroy(t_ph *ph, pthread_mutex_t *mutex);
 bool	destroy_mutex(t_ph *ph)
 {
 	size_t		i;
-	size_t		num_people;
 	t_fork		*node_fork;	
 	t_philo		*node_philo;
 	size_t		ret;
@@ -30,9 +29,8 @@ bool	destroy_mutex(t_ph *ph)
 	ret &= x_pthread_mutex_destroy(ph, &ph->mutex_ph);
 	node_philo = ph->philo_list.head;
 	node_fork = ph->fork_list.head;
-	num_people = ph->argv[1];
 	i = 0;
-	while (i < num_people)
+	while (i < ph->argv[1])
 	{
 		ret &= x_pthread_mutex_destroy(ph, &node_fork->mtx_fork);
 		node_fork = node_fork->next;
