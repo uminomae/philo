@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 12:12:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:23:45 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	wait_action_usleep_ms(t_ph *ph, \
-				long start, size_t wait_ms);
+static int	put_stamp(long time, size_t id, char *state);
+static bool	wait_action_usleep_ms(t_ph *ph, long start, size_t wait_ms);
 
 bool	put_state(size_t state, t_philo *node_ph, long ms, size_t id)
 {
@@ -43,7 +43,7 @@ bool	put_state(size_t state, t_philo *node_ph, long ms, size_t id)
 	return (true);
 }
 
-int	put_stamp(long time, size_t id, char *state)
+static int	put_stamp(long time, size_t id, char *state)
 {
 	int	ret;
 

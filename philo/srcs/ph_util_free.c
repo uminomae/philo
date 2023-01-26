@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_finish_free.c                                   :+:      :+:    :+:   */
+/*   ph_util_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 15:11:49 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/20 11:34:08 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:27:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	free_alloc_ptr(t_ph *ph);
-bool	free_alloc_list_node(t_ph *ph);
+static bool	free_alloc_ptr(t_ph *ph);
+static bool	free_alloc_list_node(t_ph *ph);
 
 bool	free_all(t_ph *ph)
 {
@@ -24,7 +24,7 @@ bool	free_all(t_ph *ph)
 	return (true);
 }
 
-bool	free_alloc_ptr(t_ph *ph)
+static bool	free_alloc_ptr(t_ph *ph)
 {
 	t_ptr_node	*node;
 
@@ -41,7 +41,7 @@ bool	free_alloc_ptr(t_ph *ph)
 	return (true);
 }
 
-bool	free_alloc_list_node(t_ph *ph)
+static bool	free_alloc_list_node(t_ph *ph)
 {
 	t_ptr_node	*node;
 	t_ptr_node	*tmp;

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:10:53 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:34:19 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ typedef struct s_ph
 	struct s_monitor		die_monitor;
 	struct s_monitor		hungry_monitor;
 	char					*status[5];
-	bool					ate_all;
 	struct s_mutex			mtx_st;
 	struct s_ate			ate_st;
 	struct s_die			died_st;
@@ -207,63 +206,68 @@ enum e_put_state {
 };
 
 bool	is_valid_values(t_ph *ph, int argc, char **argv);
-bool	init_mutex(t_ph *ph);
 bool	build_struct_and_list(t_ph *ph, int argc);
+bool	run_parallel_process(t_ph *ph);
+void	end_error(t_ph *ph);
+void	end_philo(t_ph *ph);
+
 bool	add_fork_list(t_ph *ph, t_fork_list *list, \
 			t_ptr_list *ptr_list, size_t data);
 bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 			t_ptr_list *ptr_list, size_t id);
-bool	destroy_mutex(t_ph *ph);
-int		usleep_ms(size_t ms);
-bool	is_end(t_end *end_st, t_mutex *mtx_st);
-void	*run_rutine_philo(void *ptr);
+
+bool	is_error(t_ph *ph);
+
+bool	is_hungly(t_philo *node_philo);
+void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
+bool	is_flag_died(t_monitor *eat_monitor);
+
+bool	put_died(t_ph *ph);
+
+t_fork	*get_fork(t_fork_list *list_fork, size_t id);
+t_philo	*get_philo(t_philo_list *list_philo, size_t id);
 bool	gettimeofday_millisec(t_ph *ph, long *cur_time);
 bool	get_time_from_start(t_ph *ph, long *current_time);
-void	*run_monitor_ate_all(void *ptr);
-int		put_stamp(long time, size_t id, char *state);
+
 int		ft_isdigit(int c);
-int		ph_atoi(const char *str);
-char	*x_strdup(t_ptr_list *list, char *str);
-bool	run_parallel_process(t_ph *ph);
-bool	run_eating(t_philo *node_philo, t_fork *node_fork, \
-					size_t id, long time_eat);
-bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
-void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
-void	end_error(t_ph *ph);
-void	end_philo(t_ph *ph);
-bool	free_all(t_ph *ph);
+
 void	set_err_num_mutex(t_mutex *mtx_st, size_t err_num);
 void	set_err_num_ph(t_ph *ph, size_t err_num);
 void	set_err_num_fork(t_fork *node_fork, size_t err_num);
 void	set_err_num_philo(t_philo *node_philo, size_t err_num);
-bool	is_error(t_ph *ph);
-void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
-void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
-void	x_lock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
-void	x_unlock_mutex(pthread_mutex_t *mutex_eat, t_monitor *end_monitor);
+
+bool	free_all(t_ph *ph);
+void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
+
 void	x_lock_mutex_fork(t_fork *node_fork);
 void	x_unlock_mutex_fork(t_fork *node_fork);
 void	x_lock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
 void	x_unlock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
+void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
+void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
+
 bool	x_pthread_create(t_ph *ph, pthread_t *t, \
 			void *(*f)(void *), void *p);
 bool	x_pthread_detach(t_ph *ph, pthread_t *thread);
 bool	x_usleep_millisec(t_ph *ph, long time_ms);
-bool	is_flag_died(t_monitor *eat_monitor);
-void	wait_ate_person(t_philo *node_philo);
-void	*run_judge_hungry(void *ptr);
-void	run_case_1person(t_philo *node_philo, t_fork *node_fork);
-t_fork	*get_fork(t_fork_list *list_fork, size_t id);
-t_philo	*get_philo(t_philo_list *list_philo, size_t id);
-void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
-void	set_err_num(t_ph *ph);
-bool	put_died(t_ph *ph);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
-bool	is_hungly(t_philo *node_philo);
+
+bool	destroy_mutex(t_ph *ph);
+
+bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
+bool	is_end(t_end *end_st, t_mutex *mtx_st);
+
+void	*run_rutine_philo(void *ptr);
+void	*run_monitor_ate_all(void *ptr);
 void	*run_monitor_error(void *ptr);
 void	*run_monitor_die(void *ptr);
 void	*run_monitor_hungry(void *ptr);
+bool	run_eating(t_philo *node_philo, t_fork *node_fork, \
+					size_t id, long time_eat);
+
+int		ph_atoi(const char *str);
+char	*x_strdup(t_ptr_list *list, char *str);
 
 #endif

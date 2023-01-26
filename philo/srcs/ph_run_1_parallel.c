@@ -6,12 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:11:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:16:12 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static bool	init_mutex(t_ph *ph);
 static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex);
 static bool	create_thread(t_ph *ph, size_t num_people);
 static bool	join_pthread(t_ph *ph);
@@ -29,7 +30,7 @@ bool	run_parallel_process(t_ph *ph)
 	return (true);
 }
 
-bool	init_mutex(t_ph *ph)
+static bool	init_mutex(t_ph *ph)
 {
 	size_t		i;
 	t_fork		*node_fork;	

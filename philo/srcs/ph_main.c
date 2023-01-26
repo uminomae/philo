@@ -6,12 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:07:06 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:20:52 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+//TODO node_fork,node_philo->
 int	main(int argc, char **argv)
 {
 	t_ph	ph;

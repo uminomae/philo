@@ -6,13 +6,13 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 23:14:55 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/18 03:18:15 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:28:59 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	ft_strlen(const char *s)
+static size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+static void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t				i;
 	unsigned char		*ucp_dst;
@@ -41,7 +41,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	len_src;
 
@@ -58,7 +58,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (len_src);
 }
 
-char	*ft_strdup(t_ptr_list *list, const char *src)
+static char	*ft_strdup(t_ptr_list *list, const char *src)
 {
 	char	*p_cpy;
 	size_t	len_src;
