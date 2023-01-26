@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_malloc.c                                        :+:      :+:    :+:   */
+/*   ph_util_malloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:43:12 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/19 02:07:42 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:40:46 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static t_ptr_node	*init_ptr_node(void)
 	node = (t_ptr_node *)malloc(sizeof(t_ptr_node));
 	if (node == NULL)
 		return (NULL);
-	node->ptr = NULL;
-	node->next = NULL;
+	memset(node, 0, sizeof(t_ptr_node));
 	return (node);
 }
 

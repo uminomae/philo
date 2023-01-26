@@ -144,19 +144,24 @@ test2:
 	./philo 4 410 200 200
 5:
 #	make re	
-#	make sani_add
 	make sani_thread
 #	./philo 200 2000 1000 1000  >out 
 	./philo 200 2000 1000 1000
 
 51:
 	make sani_add
-#	make sani_thread
-#	./philo 200 2000 1000 1000  >out 
+	./philo 200 2000 1000 1000
+
+52:
+	make re	
 	./philo 200 2000 1000 1000
 
 6:
 	make sani_thread
+	./philo 5 510 200 100
+
+62:
+	make re
 	./philo 5 510 200 100
 
 7:
