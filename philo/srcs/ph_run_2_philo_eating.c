@@ -6,19 +6,19 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:50:05 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	lock_fork_mutex(t_philo *philo_n, \
-		t_fork *fork_n, t_fork *next_fork_n, size_t id);
+				t_fork *fork_n, t_fork *next_fork_n, size_t id);
 static bool	lock_next_fork_mutex(t_philo *philo_n, \
-		t_fork *fork_n, t_fork *next_fork_n, size_t id);
+				t_fork *fork_n, t_fork *next_fork_n, size_t id);
 
 static void	unlock_next_fork(t_philo *philo_n, \
-		t_fork *fork_n, t_fork *next_fork_n)
+				t_fork *fork_n, t_fork *next_fork_n)
 {
 	if (philo_n->id % 2 == 0)
 		x_unlock_mutex_fork(next_fork_n);
@@ -26,8 +26,7 @@ static void	unlock_next_fork(t_philo *philo_n, \
 		x_unlock_mutex_fork(fork_n);
 }
 
-bool	run_eating(t_philo *philo_n, \
-	t_fork *fork_n, size_t id, long time_eat)
+bool	run_eating(t_philo *philo_n, t_fork *fork_n, size_t id, long time_eat)
 {
 	t_fork	*next_fork_n;
 
@@ -56,7 +55,7 @@ bool	run_eating(t_philo *philo_n, \
 }
 
 static bool	lock_fork_mutex(t_philo *philo_n, \
-		t_fork *fork_n, t_fork *next_fork_n, size_t id)
+				t_fork *fork_n, t_fork *next_fork_n, size_t id)
 {
 	if (philo_n->id % 2 == 0)
 	{
@@ -80,7 +79,7 @@ static bool	lock_fork_mutex(t_philo *philo_n, \
 }
 
 static bool	lock_next_fork_mutex(t_philo *philo_n, \
-		t_fork *fork_n, t_fork *next_fork_n, size_t id)
+				t_fork *fork_n, t_fork *next_fork_n, size_t id)
 {
 	if (philo_n->id % 2 == 0)
 	{

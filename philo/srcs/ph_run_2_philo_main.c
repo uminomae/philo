@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:50:23 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static void	run_case_1person(t_philo *philo_n, t_fork *fork_n)
 	return ;
 }
 
-static void	run_case_normal(t_ph *ph, \
-			t_philo *philo_n, t_fork *fork_n)
+static void	run_case_normal(t_ph *ph, t_philo *philo_n, t_fork *fork_n)
 {
 	delay_start_eating(ph, philo_n);
 	while (!is_end(&ph->end_st, &ph->mtx_st))
