@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/21 09:05:26 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:07:06 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(int argc, char **argv)
 // ./philo 5 800 200 200
 // ./philo 5 800 200 200 7
 // ./philo 4 410 200 200
+// ./philo 5 1410 200 500
+// ./philo 5 510 200 100
 
 //[debug]
 // printf("%sERROR NUM=%zu\n", ERR_STR, ph.err_num);
