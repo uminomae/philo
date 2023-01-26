@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:34:19 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_philo
 	size_t			err_num;
 	struct s_mutex	*mtx_st;
 	bool			hungry;
-	struct s_fork	*node_fork;
+	struct s_fork	*fork_n;
 }	t_philo;
 
 typedef struct s_philo_list
@@ -218,7 +218,7 @@ bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 
 bool	is_error(t_ph *ph);
 
-bool	is_hungly(t_philo *node_philo);
+bool	is_hungly(t_philo *philo_n);
 void	set_flag_end(t_ph *ph, pthread_mutex_t *mtx_end, t_mutex *mtx_st);
 bool	is_flag_died(t_monitor *eat_monitor);
 
@@ -233,16 +233,16 @@ int		ft_isdigit(int c);
 
 void	set_err_num_mutex(t_mutex *mtx_st, size_t err_num);
 void	set_err_num_ph(t_ph *ph, size_t err_num);
-void	set_err_num_fork(t_fork *node_fork, size_t err_num);
-void	set_err_num_philo(t_philo *node_philo, size_t err_num);
+void	set_err_num_fork(t_fork *fork_n, size_t err_num);
+void	set_err_num_philo(t_philo *philo_n, size_t err_num);
 
 bool	free_all(t_ph *ph);
 void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
-void	x_lock_mutex_fork(t_fork *node_fork);
-void	x_unlock_mutex_fork(t_fork *node_fork);
-void	x_lock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
-void	x_unlock_mutex_philo(t_philo *node_philo, pthread_mutex_t *mtx);
+void	x_lock_mutex_fork(t_fork *fork_n);
+void	x_unlock_mutex_fork(t_fork *fork_n);
+void	x_lock_mutex_philo(t_philo *philo_n, pthread_mutex_t *mtx);
+void	x_unlock_mutex_philo(t_philo *philo_n, pthread_mutex_t *mtx);
 void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
@@ -256,7 +256,7 @@ bool	x_usleep_microsec(t_ph *ph, long time_microsec);
 
 bool	destroy_mutex(t_ph *ph);
 
-bool	put_state(size_t idx_state, t_philo *node_philo, long ms, size_t id);
+bool	put_state(size_t idx_state, t_philo *philo_n, long ms, size_t id);
 bool	is_end(t_end *end_st, t_mutex *mtx_st);
 
 void	*run_rutine_philo(void *ptr);
@@ -264,7 +264,7 @@ void	*run_monitor_ate_all(void *ptr);
 void	*run_monitor_error(void *ptr);
 void	*run_monitor_die(void *ptr);
 void	*run_monitor_hungry(void *ptr);
-bool	run_eating(t_philo *node_philo, t_fork *node_fork, \
+bool	run_eating(t_philo *philo_n, t_fork *fork_n, \
 					size_t id, long time_eat);
 
 int		ph_atoi(const char *str);

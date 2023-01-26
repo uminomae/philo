@@ -6,14 +6,14 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:56:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	judge_time_to_die(t_ph *ph, size_t num_people);
-static bool	check_time_to_die(t_philo *node_philo);
+static bool	check_time_to_die(t_philo *philo_n);
 static void	set_flag_died(t_ph *ph, size_t id);
 static void	put_died_with_mutex(t_ph *ph, size_t num_people);
 
@@ -38,19 +38,19 @@ void	*run_monitor_die(void *ptr)
 static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 {
 	size_t	i;
-	t_philo	*node_philo;
+	t_philo	*philo_n;
 
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo(&ph->philo_list, i);
-		x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
-		if (check_time_to_die(node_philo))
+		philo_n = get_philo(&ph->philo_list, i);
+		x_lock_mutex_philo(philo_n, &philo_n->mutex_philo);
+		if (check_time_to_die(philo_n))
 		{
-			x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
+			x_unlock_mutex_philo(philo_n, &philo_n->mutex_philo);
 			return (true);
 		}
-		x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
+		x_unlock_mutex_philo(philo_n, &philo_n->mutex_philo);
 		i++;
 	}
 	return (false);
@@ -59,13 +59,13 @@ static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 static void	put_died_with_mutex(t_ph *ph, size_t num_people)
 {
 	size_t		i;
-	t_philo		*node_philo;
+	t_philo		*philo_n;
 
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo(&ph->philo_list, i);
-		x_lock_mutex_philo(node_philo, &node_philo->mutex_put);
+		philo_n = get_philo(&ph->philo_list, i);
+		x_lock_mutex_philo(philo_n, &philo_n->mutex_put);
 		i++;
 	}
 	if (!put_died(ph))
@@ -73,31 +73,31 @@ static void	put_died_with_mutex(t_ph *ph, size_t num_people)
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo(&ph->philo_list, i);
-		x_unlock_mutex_philo(node_philo, &node_philo->mutex_put);
+		philo_n = get_philo(&ph->philo_list, i);
+		x_unlock_mutex_philo(philo_n, &philo_n->mutex_put);
 		i++;
 	}
 	return ;
 }
 
-static bool	check_time_to_die(t_philo *node_philo)
+static bool	check_time_to_die(t_philo *philo_n)
 {
 	long	eating;
 	long	time_to_die;
 	long	elapsed_time;
 
-	eating = node_philo->time[EATING];
-	time_to_die = (long)node_philo->ph->argv[2];
-	if (!get_time_from_start(node_philo->ph, &elapsed_time))
+	eating = philo_n->time[EATING];
+	time_to_die = (long)philo_n->ph->argv[2];
+	if (!get_time_from_start(philo_n->ph, &elapsed_time))
 		return (false);
 	if (eating == 0 && elapsed_time >= time_to_die)
 	{
-		set_flag_died(node_philo->ph, node_philo->id);
+		set_flag_died(philo_n->ph, philo_n->id);
 		return (true);
 	}
 	if (eating > 0 && (elapsed_time - eating) >= time_to_die)
 	{
-		set_flag_died(node_philo->ph, node_philo->id);
+		set_flag_died(philo_n->ph, philo_n->id);
 		return (true);
 	}
 	return (false);

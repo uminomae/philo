@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ static void		add_last_philo(t_philo_list *list, t_philo *node);
 bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 						t_ptr_list *ptr_list, size_t id)
 {
-	t_philo	*node_philo;
+	t_philo	*philo_n;
 
-	node_philo = init_philo(ptr_list);
-	if (node_philo == NULL)
+	philo_n = init_philo(ptr_list);
+	if (philo_n == NULL)
 	{
 		set_err_num_ph(ph, ERR_ADD_PHILO_LIST);
 		return (false);
 	}
-	node_philo->id = id;
-	node_philo->ph = ph;
-	node_philo->flag_must_eat = ph->flag_must_eat;
-	node_philo->times_must_eat = ph->argv[5];
-	node_philo->time[EATING] = 0;
+	philo_n->id = id;
+	philo_n->ph = ph;
+	philo_n->flag_must_eat = ph->flag_must_eat;
+	philo_n->times_must_eat = ph->argv[5];
+	philo_n->time[EATING] = 0;
 	if (list->head == NULL)
-		make_first_philo(list, node_philo);
+		make_first_philo(list, philo_n);
 	else
-		add_last_philo(list, node_philo);
+		add_last_philo(list, philo_n);
 	return (true);
 }
 

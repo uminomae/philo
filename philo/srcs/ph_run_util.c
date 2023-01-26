@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_7_util.c                                    :+:      :+:    :+:   */
+/*   ph_run_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 t_philo	*get_philo(t_philo_list *list_philo, size_t id)
 {
 	size_t	i;
-	t_philo	*node_philo;
+	t_philo	*philo_n;
 
-	node_philo = list_philo->head;
+	philo_n = list_philo->head;
 	i = 0;
 	while (i < id)
 	{
-		node_philo = node_philo->next;
+		philo_n = philo_n->next;
 		i++;
 	}
-	return (node_philo);
+	return (philo_n);
 }
 
 t_fork	*get_fork(t_fork_list *list_fork, size_t id)
 {
 	size_t	i;
-	t_fork	*node_fork;
+	t_fork	*fork_n;
 
-	node_fork = list_fork->head;
+	fork_n = list_fork->head;
 	i = 0;
 	while (i < id)
 	{
-		node_fork = node_fork->next;
+		fork_n = fork_n->next;
 		i++;
 	}
-	return (node_fork);
+	return (fork_n);
 }
 
 bool	gettimeofday_millisec(t_ph *ph, long *cur_time)

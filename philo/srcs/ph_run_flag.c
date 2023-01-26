@@ -6,35 +6,35 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:31:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:41:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	is_hungly(t_philo *node_philo)
+bool	is_hungly(t_philo *philo_n)
 {
-	t_philo	*node_next_philo;
-	t_philo	*node_prev_philo;
+	t_philo	*next_philo_n;
+	t_philo	*prev_philo_n;
 
-	x_lock_mutex_philo(node_philo, &node_philo->mutex_philo);
-	node_next_philo = node_philo->next;
-	node_prev_philo = node_philo->prev;
-	x_unlock_mutex_philo(node_philo, &node_philo->mutex_philo);
-	x_lock_mutex_philo(node_next_philo, &node_next_philo->mutex_philo);
-	if (node_next_philo->hungry == true)
+	x_lock_mutex_philo(philo_n, &philo_n->mutex_philo);
+	next_philo_n = philo_n->next;
+	prev_philo_n = philo_n->prev;
+	x_unlock_mutex_philo(philo_n, &philo_n->mutex_philo);
+	x_lock_mutex_philo(next_philo_n, &next_philo_n->mutex_philo);
+	if (next_philo_n->hungry == true)
 	{
-		x_unlock_mutex_philo(node_next_philo, &node_next_philo->mutex_philo);
+		x_unlock_mutex_philo(next_philo_n, &next_philo_n->mutex_philo);
 		return (true);
 	}
-	x_unlock_mutex_philo(node_next_philo, &node_next_philo->mutex_philo);
-	x_lock_mutex_philo(node_prev_philo, &node_prev_philo->mutex_philo);
-	if (node_prev_philo->hungry == true)
+	x_unlock_mutex_philo(next_philo_n, &next_philo_n->mutex_philo);
+	x_lock_mutex_philo(prev_philo_n, &prev_philo_n->mutex_philo);
+	if (prev_philo_n->hungry == true)
 	{
-		x_unlock_mutex_philo(node_prev_philo, &node_prev_philo->mutex_philo);
+		x_unlock_mutex_philo(prev_philo_n, &prev_philo_n->mutex_philo);
 		return (true);
 	}
-	x_unlock_mutex_philo(node_prev_philo, &node_prev_philo->mutex_philo);
+	x_unlock_mutex_philo(prev_philo_n, &prev_philo_n->mutex_philo);
 	return (false);
 }
 

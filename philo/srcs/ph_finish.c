@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:46:38 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static bool	x_pthread_mutex_destroy(t_ph *ph, pthread_mutex_t *mutex);
 bool	destroy_mutex(t_ph *ph)
 {
 	size_t		i;
-	t_fork		*node_fork;	
-	t_philo		*node_philo;
+	t_fork		*fork_n;	
+	t_philo		*philo_n;
 	size_t		ret;
 
 	ret = true;
@@ -27,16 +27,16 @@ bool	destroy_mutex(t_ph *ph)
 	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_die);
 	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_end);
 	ret &= x_pthread_mutex_destroy(ph, &ph->mutex_ph);
-	node_philo = ph->philo_list.head;
-	node_fork = ph->fork_list.head;
+	philo_n = ph->philo_list.head;
+	fork_n = ph->fork_list.head;
 	i = 0;
 	while (i < ph->argv[1])
 	{
-		ret &= x_pthread_mutex_destroy(ph, &node_fork->mtx_fork);
-		node_fork = node_fork->next;
-		ret &= x_pthread_mutex_destroy(ph, &node_philo->mutex_philo);
-		ret &= x_pthread_mutex_destroy(ph, &node_philo->mutex_put);
-		node_philo = node_philo->next;
+		ret &= x_pthread_mutex_destroy(ph, &fork_n->mtx_fork);
+		fork_n = fork_n->next;
+		ret &= x_pthread_mutex_destroy(ph, &philo_n->mutex_philo);
+		ret &= x_pthread_mutex_destroy(ph, &philo_n->mutex_put);
+		philo_n = philo_n->next;
 		i++;
 	}
 	return (ret);

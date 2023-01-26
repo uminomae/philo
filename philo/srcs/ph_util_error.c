@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 23:44:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	set_err_num_ph(t_ph *ph, size_t err_num)
 	ph->err_num = err_num;
 }
 
-void	set_err_num_fork(t_fork *node_fork, size_t err_num)
+void	set_err_num_fork(t_fork *fork_n, size_t err_num)
 {
-	node_fork->err_num = err_num;
+	fork_n->err_num = err_num;
 }
 
-void	set_err_num_philo(t_philo *node_philo, size_t err_num)
+void	set_err_num_philo(t_philo *philo_n, size_t err_num)
 {
-	node_philo->err_num = err_num;
+	philo_n->err_num = err_num;
 }

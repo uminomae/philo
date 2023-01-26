@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:16:12 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ bool	run_parallel_process(t_ph *ph)
 static bool	init_mutex(t_ph *ph)
 {
 	size_t		i;
-	t_fork		*node_fork;	
-	t_philo		*node_philo;
+	t_fork		*fork_n;	
+	t_philo		*philo_n;
 	size_t		ret;
 
 	ret = true;
@@ -43,16 +43,16 @@ static bool	init_mutex(t_ph *ph)
 	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_die);
 	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_end);
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_ph);
-	node_fork = ph->fork_list.head;
-	node_philo = ph->philo_list.head;
+	fork_n = ph->fork_list.head;
+	philo_n = ph->philo_list.head;
 	i = 0;
 	while (i < ph->argv[1])
 	{
-		ret &= x_pthread_mutex_init(ph, &node_fork->mtx_fork);
-		node_fork = node_fork->next;
-		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_philo);
-		ret &= x_pthread_mutex_init(ph, &node_philo->mutex_put);
-		node_philo = node_philo->next;
+		ret &= x_pthread_mutex_init(ph, &fork_n->mtx_fork);
+		fork_n = fork_n->next;
+		ret &= x_pthread_mutex_init(ph, &philo_n->mutex_philo);
+		ret &= x_pthread_mutex_init(ph, &philo_n->mutex_put);
+		philo_n = philo_n->next;
 		i++;
 	}
 	return (ret);
@@ -74,16 +74,16 @@ static bool	x_pthread_mutex_init(t_ph *ph, pthread_mutex_t *mutex)
 static bool	create_thread(t_ph *ph, size_t num_people)
 {
 	size_t	i;
-	t_philo	*node_philo;
+	t_philo	*philo_n;
 
 	if (!gettimeofday_millisec(ph, &ph->start_time))
 		return (false);
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo(&ph->philo_list, i);
-		x_pthread_create(ph, &node_philo->philo_th, \
-					run_rutine_philo, node_philo);
+		philo_n = get_philo(&ph->philo_list, i);
+		x_pthread_create(ph, &philo_n->philo_th, \
+					run_rutine_philo, philo_n);
 		i++;
 	}
 	x_pthread_create(ph, &ph->ate_all_monitor.monitor_th, \
@@ -101,7 +101,7 @@ static bool	join_pthread(t_ph *ph)
 {
 	size_t			i;
 	const size_t	num_people = ph->argv[1];
-	t_philo			*node_philo;
+	t_philo			*philo_n;
 
 	if (pthread_join(ph->ate_all_monitor.monitor_th, NULL) != 0)
 		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
@@ -114,8 +114,8 @@ static bool	join_pthread(t_ph *ph)
 	i = 0;
 	while (i < num_people)
 	{
-		node_philo = get_philo(&ph->philo_list, i);
-		if (pthread_join(node_philo->philo_th, NULL) != 0)
+		philo_n = get_philo(&ph->philo_list, i);
+		if (pthread_join(philo_n->philo_th, NULL) != 0)
 			set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 		i++;
 	}
