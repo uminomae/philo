@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:50:23 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:06:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	run_case_1person(t_philo *philo_n, t_fork *fork_n);
 static void	run_case_normal(t_ph *ph, t_philo *philo_n, t_fork *fork_n);
 static void	delay_start_eating(t_ph *ph, t_philo *philo_n);
-static void	count_ate_in_philo(t_philo *philo_n);
+static int	count_ate_in_philo(t_philo *philo_n);
 
 void	*run_rutine_philo(void *ptr)
 {
@@ -57,8 +57,9 @@ static void	run_case_normal(t_ph *ph, t_philo *philo_n, t_fork *fork_n)
 			break ;
 		if (is_end(&philo_n->ph->end_st, &philo_n->ph->mtx_st))
 			break ;
-		if (philo_n->flag_must_eat == true)
-			count_ate_in_philo(philo_n);
+		if (philo_n->flag_must_eat == true && \
+			count_ate_in_philo(philo_n) == ATE_ALL)
+			break ;
 		if (!put_state(SLEEPING, philo_n, ph->argv[4], philo_n->id))
 			break ;
 		if (!put_state(THINKING, philo_n, 0, philo_n->id))
@@ -90,10 +91,12 @@ static void	delay_start_eating(t_ph *ph, t_philo *philo_n)
 	}
 }
 
-static void	count_ate_in_philo(t_philo *philo_n)
+static int	count_ate_in_philo(t_philo *philo_n)
 {
 	t_mutex	*mtx_st;
+	int		ret;
 
+	ret = 0;
 	mtx_st = &philo_n->ph->mtx_st;
 	x_lock_mtx_philo(philo_n, &philo_n->mtx_philo);
 	if (philo_n->times_must_eat == philo_n->cnt)
@@ -101,8 +104,16 @@ static void	count_ate_in_philo(t_philo *philo_n)
 		x_unlock_mtx_philo(philo_n, &philo_n->mtx_philo);
 		x_lock_mutex_struct(&mtx_st->mtx_cnt_ate, mtx_st);
 		philo_n->ph->ate_st.ate_cnt++;
+		if (philo_n->ph->ate_st.ate_cnt == philo_n->ph->argv[1])
+		{
+			ret = ATE_ALL;
+			x_lock_mutex_struct(&mtx_st->mtx_end, &philo_n->ph->mtx_st);
+			philo_n->ph->end_st.flag_end = true;
+			x_unlock_mutex_struct(&mtx_st->mtx_end, &philo_n->ph->mtx_st);
+		}
 		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, mtx_st);
 	}
 	else
 		x_unlock_mtx_philo(philo_n, &philo_n->mtx_philo);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:03:31 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ bool	destroy_mutex(t_ph *ph)
 
 	ret = true;
 	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_cnt_ate);
-	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_ate_all);
 	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_die);
 	ret &= x_pthread_mutex_destroy(ph, &ph->mtx_st.mtx_end);
 	ret &= x_pthread_mutex_destroy(ph, &ph->mutex_ph);

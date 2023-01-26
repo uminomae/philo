@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:03:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_die
 typedef struct s_ate
 {
 	size_t	ate_cnt;
-	bool	ate_all;
 	size_t	id;
 	long	time;
 }	t_ate;
@@ -88,7 +87,6 @@ typedef struct s_ate
 typedef struct s_mutex
 {
 	pthread_mutex_t	mtx_cnt_ate;
-	pthread_mutex_t	mtx_ate_all;
 	pthread_mutex_t	mtx_die;
 	pthread_mutex_t	mtx_end;
 	size_t			err_num;
@@ -138,7 +136,6 @@ typedef struct s_ph
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
 	struct s_ptr_list		alloc_list;
-	struct s_monitor		ate_all_monitor;
 	struct s_monitor		err_monitor;
 	struct s_monitor		die_monitor;
 	struct s_monitor		hungry_monitor;
@@ -186,6 +183,7 @@ enum e_err_type {
 # define ERR_STR		"error\n"
 
 # define LOCK			1
+# define ATE_ALL		1
 # define UNLOCK			0
 # define ERROR			1
 # define SUCCESS		0
@@ -259,7 +257,6 @@ bool	put_state(size_t idx_state, t_philo *philo_n, long ms, size_t id);
 bool	is_end(t_end *end_st, t_mutex *mtx_st);
 
 void	*run_rutine_philo(void *ptr);
-void	*run_monitor_ate_all(void *ptr);
 void	*run_monitor_error(void *ptr);
 void	*run_monitor_die(void *ptr);
 void	*run_monitor_hungry(void *ptr);

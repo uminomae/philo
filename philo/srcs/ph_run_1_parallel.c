@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:03:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static bool	init_mutex(t_ph *ph)
 
 	ret = true;
 	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_cnt_ate);
-	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_ate_all);
 	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_die);
 	ret &= x_pthread_mutex_init(ph, &ph->mtx_st.mtx_end);
 	ret &= x_pthread_mutex_init(ph, &ph->mutex_ph);
@@ -86,8 +85,6 @@ static bool	create_thread(t_ph *ph, size_t num_people)
 					run_rutine_philo, philo_n);
 		i++;
 	}
-	x_pthread_create(ph, &ph->ate_all_monitor.monitor_th, \
-				run_monitor_ate_all, &ph->ate_all_monitor);
 	x_pthread_create(ph, &ph->err_monitor.monitor_th, \
 				run_monitor_error, &ph->err_monitor);
 	x_pthread_create(ph, &ph->die_monitor.monitor_th, \
@@ -103,8 +100,6 @@ static bool	join_pthread(t_ph *ph)
 	const size_t	num_people = ph->argv[1];
 	t_philo			*philo_n;
 
-	if (pthread_join(ph->ate_all_monitor.monitor_th, NULL) != 0)
-		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	if (pthread_join(ph->err_monitor.monitor_th, NULL) != 0)
 		set_err_num_ph(ph, ERR_PTHREAD_JOIN);
 	if (pthread_join(ph->die_monitor.monitor_th, NULL) != 0)

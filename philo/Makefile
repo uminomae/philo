@@ -21,7 +21,6 @@ ph_begin_list_philo.c \
 ph_run_1_parallel.c \
 ph_run_2_philo_main.c \
 ph_run_2_philo_eating.c \
-ph_run_3_ate_all.c \
 ph_run_3_die.c \
 ph_run_3_err.c \
 ph_run_3_hungry.c \
