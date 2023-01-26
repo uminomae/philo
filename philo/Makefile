@@ -24,9 +24,9 @@ ph_run_2_philo_eating.c \
 ph_run_3_die.c \
 ph_run_3_err.c \
 ph_run_3_hungry.c \
-ph_run_flag.c \
-ph_run_put.c \
-ph_run_util.c \
+ph_run_4_flag.c \
+ph_run_4_put.c \
+ph_run_4_util.c \
 ph_finish.c \
 ph_util_atoi.c \
 ph_util_error.c \
