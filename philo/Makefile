@@ -130,18 +130,17 @@ test2:
 	bash test.sh
 
 1: 
-	make re
+	make sani_thread
 	./philo 4 310 200 100
 2:
-	make re
+#	make re
+	make sani_thread
 	./philo 5 800 200 200 7
 3:
-	make sani_add
-# make re
+	make sani_thread
 	./philo 5 800 200 200 
 4:
-	make sani_add
-#	make re
+	make sani_thread
 	./philo 4 410 200 200
 5:
 #	make re	
@@ -150,15 +149,22 @@ test2:
 #	./philo 200 2000 1000 1000  >out 
 	./philo 200 2000 1000 1000
 
-6:
-#	make re
+51:
 	make sani_add
+#	make sani_thread
+#	./philo 200 2000 1000 1000  >out 
+	./philo 200 2000 1000 1000
+
+6:
+	make sani_thread
 	./philo 5 510 200 100
 
 7:
-	make sani_add
+	make sani_thread
+#	make sani_add
 #	make re
 	./philo 5 1410 200 500
+
 
 
 error:
