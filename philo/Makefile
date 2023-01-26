@@ -135,7 +135,7 @@ test2:
 2:
 #	make re
 	make sani_thread
-	./philo 5 800 200 200 7
+	./philo 5 800 200 200 7 >out
 3:
 	make sani_thread
 	./philo 5 800 200 200 

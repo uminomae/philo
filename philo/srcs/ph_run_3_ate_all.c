@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:11:25 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 22:22:24 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people)
 	if (ph->ate_st.ate_cnt >= num_people && ph->ate_st.ate_all == false)
 	{
 		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, &ph->mtx_st);
-		if (!x_usleep_millisec(ph, ph->argv[3]))
-			return (false);
 		x_lock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
 		ph->ate_st.ate_all = true;
 		x_unlock_mutex_struct(&mtx_st->mtx_ate_all, &ph->mtx_st);
