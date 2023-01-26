@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:50:05 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:15:15 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ bool	run_eating(t_philo *philo_n, t_fork *fork_n, size_t id, long time_eat)
 {
 	t_fork	*next_fork_n;
 
-	x_lock_mutex_fork(fork_n);
 	next_fork_n = fork_n->next;
-	x_unlock_mutex_fork(fork_n);
 	if (!lock_fork_mutex(philo_n, fork_n, next_fork_n, id))
 		return (false);
 	if (!lock_next_fork_mutex(philo_n, fork_n, next_fork_n, id))
