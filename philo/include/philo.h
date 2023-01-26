@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/25 09:33:34 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:10:53 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_ph
 	struct s_fork_list		fork_list;
 	struct s_philo_list		philo_list;
 	struct s_ptr_list		alloc_list;
-	struct s_monitor		monitor;
+	struct s_monitor		ate_all_monitor;
 	struct s_monitor		err_monitor;
 	struct s_monitor		die_monitor;
 	struct s_monitor		hungry_monitor;

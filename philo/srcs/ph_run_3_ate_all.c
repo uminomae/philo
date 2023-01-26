@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_run_monitor_ate_all.c                           :+:      :+:    :+:   */
+/*   ph_run_3_ate_all.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 13:26:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:11:25 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ static bool	judge_ate_all(t_ph *ph, size_t num_people);
 
 void	*run_monitor_ate_all(void *ptr)
 {
-	t_monitor	*monitor;
+	t_monitor	*ate_all_monitor;
 	t_ph		*ph;
 	size_t		num_people;
 
-	monitor = (t_monitor *)ptr;
-	ph = monitor->ph;
-	num_people = monitor->num_people;
+	ate_all_monitor = (t_monitor *)ptr;
+	ph = ate_all_monitor->ph;
+	num_people = ate_all_monitor->num_people;
 	while (!is_end(&ph->end_st, &ph->mtx_st))
 	{
-		if (monitor->flag_must_eat == true)
+		if (ate_all_monitor->flag_must_eat == true)
 		{
 			if (judge_ate_all(ph, num_people))
 				break ;
