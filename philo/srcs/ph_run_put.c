@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/24 14:49:03 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 12:12:17 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,26 @@
 static bool	wait_action_usleep_ms(t_ph *ph, \
 				long start, size_t wait_ms);
 
-bool	put_state(size_t state, t_philo *node_ph, \
-				long ms, size_t id)
+bool	put_state(size_t state, t_philo *node_ph, long ms, size_t id)
 {
 	long	elapsed_time;
 
-	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
-		return (false);
 	x_lock_mutex_philo(node_ph, &node_ph->mutex_put);
-	x_lock_mutex_philo(node_ph, &node_ph->mutex_philo);
-	if (!get_time_from_start(node_ph->ph, &elapsed_time))
-		return (false);
-	node_ph->time[state] = elapsed_time;
-	if (put_stamp(node_ph->time[state], id, node_ph->ph->status[state]) == -1)
+	if (is_end(&node_ph->ph->end_st, &node_ph->ph->mtx_st))
 	{
-		set_err_num_philo(node_ph, ERR_PRINTF);
-		x_unlock_mutex_philo(node_ph, &node_ph->mutex_philo);
 		x_unlock_mutex_philo(node_ph, &node_ph->mutex_put);
 		return (false);
 	}
+	x_lock_mutex_philo(node_ph, &node_ph->mutex_philo);
+	if (!get_time_from_start(node_ph->ph, &elapsed_time))
+		x_unlock_mutex_philo(node_ph, &node_ph->mutex_put);
+	node_ph->time[state] = elapsed_time;
+	if (put_stamp(node_ph->time[state], id, node_ph->ph->status[state]) == -1)
+		set_err_num_philo(node_ph, ERR_PRINTF);
 	x_unlock_mutex_philo(node_ph, &node_ph->mutex_philo);
 	x_unlock_mutex_philo(node_ph, &node_ph->mutex_put);
+	if (node_ph->err_num > NUM_ERR_LOW || node_ph->ph->err_num > NUM_ERR_LOW)
+		return (false);
 	if (ms > 0)
 	{
 		if (!wait_action_usleep_ms(node_ph->ph, node_ph->time[state], ms))
