@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:42:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/23 11:58:17 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:46:16 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ static t_fork	*init_fork(t_ptr_list *ptr_list);
 static void		make_first_fork(t_fork_list *list, t_fork *node);
 static void		add_last_fork(t_fork_list *list, t_fork *node);
 
-bool	add_fork_list(t_ph *ph, t_fork_list *list, \
+bool	add_fork_list(t_ph *ph, t_fork_list *fork_list, \
 					t_ptr_list *ptr_list, size_t data)
 {
-	t_fork	*node;
+	t_fork	*fork_n;
 
-	node = init_fork(ptr_list);
-	if (node == NULL)
+	fork_n = init_fork(ptr_list);
+	if (fork_n == NULL)
 	{
 		set_err_num_ph(ph, ERR_ADD_FORK_LIST);
 		return (false);
 	}
-	node->data = data;
-	node->ph = ph;
-	if (list->head == NULL)
-		make_first_fork(list, node);
+	fork_n->data = data;
+	fork_n->ph = ph;
+	if (fork_list->head == NULL)
+		make_first_fork(fork_list, fork_n);
 	else
-		add_last_fork(list, node);
+		add_last_fork(fork_list, fork_n);
 	return (true);
 }
 

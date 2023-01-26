@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:48:10 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,9 @@ void	end_error(t_ph *ph);
 void	end_philo(t_ph *ph);
 
 bool	add_fork_list(t_ph *ph, t_fork_list *list, \
-			t_ptr_list *ptr_list, size_t data);
+		t_ptr_list *ptr_list, size_t data);
 bool	add_philo_list(t_ph *ph, t_philo_list *list, \
-			t_ptr_list *ptr_list, size_t id);
+		t_ptr_list *ptr_list, size_t id);
 
 bool	is_error(t_ph *ph);
 
@@ -248,8 +248,7 @@ void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 void	x_unlock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
 
-bool	x_pthread_create(t_ph *ph, pthread_t *t, \
-			void *(*f)(void *), void *p);
+bool	x_pthread_create(t_ph *ph, pthread_t *t, void *(*f)(void *), void *p);
 bool	x_pthread_detach(t_ph *ph, pthread_t *thread);
 bool	x_usleep_millisec(t_ph *ph, long time_ms);
 bool	x_usleep_microsec(t_ph *ph, long time_microsec);
@@ -264,8 +263,7 @@ void	*run_monitor_ate_all(void *ptr);
 void	*run_monitor_error(void *ptr);
 void	*run_monitor_die(void *ptr);
 void	*run_monitor_hungry(void *ptr);
-bool	run_eating(t_philo *philo_n, t_fork *fork_n, \
-					size_t id, long time_eat);
+bool	run_eating(t_philo *philo_n, t_fork *fork_n, size_t id, long time_eat);
 
 int		ph_atoi(const char *str);
 char	*x_strdup(t_ptr_list *list, char *str);

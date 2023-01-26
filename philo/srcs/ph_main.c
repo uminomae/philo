@@ -6,13 +6,12 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:51:44 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:44:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//TODO fork_n,philo_n->
 int	main(int argc, char **argv)
 {
 	t_ph	ph;

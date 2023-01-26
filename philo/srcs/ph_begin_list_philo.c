@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:50:53 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:46:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_philo	*init_philo(t_ptr_list *ptr_list);
 static void		make_first_philo(t_philo_list *list, t_philo *node);
 static void		add_last_philo(t_philo_list *list, t_philo *node);
 
-bool	add_philo_list(t_ph *ph, t_philo_list *list, \
+bool	add_philo_list(t_ph *ph, t_philo_list *philo_list, \
 						t_ptr_list *ptr_list, size_t id)
 {
 	t_philo	*philo_n;
@@ -32,10 +32,10 @@ bool	add_philo_list(t_ph *ph, t_philo_list *list, \
 	philo_n->flag_must_eat = ph->flag_must_eat;
 	philo_n->times_must_eat = ph->argv[5];
 	philo_n->time[EATING] = 0;
-	if (list->head == NULL)
-		make_first_philo(list, philo_n);
+	if (philo_list->head == NULL)
+		make_first_philo(philo_list, philo_n);
 	else
-		add_last_philo(list, philo_n);
+		add_last_philo(philo_list, philo_n);
 	return (true);
 }
 
