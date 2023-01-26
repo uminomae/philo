@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 10:21:59 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ bool	destroy_mutex(t_ph *ph)
 	{
 		ret &= x_pthread_mutex_destroy(ph, &fork_n->mtx_fork);
 		fork_n = fork_n->next;
-		ret &= x_pthread_mutex_destroy(ph, &philo_n->mutex_philo);
-		ret &= x_pthread_mutex_destroy(ph, &philo_n->mutex_put);
+		ret &= x_pthread_mutex_destroy(ph, &philo_n->mtx_philo);
+		ret &= x_pthread_mutex_destroy(ph, &philo_n->mtx_put);
 		philo_n = philo_n->next;
 		i++;
 	}

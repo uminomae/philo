@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 01:04:10 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:39:02 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:48:26 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static void	count_ate_in_philo(t_philo *philo_n)
 	t_mutex	*mtx_st;
 
 	mtx_st = &philo_n->ph->mtx_st;
-	x_lock_mutex_philo(philo_n, &philo_n->mutex_philo);
+	x_lock_mtx_philo(philo_n, &philo_n->mtx_philo);
 	if (philo_n->times_must_eat == philo_n->cnt)
 	{
-		x_unlock_mutex_philo(philo_n, &philo_n->mutex_philo);
+		x_unlock_mtx_philo(philo_n, &philo_n->mtx_philo);
 		x_lock_mutex_struct(&mtx_st->mtx_cnt_ate, mtx_st);
 		philo_n->ph->ate_st.ate_cnt++;
 		x_unlock_mutex_struct(&mtx_st->mtx_cnt_ate, mtx_st);
 	}
 	else
-		x_unlock_mutex_philo(philo_n, &philo_n->mutex_philo);
+		x_unlock_mtx_philo(philo_n, &philo_n->mtx_philo);
 }

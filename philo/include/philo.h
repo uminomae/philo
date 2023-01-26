@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:04:46 by hioikawa          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:10 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ typedef struct s_mutex
 
 typedef struct s_philo
 {
-	pthread_mutex_t	mutex_philo;
-	pthread_mutex_t	mutex_put;
+	pthread_mutex_t	mtx_philo;
+	pthread_mutex_t	mtx_put;
 	pthread_t		philo_th;
 	size_t			id;
 	long			time[5];
@@ -241,8 +241,8 @@ void	*malloc_and_add_ptr_list(t_ptr_list *ptr_list, size_t size);
 
 void	x_lock_mutex_fork(t_fork *fork_n);
 void	x_unlock_mutex_fork(t_fork *fork_n);
-void	x_lock_mutex_philo(t_philo *philo_n, pthread_mutex_t *mtx);
-void	x_unlock_mutex_philo(t_philo *philo_n, pthread_mutex_t *mtx);
+void	x_lock_mtx_philo(t_philo *philo_n, pthread_mutex_t *mtx);
+void	x_unlock_mtx_philo(t_philo *philo_n, pthread_mutex_t *mtx);
 void	x_lock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_unlock_mutex_ph(pthread_mutex_t *mutex_ph, t_ph *ph);
 void	x_lock_mutex_struct(pthread_mutex_t *mutex, t_mutex *mtx_st);
