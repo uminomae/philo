@@ -6,7 +6,7 @@
 /*   By: uminomae <uminomae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:52:51 by uminomae          #+#    #+#             */
-/*   Updated: 2023/01/26 21:48:44 by uminomae         ###   ########.fr       */
+/*   Updated: 2023/01/26 23:56:48 by uminomae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	judge_time_to_die(t_ph *ph, size_t num_people);
 static bool	check_time_to_die(t_philo *philo_n);
 static void	set_flag_died(t_ph *ph, size_t id);
-static void	put_died_with_mutex(t_ph *ph, size_t num_people);
+static void	put_died_in_mutex(t_ph *ph, size_t num_people);
 
 void	*run_monitor_die(void *ptr)
 {
@@ -31,7 +31,7 @@ void	*run_monitor_die(void *ptr)
 		if (judge_time_to_die(ph, num_people))
 			break ;
 	}
-	put_died_with_mutex(ph, num_people);
+	put_died_in_mutex(ph, num_people);
 	return (ptr);
 }
 
@@ -56,7 +56,7 @@ static bool	judge_time_to_die(t_ph *ph, size_t num_people)
 	return (false);
 }
 
-static void	put_died_with_mutex(t_ph *ph, size_t num_people)
+static void	put_died_in_mutex(t_ph *ph, size_t num_people)
 {
 	size_t		i;
 	t_philo		*philo_n;
